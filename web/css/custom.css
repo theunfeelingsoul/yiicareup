@@ -1,0 +1,62 @@
+.the-tagcloud {
+    margin: 5px 0 10px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    line-height: 1.8em;
+    word-spacing: 3px;
+}
+
+.tag-link,.tag-link-2{
+	padding-right: 10px;
+	/*float: left;*/
+	/*background-color: green;*/
+}
+
+#hform{
+	display: none;
+}
+
+.tagchecklistitem{
+	/*padding: 5px;*/
+}
+
+.skill_timetable_remove:hover,
+.skill_timetable_add:hover{
+	cursor: pointer;
+	visibility: visible;
+}
+
+.skill_timetable_remove,
+.skill_timetable_add{
+	/*display: none;*/
+	/*visibility: hidden;*/
+}
+
+
+.hidden_time{
+	display: none !important;
+}
+
+.time_not_available,
+.time_available,
+.time_maybe,
+.office_time_not_available,
+.office_time_available,
+.office_time_maybe,
+{
+	cursor: pointer;
+}
+
+
+.tagchecklist-tag-item , .tagchecklist-service-item{
+	float:left;
+	padding-right: 5px;
+}
+
+.tagchecklist-item .fa .fa-times:hover{
+	color: red;
+}
+
+.tagchecklist{
+	padding-left: 15px;
+}
