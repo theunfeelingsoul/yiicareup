@@ -78,9 +78,10 @@ The pages are :
 http://localhost/yiicareup/web/index.php?r=office%2Fhome
 ``` 
 
-- here ypu can :
+Here ypu can :
+
 - See the office information.
-- Add and remove the serveces or tags that an office has
+- Add and remove the serveces or appeal tags that an office has by clicking on the service or appeal tag.
 - Chnage the status of the office and employee timetable by clicking on the symbol.
 
 ###Update an Office 
@@ -88,15 +89,19 @@ http://localhost/yiicareup/web/index.php?r=office%2Fhome
 http://localhost/yiicareup/web/index.php?r=office%2Fupdate&id=9
 ``` 
 
-###View all the offices belonging to one user
+###View
 ```
 http://localhost/yiicareup/web/index.php?r=office%2Findex
 ``` 
 
-###Create an office
+- Here you can view all the offices belonging to one user.
+
+###Create
 ```
 http://localhost/yiicareup/web/index.php?r=office%2Fcreate
 ``` 
+
+- Here you create an office
 
 
 

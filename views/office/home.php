@@ -15,7 +15,7 @@
     		
     	<?php endforeach ?>
     	<div class="col-md-2">
-			<?= Html::a( "+", $url = ['office/create']) ?>
+			<?= Html::a( "+ Add", $url = ['office/create']) ?>
     		
     	</div>
     </div>
@@ -23,11 +23,11 @@
     <div class="row">
     	<div class="col-md-8">Office Information</div>
     	<div class="col-md-2">
-			<?= Html::a( "Edit Office", $url = ['office/update','id'=>$value->id], $options = [] ) ?>
+			<?= Html::a( "Edit Office", $url = ['office/update','id'=>$user_office_id], $options = [] ) ?>
 
     	</div>
     	<div class="col-md-2">
-			<?= Html::a( "View all offices Office", $url = ['office/index'], $options = [] ) ?>
+			<?= Html::a( "View all", $url = ['office/index'], $options = [] ) ?>
 
     	</div>
     	<hr/>

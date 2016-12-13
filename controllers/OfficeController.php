@@ -444,7 +444,6 @@ class OfficeController extends Controller
 
     public function actionHome($id=false)
     {
-        echo Yii::$app->user->identity->id;
         // use the careup layout
         $this->layout = "careup";
 
@@ -550,44 +549,7 @@ class OfficeController extends Controller
         }
 
 
-        // echo "<pre>";
-        // print_r($new_skilltimetable_array);
-        // echo "</pre>";
-        
-        // exit();
-        
-        
-        // in the loop get all the days beloging to theskill id
-
-
-        // echo "<pre>";
-        // print_r($skills_timetable);
-        // echo "</pre>";
-        
-        // create an array
-        // $skills_timetable_array = array();
-        // chnage the user ID to name and explode the days column
-        // foreach ($skills_timetable as $key => $skill_time) {
-        //     $skill_days_array = explode(",", $skill_time->day_and_time);
-        //     $skill_name = $modelTags->findTagsById($skill_time->skid); 
-
-        //     // echo "<pre>";
-        //     // print_r($skill_days_array);
-        //     // echo "</pre>";
-            
-        //    // $skills_timetable_array[] = 
-        //    // $skills_timetable_array = array($modelTags->findTagsById($skill_time->skid), $skill_days_array);
-        //    $skills_timetable_array = array($skill_name => $skill_days_array);
-        //    // $skills_timetable_array = array($skill_name,$skill_days_array);
-
-        // }
-
-
-        // echo "<pre>";
-        // print_r($skills_timetable_array);
-        // echo "</pre>";
-
-        // exit();
+      
         
         
         // get the skill names using Ids gotten above
@@ -600,7 +562,6 @@ class OfficeController extends Controller
 
          return $this->render('home', [
                 'model'                     => $model,
-                // 'working_days_array'        => $working_days_array,
                 'model_service_name'        => $model_service_name,
                 'Service_display'           => $Service_display,
                 'tags_display'              => $tags_display,
@@ -608,7 +569,6 @@ class OfficeController extends Controller
                 'user_offices'              => $user_offices,
                 'user_office_id'            => $model->id,
                 'skills_names_array'        => $skills_names_array,
-                // 'skills_timetable_array' => $skills_timetable_array,
                 'new_skilltimetable_array'  => $new_skilltimetable_array,
                 'office_timetable'          => $office_timetable,
             ]);
@@ -617,15 +577,6 @@ class OfficeController extends Controller
 
 
     public function officeTimetable($office_id){
-         // 4. GET DATA TO CREATE THE SCHEDULE OR CALENDAR OR TIMETABLE
-
-        // get skills. These are the Ids
-        // $skills_id_array = explode(",", $model->skills);
-        // $skills_names_array = array(); // array to save the skill names
-
-        // // get all the skills timetable
-        // // by userID only we will sort it out later below
-        // $skills_timetable = $modelSkillstimetable->findByUserId();
 
         $modelOfficetimetable = new Officetimetable();
 
@@ -636,13 +587,6 @@ class OfficeController extends Controller
             $office_timetable_days_and_time_array[] = $office_time->day_and_time.'-'.$office_time->status;
         }
 
-
-
-        echo "<pre>";
-        print_r($office_timetable_days_and_time_array);
-        echo "</pre>";
-        
-        // exit();
         
         return $office_timetable_days_and_time_array;
 
