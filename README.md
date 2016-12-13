@@ -66,13 +66,18 @@ The name of the database is called  `careup_server.sql`
 INSTALLATION
 ------------
 
-Download this archive to your loacl host computer. Then set up the database. This has to be done manually. 
-Then go to this URL http://localhost/yiicareup/web/index.php?r=office%2Fhome. 
+Download this archive to your local host computer. Then set up the database. This has to be done manually. 
+Then go to this URL:
+
+~~~
+http://localhost/yiicareup/web/index.php?r=office%2Fhome. 
+~~~
 
 You will be asked to log in. The credentaisl are :
-
-Username : v
-Password : 123
+~~~
+- Username : v
+- Password : 123
+~~~
 
 You can then naviaget to other pages from there.
 
@@ -88,7 +93,7 @@ The pages are :
 http://localhost/yiicareup/web/index.php?r=office%2Fhome
 ``` 
 
-Here ypu can :
+Here you can :
 
 - See the office information.
 - Add and remove the serveces or appeal tags that an office has by clicking on the service or appeal tag.
