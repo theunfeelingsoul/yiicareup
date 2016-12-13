@@ -54,9 +54,11 @@ return [
 
 You can find the database in the config folder. 
 
-```yiicareup\config
+~~~
+yiicareup\config
+~~~
 
-The name of the database is called careup_server.sql
+The name of the database is called  `careup_server.sql`
 
 
 
