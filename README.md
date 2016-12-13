@@ -73,13 +73,13 @@ Then go to this URL:
 http://localhost/yiicareup/web/index.php?r=office%2Fhome. 
 ~~~
 
-You will be asked to log in. The credentaisl are :
+You will be asked to log in. The credentials are :
 ~~~
 - Username : v
 - Password : 123
 ~~~
 
-You can then naviaget to other pages from there.
+You can then navigate to other pages from there.
 
 
 
