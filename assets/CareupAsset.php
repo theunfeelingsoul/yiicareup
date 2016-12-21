@@ -18,26 +18,27 @@ class CareupAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'css/site.css',
+        // 'css/site.css',
         'css/custom.css',
         'css/select.css',
-        'css/carehome.css',
+        // 'css/carehome.css',
         'css/tab.css',
         'css/font-awesome-4.7.0/css/font-awesome.min.css',
-        // 'css/materialize/css/materialize.css',
-        // 'css/materialize/fonts/fonts.css',
+        'css/materialize/css/materialize.css',
+        'css/materialize/fonts/fonts.css',
+        'https://fonts.googleapis.com/icon?family=Material+Icons',
     ];
     public $js = [
     'js/ajax.js',
-    'js/tabmenu.js',
+    // 'js/tabmenu.js',
     'js/select.js',
     'js/custom.js',
-    // 'css/materialize/js/materialize.min.js',
+    'css/materialize/js/materialize.min.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',
         'yii\web\JqueryAsset',
-        'yii\bootstrap\BootstrapAsset',
-        'yii\bootstrap\BootstrapPluginAsset',
+        // 'yii\bootstrap\BootstrapAsset',
+        // 'yii\bootstrap\BootstrapPluginAsset',
     ];
 }
