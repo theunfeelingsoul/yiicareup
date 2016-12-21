@@ -561,6 +561,7 @@ class OfficeController extends Controller
         $office_timetable = $this->officeTimetable($model->id);
 
          return $this->render('home', [
+         // return $this->render('home_back_12_18_2016', [
                 'model'                     => $model,
                 'model_service_name'        => $model_service_name,
                 'Service_display'           => $Service_display,

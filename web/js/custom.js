@@ -1,66 +1,18 @@
   
+  $(window).load(function() {
+  	console.log("cows");
+	$("#preloader").fadeOut("slow");
+	// $(".preloader-wrapper").fadeOut("slow");
+})
+
 $( document ).ready(function() {
 
   $('select').multipleSelect();
 
 
-	// $(".skill_timetable_remove").click(function() {
-	// 	// get the class
-	// 	var myClass = $(this).attr("class");
-	// 	console.log(myClass);
-	// 	//split the class and get the skill name, day and id class
 
-	// 	var splitClass = myClass.split(' ');
 
-	// 	console.log(splitClass);
-	// 	// split the skill name, day and id class by a dash (-)
-	// 	var skill_day_id_class = splitClass[1];
-	// 	console.log(skill_day_id_class);
-	// 	var split_skill_day_id_class = skill_day_id_class.split('-');
-	// 	console.log(split_skill_day_id_class);
-	// 	var skill_class = split_skill_day_id_class[0];
-	// 	var day_class = split_skill_day_id_class[1];
-	// 	var id_class = split_skill_day_id_class[2];
-
-	// 	// save the data using ajax top the skill table
-
-	// 	$.post( "index.php?r=office/ajaxskilltimetableremove", { 	skill 	: skill_class, day 	:day_class, user_id :id_class })
-	// 		.done(function( data ) {
-	// 		console.log(data);
-
-	// 	});
-
-	// 	// chnage the existing state
-	// });
-
-	// $(".skill_timetable_add").click(function() {
-	// 	// get the class
-	// 	var myClass = $(this).attr("class");
-	// 	console.log(myClass);
-	// 	//split the class and get the skill name, day and id class
-
-	// 	var splitClass = myClass.split(' ');
-
-	// 	console.log(splitClass);
-	// 	// split the skill name, day and id class by a dash (-)
-	// 	var skill_day_id_class = splitClass[1];
-	// 	console.log(skill_day_id_class);
-	// 	var split_skill_day_id_class = skill_day_id_class.split('-');
-	// 	console.log(split_skill_day_id_class);
-	// 	var skill_class = split_skill_day_id_class[0];
-	// 	var day_class = split_skill_day_id_class[1];
-	// 	var id_class = split_skill_day_id_class[2];
-
-	// 	// save the data using ajax top the skill table
-
-	// 	$.post( "index.php?r=office/ajaxskilltimetableadd", { 	skill 	: skill_class, day 	:day_class, user_id :id_class })
-	// 		.done(function( data ) {
-	// 		console.log(data);
-
-	// 	});
-
-	// 	// chnage the existing state
-	// });
+	
 
 	$(".time_not_available").click(function() {
 		// get the class
@@ -205,7 +157,8 @@ $( document ).ready(function() {
 		// chnage the existing state
 	});
 
-
+	$('ul.tabs').tabs();
+	$('ul.tabsz').tabs();
 
 	$(".office_time_not_available").click(function() {
 		// get the class
@@ -346,6 +299,10 @@ $( document ).ready(function() {
 	});
 
 
-
+	$(".button-collapse").sideNav();
 
 }); // end 
+
+ 	
+
+

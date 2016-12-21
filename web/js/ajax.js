@@ -1,51 +1,3 @@
-// $( document ).ready(function() {
-
-// console.log("wow");
-// function dd(e) {
- 
-//     e.preventDefault();
- 
-//     var
-//         $link = $(e.target),
-//         callUrl = $link.attr('href'),
-//         formId = $link.data('formId'),
-//         onDone = $link.data('onDone'),
-//         onFail = $link.data('onFail'),
-//         onAlways = $link.data('onAlways'),
-//         ajaxRequest;
- 
- 
-//     ajaxRequest = $.ajax({
-//         type: "post",
-//         dataType: 'json',
-//         url: callUrl,
-//         data: (typeof formId === "string" ? $('#' + formId).serializeArray() : null)
-//     });
- 
-//     // Assign done handler
-//     if (typeof onDone === "string" && ajaxCallbacks.hasOwnProperty(onDone)) {
-//         ajaxRequest.done(ajaxCallbacks[onDone]);
-//     }
- 
-//     // Assign fail handler
-//     if (typeof onFail === "string" && ajaxCallbacks.hasOwnProperty(onFail)) {
-//         ajaxRequest.fail(ajaxCallbacks[onFail]);
-//     }
- 
-//     // Assign always handler
-//     if (typeof onAlways === "string" && ajaxCallbacks.hasOwnProperty(onAlways)) {
-//         ajaxRequest.always(ajaxCallbacks[onAlways]);
-//     }
- 
-// }
-
-// 'simpleDone': function (response) {
-//     // This is called by the link attribute 'data-on-done' => 'simpleDone'
-//     console.dir(response);
-//     $('#ajax_result_01').html(response.body);
-// }
-
-// });
 
 $( document ).ready(function() {
 
@@ -69,26 +21,23 @@ $( ".tag-link" ).click(function() {
     .done(function( data ) {
     // console.log(data);
     var service_display_exists = data;
-    // console.log("exists? "+service_display_exists);
+    console.log("exists? "+service_display_exists);
 
     // get the service display id
     $.post( "index.php?r=servicedisplay/ajaxgetid", { name: tag_link, office_id:tag_link_office_id })
         .done(function( data ) {
-      console.log(data);
+      // console.log(data);
       var service_display_id = data;
 
       // if the service display exists dont append it.
       // if it does append it
       if (service_display_exists == false) {
-        $( ".tagchecklist" ).append( "<div class='tagchecklist-item "+service_display_id+" ?>'> <i class='fa fa-times' aria-hidden='true'></i> "+tag_link+" </div>" );
-
+        // $( ".tagchecklist_service" ).append( "<div class='tagchecklist-item "+service_display_id+" ?>'> <i class='fa fa-times' aria-hidden='true'></i> "+tag_link+" </div>" );
+        console.log("appended");
+        $( ".tagchecklist-service" ).append( "<div class='tagchecklist-service-item "+service_display_id+" ?>'> <div class='chip'> <i class='close material-icons'>close</i> "+tag_link+" </div></div>" );
       }
     }); // end ajax post
   }); // end ajax post
-
-
-
-
 });
 
 $( ".tag-link-2" ).click(function() {
@@ -121,7 +70,7 @@ $( ".tag-link-2" ).click(function() {
       // if the service display exists dont append it.
       // if it does append it
       if (tags_display_exists == false) {
-        $( ".tagchecklist" ).append( "<div class='tagchecklist-item "+tag_display_id+" ?>'> <i class='fa fa-times' aria-hidden='true'></i> "+tag_link2+" </div>" );
+        $( ".tagchecklist-tag" ).append( "<div class='tagchecklist-item "+tag_display_id+" ?>'> <div class='chip'> <i class='close material-icons'>close</i> "+tag_link2+" </div></div>" );
 
       }
     }); // end ajax post
