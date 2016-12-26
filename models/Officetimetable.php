@@ -48,6 +48,15 @@ class Officetimetable extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * Returns the attributes of office_timetable in array format.
+     * Excluding the id.
+     * @return mixed
+     */
+    public function batchInsertAttributes(){
+        return ['day_and_time', 'user_id', 'status', 'office_id'];
+    }
+
 
     public function findByUserIdAndOfficeId($office_id){
 
@@ -60,7 +69,8 @@ class Officetimetable extends \yii\db\ActiveRecord
     }
 
 
-    public function exists($day,$office_id){
+    public function exists($day,$office_id)
+    {
          $exists = officetimetable::find()
         ->andwhere(['day_and_time' => $day])
         ->andwhere(['office_id' => $office_id])
@@ -69,13 +79,37 @@ class Officetimetable extends \yii\db\ActiveRecord
         return $exists;
     }
 
-    public function findByDayAndOfficeId($day,$office_id){
+    public function findByDayAndOfficeId($day,$office_id)
+    {
          $office = officetimetable::find()
         ->andwhere(['day_and_time' => $day])
         ->andwhere(['office_id' => $office_id])
         ->one();
 
         return $office;
+    }
+
+
+    /**
+     * Inserts multiple rows into office_timetable table.
+     * @param mixed $data. Multidimention array. Each array made of the data 
+     * Example :
+     * $connection->createCommand()->batchInsert('user', ['name', 'age'], [
+     *    ['Tom', 30],
+     *    ['Jane', 20],
+     *    ['Linda', 25],
+     * ])->execute();
+     *
+     */
+    public function batchInsertTimes($data)
+    {
+
+        $table  = officeTimetable::tableName();
+        $fields = officeTimetable::batchInsertAttributes();
+        Yii::$app->db
+                 ->createCommand()
+                 ->batchInsert($table,$fields,$data)
+                 ->execute();
     }
 
 

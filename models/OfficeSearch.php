@@ -19,7 +19,7 @@ class OfficeSearch extends Office
     {
         return [
             [['id', 'staff'], 'integer'],
-            [['Onum', 'Oname', 'leader', 'url', 'apeal', 'tel', 'fax', 'email', 'blanktime_s', 'blanktime_f', 'holiday', 'location', 'area', 'service', 'imgname', 'img'], 'safe'],
+            [['Onum', 'Oname', 'leader', 'url', 'apeal', 'tel', 'fax', 'email', 'blanktime_s', 'blanktime_f', 'location', 'area', 'service', 'imgname', 'img'], 'safe'],
         ];
     }
 
@@ -73,7 +73,6 @@ class OfficeSearch extends Office
             ->andFilterWhere(['like', 'tel', $this->tel])
             ->andFilterWhere(['like', 'fax', $this->fax])
             ->andFilterWhere(['like', 'email', $this->email])
-            ->andFilterWhere(['like', 'holiday', $this->holiday])
             ->andFilterWhere(['like', 'location', $this->location])
             ->andFilterWhere(['like', 'area', $this->area])
             ->andFilterWhere(['like', 'service', $this->service])

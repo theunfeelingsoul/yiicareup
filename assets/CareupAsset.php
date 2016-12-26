@@ -18,7 +18,7 @@ class CareupAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        // 'css/site.css',
+        'css/site.css',
         'css/custom.css',
         'css/select.css',
         // 'css/carehome.css',
@@ -29,10 +29,8 @@ class CareupAsset extends AssetBundle
         'https://fonts.googleapis.com/icon?family=Material+Icons',
     ];
     public $js = [
-    'js/ajax.js',
-    // 'js/tabmenu.js',
-    'js/select.js',
-    'js/custom.js',
+    'js/service-and-skill-tags.js',
+    'js/office-and-skill-timetable.js',
     'css/materialize/js/materialize.min.js',
     ];
     public $depends = [

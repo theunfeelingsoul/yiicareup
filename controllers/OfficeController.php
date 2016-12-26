@@ -22,7 +22,9 @@ use yii\filters\AccessControl;
  * OfficeController implements the CRUD actions for Office model.
  */
 class OfficeController extends Controller
-{
+{   
+
+    // public $imgx=0;
     /**
      * @inheritdoc
      */
@@ -87,7 +89,7 @@ class OfficeController extends Controller
     }
 
     /**
-     * Creates a new Office model.
+     * Creates a new Office model and uploads the image to the uploads folder.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
@@ -100,30 +102,14 @@ class OfficeController extends Controller
         if ($model->load(Yii::$app->request->post())) {
 
             // Data from the dropdown list come in array format
-            // chnage it to a string delimited by commas
+            // Change it to a string delimited by commas
             // save it to the respective model attribute
-            $model->area = implode(', ', $model->area);
+            $model->area    = implode(', ', $model->area);
             $model->service = implode(', ', $model->service);
-            $model->skills = implode(', ', $model->skills);
-
-            // array containing all working dates
-            $times=array('mon_9','tue_9','wed_9','thu_9','fri_9','sat_9','sun_9','mon_10','tue_10','wed_10','thu_10','fri_10','sat_10','sun_10','mon_11','tue_11','wed_11','thu_11','fri_11','sat_11','sun_11','mon_12','tue_12','wed_12','thu_12','fri_12','sat_12','sun_12','mon_13','tue_13','wed_13','thu_13','fri_13','sat_13','sun_13','mon_14','tue_14','wed_14','thu_14','fri_14','sat_14','sun_14','mon_15','tue_15','wed_15','thu_15','fri_15','sat_15','sun_15','mon_16','tue_16','wed_16','thu_16','fri_16','sat_16','sun_16','mon_17','tue_17','wed_17','thu_17','fri_17','sat_17','sun_17','mon_18','tue_18','wed_18','thu_18','fri_18','sat_18','sun_18','mon_19','tue_19','wed_19','thu_19','fri_19','sat_19','sun_19','mon_20','tue_20','wed_20','thu_20','fri_20','sat_20','sun_20');
-            // $times=array('mon_9', 'tue_9', 'wed_9', 'thu_9', 'fri_9', 'sat_9', 'sun_9', 'mon_10', 'tue_10', 'wed_10', 'thu_10', 'fri_10', 'sat_10', 'sun_10', 'mon_11', 'tue_11', 'wed_11', 'thu_11', 'fri_11', 'sat_11', 'sun_11', 'mon_12', 'tue_12', 'wed_12', 'thu_12', 'fri_12', 'sat_12', 'sun_12', 'mon_13', 'tue_13', 'wed_13', 'thu_13', 'fri_13', 'sat_13', 'sun_13', 'mon_14', 'tue_14', 'wed_14', 'thu_14', 'fri_14', 'sat_14', 'sun_14', 'mon_15', 'tue_15', 'wed_15', 'thu_15', 'fri_15', 'sat_15', 'sun_15', 'mon_16', 'tue_16', 'wed_16', 'thu_16', 'fri_16', 'sat_16', 'sun_16', 'mon_17', 'tue_17', 'wed_17', 'thu_17', 'fri_17', 'sat_17', 'sun_17', 'mon_18', 'tue_18', 'wed_18', 'thu_18', 'fri_18', 'sat_18', 'sun_18', 'mon_19', 'tue_19', 'wed_19', 'thu_19', 'fri_19', 'sat_19', 'sun_19', 'mon_20', 'tue_20', 'wed_20', 'thu_20', 'fri_20', 'sat_20', 'sun_20');
-
-            // If the any date was checked, save it a string delimited by commas
-            $working_days = array();
-            foreach ($times as $key => $value) {
-                if ( $model->$value == '1') {
-                    array_push($working_days, $value);
-                }
-            }
-
-             // save the string to the model attribute
-            $model->holiday = implode(',', $working_days);
+            $model->skills  = implode(', ', $model->skills);
 
             // add the user id
             $model->user_id = Yii::$app->user->identity->id;
-
             // upload image to folder
             $model->imageFile = UploadedFile::getInstance($model, 'imgname'); // get image
             
@@ -134,12 +120,18 @@ class OfficeController extends Controller
             $model->imgname = $img_path.'.'.$model->imageFile->extension;
             // upload image to folder
             if (!$model->upload($img_name)) { 
-                echo "did not upload";
-                exit();
+                // echo "did not upload";
+                // exit();
+                // todo
+                // find a way to add errrs to an array
             }
             
             // save model
             if ($model->save(false)) {
+
+                // batch insert office_timetable
+                $this -> InstantiateTimesPrep();
+
                 return $this->redirect(['view', 'id' => $model->id]);
                 exit();
             }else{
@@ -153,6 +145,40 @@ class OfficeController extends Controller
                 'model' => $model,
             ]);
         }
+    }
+
+
+
+    /**
+     * This method is called only after the create() method.
+     *
+     * Prepares a multidimentional array and then passes the data to 
+       the the batchInsertTimes() method that Inserts default data values into the office_timetatble table.
+     *
+     * The default values are :
+        Office_id - the id of the office just created.
+        ueser_id  - User id of the logged in user.
+        status    - 0.
+     */
+    public function InstantiateTimesPrep()
+    {
+
+        $model                  = new Office();
+        $model_office_timetable = new Officetimetable();
+        
+        $office_id              = Yii::$app->db->getLastInsertID();
+        $user_id                = Yii::$app->user->identity->id;
+
+        foreach ($model->times as $key => $value) {
+
+            // the array values below should be arranged as folllows:
+            // ['day_and_time', 'user_id', 'status', 'office_id']
+            $data[] = [$value,$user_id,'0',$office_id];
+        }
+        
+        // Insert the prepared data array into the table
+        // by passing it to the batchInsertTimes() method
+        $model_office_timetable->batchInsertTimes($data);
     }
 
     /**
@@ -171,19 +197,6 @@ class OfficeController extends Controller
         $model                  = $this->findModel($id);
         $first_model_imgname    = $model->imgname;
 
-
-
-        // fill the checkboxes
-        // get the holiday values
-        // $working_days = $model->holiday;
-        // // explode them
-        // $working_days_array=explode(",", $working_days);
-
-        // loop through the array and update the chekboxes
-        // foreach ($working_days_array as $key => $value) {
-        //     $model->$value =1;
-        // }
-
         // 2. CHNAGE THE COMMA DELIMITED SERVICE, AREA AND SKILLS STRING DATA TO AN ARRAY 
         $model->service = explode(',', $model->service); 
         $model->area    = explode(',', $model->area); 
@@ -200,21 +213,6 @@ class OfficeController extends Controller
             $string_service = $model->service = implode(', ', $model->service);
             $string_skills = $model->skills  = implode(', ', $model->skills);
 
-
-            // If the any date was checked, save it a string delimited by commas
-            // $working_days = array();
-            // foreach ($model->times as $key => $value) {
-            //     if ( $model->$value == '1') {
-            //         array_push($working_days, $value);
-            //     }
-            // }
-
-
-             // save the string to the model attribute
-            // $model->holiday = implode(',', $working_days);
-
-            // exit();
-            
 
             // 5.   GET THE IMAGE UPLOADED
             $image_instance= $model->imageFile = UploadedFile::getInstance($model, 'imgname'); // get image
@@ -240,11 +238,6 @@ class OfficeController extends Controller
                         echo "did not upload";
                         exit();
                     }
-                //      echo  $model->imgname;
-                //       echo "in";
-                //        echo "<pre>";
-                // print_r($image_instance);
-                // echo "</pre>";
                 
                 // exit();
                 }else{
@@ -252,12 +245,6 @@ class OfficeController extends Controller
                     $model->imgname=$first_model_imgname;
                 }
                 
-                // echo "out";
-                // echo  $model->imgname;
-                // exit();
-
-                   
-
                  // save model
                 if ($model->save(false)) {
                     return $this->redirect(['view', 'id' => $model->id]);
@@ -294,158 +281,11 @@ class OfficeController extends Controller
         }
     }
 
-    
-
-   
-
-
-    public function actionAjaxskilltimetableremove()
-    {
-
-        if (Yii::$app->request->isAjax) {
-
-            //  POST request
-            $skill_class      = $_POST['skill'];
-            $day_class        = $_POST['day'];
-            $user_id_class    = $_POST['user_id'];
-
-            $modelSkillstimetable = new Skillstimetable();
-            $modelTags = new Tags();
-
-            // check if it exists in service_display table already
-            // TODO
-            // chnage the skill name to id
-            $skill_id=$modelTags->findTagSkidBySkname($skill_class);
-            // use it to chekc if exists
-            // 
-            $exists= $modelSkillstimetable->Exists($skill_id,Yii::$app->user->identity->id);
-
-            // if it doesnt exist it will create it
-            // if it does it will update it
-
-            // if it dosen't exist save
-            if ($exists) {
-
-                $modelSkillstimetable = $modelSkillstimetable->findBySkidAndUser_id($skill_id,Yii::$app->user->identity->id); 
-                // insert a new row of data
-                // $modelSkillstimetable = new Skillstimetable();
-                // get the days string
-                $modelSkilltimetable_days = $modelSkillstimetable->days;
-
-                // change it to an array
-                $modelSkilltimetable_days_array = explode(',', $modelSkilltimetable_days); 
-                // check if the the new value exists
-                if (in_array($day_class, $modelSkilltimetable_days_array)) {
-                    // unset the variable
-                    foreach ($modelSkilltimetable_days_array as $key => $value) {
-                        if ($value==$day_class) {
-                            unset($modelSkilltimetable_days_array[$key]);
-                        }
-                    }
-                }
-
-
-                // chnage the array to a string delimited by commas
-
-                $modelSkilltimetable_days_imploded = implode(",", $modelSkilltimetable_days_array);
-
-
-                // save the value to the attribute
-                $modelSkillstimetable->days = $modelSkilltimetable_days_imploded;
-                // $modelSkillstimetable->skid = $service_post_name;
-                // $Servicedisplay->user_id = Yii::$app->user->identity->id;
-                $modelSkillstimetable->save(false);
-
-                echo "removed";
-            }
-
-            exit();
-         }
-
-    } // end AjaxSkilltimetable()
-
-
-   
-
-
-    public function actionAjaxskilltimetableadd()
-    {
-
-        if (Yii::$app->request->isAjax) {
-
-            //  POST request
-            $skill_class      = $_POST['skill'];
-            $day_class        = $_POST['day'];
-            $user_id_class    = $_POST['user_id'];
-
-            $modelSkillstimetable = new Skillstimetable();
-            $modelTags = new Tags();
-
-            // check if it exists in service_display table already
-            // TODO
-            // chnage the skill name to id
-            $skill_id=$modelTags->findTagSkidBySkname($skill_class);
-            // use it to chekc if exists
-            // 
-            $exists= $modelSkillstimetable->Exists($skill_id,Yii::$app->user->identity->id); 
-
-            // if it doesnt exist it will create it
-            // if it does it will update it
-
-            // if it dosen't exist save
-            if ($exists) {
-                $modelSkillstimetable = $modelSkillstimetable->findBySkidAndUser_id($skill_id,Yii::$app->user->identity->id); 
-                // insert a new row of data
-                // $modelSkillstimetable = new Skillstimetable();
-                // get the days string
-                $modelSkilltimetable_days = $modelSkillstimetable->days;
-
-                // change it to an array
-                $modelSkilltimetable_days_array = explode(',', $modelSkilltimetable_days); 
-                // check if the the new value exists
-                if (in_array($day_class, $modelSkilltimetable_days_array)) {
-                    // echo "Got Irix";
-                // if it does dont do anything
-                }else{
-                // if it isnt add it to the array
-                    array_push($modelSkilltimetable_days_array, $day_class);
-                }
-
-
-                // chnage the array to a string delimited by commas
-
-                $modelSkilltimetable_days_imploded = implode(",", $modelSkilltimetable_days_array);
-
-
-                // save the value to the attribute
-                $modelSkillstimetable->days = $modelSkilltimetable_days_imploded;
-                // $modelSkillstimetable->skid = $service_post_name;
-                // $Servicedisplay->user_id = Yii::$app->user->identity->id;
-                $modelSkillstimetable->save(false);
-
-                echo "added";
-            }else{
-                // add a new record
-                $modelSkillstimetable->skid     = $skill_id; // gotten at the beginning 
-                $modelSkillstimetable->days     = $day_class; 
-                $modelSkillstimetable->user_id  = $user_id_class; 
-
-                $modelSkillstimetable->save();
-
-                echo "created"; 
-            }
-
-            exit();
-         }
-
-    } // end AjaxSkilltimetable()
-
-
 
     public function actionHome($id=false)
     {
         // use the careup layout
-        $this->layout = "careup";
+        // $this->layout = "careup";
 
         $modelServices          = new Services();
         $modelServiceDisplay    = new Servicedisplay();
@@ -558,7 +398,14 @@ class OfficeController extends Controller
         }
 
         // office timetable
-        $office_timetable = $this->officeTimetable($model->id);
+        $office_timetable= $this->officeTimetable($model->id);
+
+      $model->imgx = $model ->imgname;
+
+       // $model->imgx;
+
+        $this->layout = "careup";
+       // exit();
 
          return $this->render('home', [
          // return $this->render('home_back_12_18_2016', [

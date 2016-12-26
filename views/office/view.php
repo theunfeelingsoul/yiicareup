@@ -39,7 +39,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'email:email',
             'blanktime_s',
             'blanktime_f',
-            'holiday',
             'location',
             'area',
             'staff',

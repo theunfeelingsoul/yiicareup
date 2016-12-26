@@ -212,7 +212,57 @@ body{
 
 }
 
-!AmFull!4_J3sus!
+.help-block {
+  display: block;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  /*color: #737373;*/
+  color: #a94442;
+}
+
+.has-success .help-block,
+.has-success .control-label,
+.has-success .radio,
+.has-success .checkbox,
+.has-success .radio-inline,
+.has-success .checkbox-inline,	
+.has-success.radio label,
+.has-success.checkbox label,
+.has-success.radio-inline label,
+.has-success.checkbox-inline label {
+  color: #3c763d;
+}
+
+
+#desktop-side-nav .collection{
+	border: none;
+}
+
+#desktop-side-nav .collection .collection-item{
+	background-color: transparent;
+	border-bottom: none;
+	color: #757575;
+	font-weight: 500;
+}
+
+#desktop-side-nav .collection .collection-item:hover{
+	background-color: rgba(158,158,158,0.2);
+	
+}
+
+#desktop-side-nav{
+	    position: fixed;	
+	    /*top: 300px;*/
+}
+
+#mynav{
+	/*width: 700px !important;*/
+
+}
+
+.side-nav-desk{
+	/*top: 300px;*/
+}
 
 
 
