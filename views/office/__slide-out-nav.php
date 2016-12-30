@@ -15,6 +15,19 @@
         </div>
     </li>
     <li> <a class="waves-effect" href="#!"><i class="material-icons">cloud</i>Home</a> </li>
+    <ul class="collapsible collapsible-accordion">
+          <li>
+            <a class="collapsible-header">Dropdown<i class="material-icons">arrow_drop_down</i></a>
+            <div class="collapsible-body">
+              <ul>
+                <li><a href="#!">First</a></li>
+                <li><a href="#!">Second</a></li>
+                <li><a href="#!">Third</a></li>
+                <li><a href="#!">Fourth</a></li>
+              </ul>
+            </div>
+          </li>
+        </ul>
     <li> <a class="waves-effect" href="#!"><i class="material-icons">cloud</i>Therapist</a> </li>
     <li> <a class="waves-effect" href="#!"><i class="material-icons">cloud</i>Events</a> </li>
     <li> <a class="waves-effect" href="#!"><i class="material-icons">cloud</i>Recruit</a> </li>

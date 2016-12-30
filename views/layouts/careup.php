@@ -30,49 +30,34 @@ CareupAsset::register($this);
 
 <div class="row" id="mynav">
     <ul id="dropdown1" class="dropdown-content">
-        <li><a href="#!">one</a></li>
-        <li><a href="#!">two</a></li>
-        <li class="divider"></li>
-        <li><a href="#!">three</a></li>
+        <li><a href="#!">Logout</a></li>
     </ul>
     <div class="navbar-fixed" id="mynav">
+
+        <!-- Dropdown Structure -->
+        <ul id="dropdown1" class="dropdown-content">
+          <li><a href="#!">one</a></li>
+          <li><a href="#!">two</a></li>
+          <li class="divider"></li>
+          <li><a href="#!">three</a></li>
+        </ul>
         <nav>
-            <div class="col s9">
-            <div class="nav-wrapper nav-header">
-                <a href="#!" class="brand-logo">
-                  <img src="img/web-logo.png">   
-                </a>
-
-                <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-
-                <ul class="right hide-on-med-and-down blue-text text-darken-2">
-                    <li>
-                        <!-- <a href="sass.html">Home</a> -->
-                        <?php echo Html::a('Home', ['office/home'], ['class' => '']) ?>
-
-                    </li>
-                     <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Dropdown<i class="material-icons right">arrow_drop_down</i></a></li>
+            <div class="nav-wrapper white">
+                <a href="#!" class="brand-logo"><img src="img/web-logo.png"></a>
+                <ul class="right hide-on-med-and-down black-text">
+                    <li><?php echo Html::a('Home', ['office/home'], ['class' => 'black-text']) ?></li>
+                    <li ><a class="black-text" href="badges.html">Therapist</a></li>
+                    <li><a class="black-text" href="badges.html">Events</a></li>
+                    <li><a class="black-text" href="badges.html">Recruit</a></li>
+                    <li><a class="black-text" href="badges.html">Share</a></li>
+                    <!-- Dropdown Trigger -->
                     <li>
                         <a class="dropdown-button" href="#!" data-activates="dropdown1">
-                            <img src="img/friends.png" alt="" width="40" class="circle responsive-img profile-menu-image"> <!-- notice the "circle" class -->
-                        </a>
-                    </li>
-                        <!-- <i class="material-icons right">arrow_drop_down</i></a></li> -->
-                </ul>
-
-                <ul class="side-nav" id="mobile-demo">
-                     <li>
-                        <!-- <a href="sass.html">Home</a> -->
-                        <?php echo Html::a('Home', ['office/home'], ['class' => '']) ?>
-
-                    </li>
-                    <li>
-                        <a class="dropdown-button" href="#!" data-activates="dropdown1">
-                            <img src="img/friends.png" alt="" width="40" class="circle responsive-img profile-menu-image"> <!-- notice the "circle" class -->
+                            <img src="img/friends.png" alt="" width="40" class="circle responsive-img profile-menu-image">
+                            <i class="material-icons right">arrow_drop_down</i>
                         </a>
                     </li>
                 </ul>
-            </div>
             </div>
         </nav>
     </div>

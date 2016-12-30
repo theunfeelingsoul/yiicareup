@@ -264,6 +264,18 @@ body{
 	/*top: 300px;*/
 }
 
+.nav ul a{
+	color: black!important;
+}
+
+.side-nav.fixed{
+	top: 65px !important;
+}
+
+#office-info-header a{
+	margin-top: 30px;
+}
+
 
 
 

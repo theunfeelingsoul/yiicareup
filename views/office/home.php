@@ -13,15 +13,6 @@ $this->params['breadcrumbs'][] = $model->Oname;
 <div class="row">
     <!-- Side Nav -->
     <div class="col s12 m4 l3">
-        <!-- <div id="desktop-side-nav" class="col s12 l3">
-            <div class="collection">
-                <a href="#!" class="collection-item">Home</a>
-                <a href="#!" class="collection-item active">Therapist</a>
-                <a href="#!" class="collection-item">Events</a>
-                <a href="#!" class="collection-item">Recruit</a>
-                <a href="#!" class="collection-item">Share</a>
-            </div>
-        </div> -->
 
         <?= $this->render('__slide-out-nav', [
         	'model'=> $model 
@@ -29,77 +20,87 @@ $this->params['breadcrumbs'][] = $model->Oname;
     </div>
 
     <div class="col s12 m8 l8">
-            <!-- PRE-LOADER -->
-            <div class="col s12" id="preloader">
-                <div class="preloader-wrapper big active center-align">
-                    <div class="spinner-layer spinner-blue">
-                        <div class="circle-clipper left">
-                            <div class="circle"></div>
-                        </div>
-                        <div class="gap-patch">
-                            <div class="circle"></div>
-                        </div>
-                        <div class="circle-clipper right">
-                            <div class="circle"></div>
-                        </div>
+        <!-- PRE-LOADER -->
+        <div class="col s12" id="preloader">
+            <div class="preloader-wrapper big active center-align">
+                <div class="spinner-layer spinner-blue">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
                     </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
 
-                    <div class="spinner-layer spinner-red">
-                        <div class="circle-clipper left">
-                            <div class="circle"></div>
-                        </div>
-                        <div class="gap-patch">
-                            <div class="circle"></div>
-                        </div>
-                        <div class="circle-clipper right">
-                            <div class="circle"></div>
-                        </div>
+                <div class="spinner-layer spinner-red">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
                     </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
 
-                    <div class="spinner-layer spinner-yellow">
-                        <div class="circle-clipper left">
-                            <div class="circle"></div>
-                        </div>
-                        <div class="gap-patch">
-                            <div class="circle"></div>
-                        </div>
-                        <div class="circle-clipper right">
-                            <div class="circle"></div>
-                        </div>
+                <div class="spinner-layer spinner-yellow">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
                     </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
 
-                    <div class="spinner-layer spinner-green">
-                        <div class="circle-clipper left">
-                            <div class="circle"></div>
-                        </div>
-                        <div class="gap-patch">
-                            <div class="circle"></div>
-                        </div>
-                        <div class="circle-clipper right">
-                            <div class="circle"></div>
-                        </div>
+                <div class="spinner-layer spinner-green">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
                     </div>
-                </div><!--./preloader-wrapper-->
-            </div> <!--./col s12-->
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div><!--./preloader-wrapper-->
+        </div> <!--./col s12-->
     
 	    <!-- OFFICE INFO HEADER -->
-		<div class="row">
-			<div id="office-info-header">
-				<div class="col s12 m12 l4">
-					<div class="office-name">
-						<h2>
-						<?php echo $model->Oname ?>
-						</h2>
-					</div>
+			<div class="row">
+				<div class="col s12">
+							<div id="office-info-header">
+								<div class="row">
+									<div class="col s12 m12 l4">
+										<div class="office-name">
+											<h2>
+											<?php echo $model->Oname ?>
+											</h2>
+										</div>
+									</div>
+
+									<div class="col s12 m12 l8 push-l5">
+										<?= Html::a( "Edit", $url = ['office/update','id'=>$user_office_id], $options = ['class'=>'waves-effect waves-light btn col s12 l2'] ) ?>
+
+							    	</div>
+
+						    	</div>
+					    	</div>
+						<div class="card-action">
+							<a href="#">This is a link</a>
+							<a href="#">This is a link</a>
+						</div>
 				</div>
+			</div> <!--./row-->
 
-				<div class="col s12 m12 l8">
-					<?= Html::a( "Edit", $url = ['office/update','id'=>$user_office_id], $options = ['class'=>'waves-effect waves-light btn col s12 l2'] ) ?>
-
-		    	</div>
-
-	    	</div>
-		</div>
+			
 
 
 	    <div class="divider"></div>
