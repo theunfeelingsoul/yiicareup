@@ -37,8 +37,8 @@ $( ".service-tag-item" ).click(function() {
       if (service_display_exists == false) {
         // $( ".tagchecklist_service" ).append( "<div class='tagchecklist-item "+service_display_id+" ?>'> <i class='fa fa-times' aria-hidden='true'></i> "+tag_link+" </div>" );
         console.log("appended");
-        $( ".tagchecklist-service" ).append( "<div class='tagchecklist-service-item "+service_display_id+"'><div class='chip'><i class='close material-icons'>close</i> "+tag_link+" </div></div>" );
-        location.reload();
+        $( ".tagchecklist-service" ).append( "<div class='tagchecklist-service-item "+service_display_id+"'><div class='chip'><i class='close material-icons'>close</i> "+serivce_name+" </div></div>" );
+        // location.reload();
       }
     }); // end ajax post
   }); // end ajax post
@@ -46,7 +46,7 @@ $( ".service-tag-item" ).click(function() {
 
 $( ".skill-tag-item" ).click(function() {
   // get the tag name
-  var tag_link2 = $(this).text();
+  var tag_name = $(this).text();
 
   // console.log(tag_link2+" clicked");
 
@@ -60,13 +60,13 @@ $( ".skill-tag-item" ).click(function() {
   // var tag_link_office_id = tag_link_split[1];
   var tag_link_office_id = getOfficeIdFromClassName(tag_or_service_class);
 
-  $.post( "index.php?r=tagsdisplay/ajaxtags", { name: tag_link2, office_id:tag_link_office_id })
+  $.post( "index.php?r=tagsdisplay/ajaxtags", { name: tag_name, office_id:tag_link_office_id })
       .done(function( data ) {
         // console.log(data);
          var tags_display_exists = data;
 
     // get the service display id
-    $.post( "index.php?r=tagsdisplay/ajaxgetid", { name: tag_link2, office_id:tag_link_office_id })
+    $.post( "index.php?r=tagsdisplay/ajaxgetid", { name: tag_name, office_id:tag_link_office_id })
         .done(function( data ) {
       console.log(data);
       var tag_display_id = data;
@@ -74,8 +74,8 @@ $( ".skill-tag-item" ).click(function() {
       // if the service display exists dont append it.
       // if it does append it
       if (tags_display_exists == false) {
-        $( ".tagchecklist-tag" ).append( "<div class='tagchecklist-item "+tag_display_id+" ?>'> <div class='chip'> <i class='close material-icons'>close</i> "+tag_link2+" </div></div>" );
-        location.reload();
+        $( ".tagchecklist-tag" ).append( "<div class='tagchecklist-item "+tag_display_id+" ?>'> <div class='chip'> <i class='close material-icons'>close</i> "+tag_name+" </div></div>" );
+        // location.reload();
       }
     }); // end ajax post
   });

@@ -44,7 +44,7 @@ use Codeception\Util\XmlStructure;
  * * xmlResponse - last SOAP response (DOMDocument)
  *
  */
-class SOAP extends CodeceptionModule implements DependsOnModule
+class SOAP extends CodeceptionModule implements DependsOnModule, API
 {
     protected $config = [
         'schema' => "",
@@ -229,7 +229,7 @@ EOF;
             $response = $this->processExternalRequest($action, $req);
         }
 
-        $this->debugSection("Response", (string) $response);
+        $this->debugSection("Response", $response);
         $this->xmlResponse = SoapUtils::toXml($response);
         $this->xmlStructure = null;
     }

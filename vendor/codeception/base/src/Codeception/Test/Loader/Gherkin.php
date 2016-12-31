@@ -10,7 +10,6 @@ use Behat\Gherkin\Node\ScenarioInterface;
 use Behat\Gherkin\Node\ScenarioNode;
 use Behat\Gherkin\Parser as GherkinParser;
 use Codeception\Configuration;
-use Codeception\Exception\ParseException;
 use Codeception\Exception\TestParseException;
 use Codeception\Test\Gherkin as GherkinFormat;
 use Codeception\Util\Annotation;
@@ -89,15 +88,12 @@ class Gherkin implements LoaderInterface
             foreach ($methods as $method) {
                 $annotation = Annotation::forMethod($context, $method);
                 foreach (['Given', 'When', 'Then'] as $type) {
-                    $patterns = $annotation->fetchAll($type);
-                    foreach ($patterns as $pattern) {
-                        if (!$pattern) {
-                            continue;
-                        }
-                        $this->validatePattern($pattern);
-                        $pattern = $this->makePlaceholderPattern($pattern);
-                        $this->steps[$group][$pattern] = [$context, $method];
+                    $pattern = $annotation->fetch($type);
+                    if (!$pattern) {
+                        continue;
                     }
+                    $pattern = $this->makePlaceholderPattern($pattern);
+                    $this->steps[$group][$pattern] = [$context, $method];
                 }
             }
         }
@@ -114,28 +110,11 @@ class Gherkin implements LoaderInterface
             $pattern = preg_replace('~(\w+)\/(\w+)~', '(?:$1|$2)', $pattern); // or
             $pattern = preg_replace('~\\\\\((\w)\\\\\)~', '$1?', $pattern); // (s)
 
-            $replacePattern = sprintf(
-                '(?|\"%s\"|%s)',
-                "((?|[^\"\\\\\\]|\\\\\\.)*?)", // matching escaped string in ""
-                '[\D]{0,1}([\d\,\.]+)[\D]{0,1}'
-            ); // or matching numbers with optional $ or € chars
-
-            // params converting from :param to match 11 and "aaa" and "aaa\"aaa"
-            $pattern = preg_replace('~"?\\\:(\w+)"?~', $replacePattern, $pattern);
-            $pattern = "/^$pattern$/u";
-            // validating this pattern is slow, so we skip it now
+            // params
+            $pattern = preg_replace('~"?\\\:(\w+)"?~', '(?|\"([^"]*?)\"|(\d+))', $pattern);
+            $pattern = "/^$pattern$/";
         }
         return $pattern;
-    }
-
-    private function validatePattern($pattern)
-    {
-        if (strpos($pattern, '/') !== 0) {
-            return; // not a user-regex but a string with placeholder
-        }
-        if (@preg_match($pattern, ' ') === false) {
-            throw new ParseException("Loading Gherkin step with regex\n \n$pattern\n \nfailed. This regular expression is invalid.");
-        }
     }
 
     public function loadTests($filename)

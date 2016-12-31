@@ -26,7 +26,7 @@ class Example implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function offsetExists($offset)
     {
-        return array_key_exists($offset, $this->data);
+        return isset($this->data[$offset]);
     }
 
     /**

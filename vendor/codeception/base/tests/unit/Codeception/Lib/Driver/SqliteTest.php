@@ -15,13 +15,7 @@ class SqliteTest extends \PHPUnit_Framework_TestCase
     
     public static function setUpBeforeClass()
     {
-        if (version_compare(PHP_VERSION, '5.5.0', '<')) {
-            $dumpFile = '/dumps/sqlite-54.sql';
-        } else {
-            $dumpFile = '/dumps/sqlite.sql';
-        }
-
-        $sql = file_get_contents(\Codeception\Configuration::dataDir() . $dumpFile);
+        $sql = file_get_contents(\Codeception\Configuration::dataDir() . '/dumps/sqlite.sql');
         $sql = preg_replace('%/\*(?:(?!\*/).)*\*/%s', "", $sql);
         self::$sql = explode("\n", $sql);
         try {
@@ -46,6 +40,7 @@ class SqliteTest extends \PHPUnit_Framework_TestCase
         }
     }
     
+    
     public function testCleanupDatabase()
     {
         $this->assertGreaterThan(
@@ -69,45 +64,28 @@ class SqliteTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEmpty($res->fetchAll());
     }
 
-    public function testGetPrimaryKeyReturnsRowIdIfTableHasIt()
+    public function testGetSingleColumnPrimaryKey()
     {
-        $this->assertEquals(['_ROWID_'], self::$sqlite->getPrimaryKey('groups'));
-    }
-
-    public function testGetPrimaryKeyReturnsRowIdIfTableHasNoPrimaryKey()
-    {
-        $this->assertEquals(['_ROWID_'], self::$sqlite->getPrimaryKey('no_pk'));
-    }
-
-    public function testGetSingleColumnPrimaryKeyWhenTableHasNoRowId()
-    {
-        if (version_compare(PHP_VERSION, '5.5.0', '<')) {
-            $this->markTestSkipped('Sqlite does not support WITHOUT ROWID on travis');
-        }
         $this->assertEquals(['id'], self::$sqlite->getPrimaryKey('order'));
     }
 
-    public function testGetCompositePrimaryKeyWhenTableHasNoRowId()
+    public function testGetCompositePrimaryKey()
     {
-        if (version_compare(PHP_VERSION, '5.5.0', '<')) {
-            $this->markTestSkipped('Sqlite does not support WITHOUT ROWID on travis');
-        }
         $this->assertEquals(['group_id', 'id'], self::$sqlite->getPrimaryKey('composite_pk'));
     }
 
-    public function testGetPrimaryColumnOfTableUsingReservedWordAsTableNameWhenTableHasNoRowId()
+    public function testGetEmptyArrayIfTableHasNoPrimaryKey()
     {
-        if (version_compare(PHP_VERSION, '5.5.0', '<')) {
-            $this->markTestSkipped('Sqlite does not support WITHOUT ROWID on travis');
-        }
+        $this->assertEquals([], self::$sqlite->getPrimaryKey('no_pk'));
+    }
+
+    public function testGetPrimaryColumnOfTableUsingReservedWordAsTableName()
+    {
         $this->assertEquals('id', self::$sqlite->getPrimaryColumn('order'));
     }
 
     public function testGetPrimaryColumnThrowsExceptionIfTableHasCompositePrimaryKey()
     {
-        if (version_compare(PHP_VERSION, '5.5.0', '<')) {
-            $this->markTestSkipped('Sqlite does not support WITHOUT ROWID on travis');
-        }
         $this->setExpectedException(
             '\Exception',
             'getPrimaryColumn method does not support composite primary keys, use getPrimaryKey instead'

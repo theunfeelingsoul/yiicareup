@@ -42,13 +42,16 @@ abstract class Step
 
     public function saveTrace()
     {
-        $stack = debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT);
-
+        if (!function_exists('xdebug_get_function_stack')) {
+            return;
+        }
+        ini_set('xdebug.collect_params', '1');
+        $stack = xdebug_get_function_stack();
+        ini_set('xdebug.collect_params', 0);
         if (count($stack) <= self::STACK_POSITION) {
             return;
         }
-
-        $traceLine = $stack[self::STACK_POSITION - 1];
+        $traceLine = $stack[count($stack) - self::STACK_POSITION];
 
         if (!isset($traceLine['file'])) {
             return;
@@ -291,7 +294,7 @@ abstract class Step
                 continue;
             }
 
-            $this->metaStep = new Step\Meta($step['function'], array_values($step['args']));
+            $this->metaStep = new Step\Meta($step['function'], array_values($step['params']));
             $this->metaStep->setTraceInfo($step['file'], $step['line']);
 
             // pageobjects or other classes should not be included with "I"

@@ -413,10 +413,9 @@ Give a locator as the second parameter to match a specific region.
 
 ```php
 <?php
-$I->dontSee('Login');                         // I can suppose user is already logged in
-$I->dontSee('Sign Up','h1');                  // I can suppose it's not a signup page
-$I->dontSee('Sign Up','//body/h1');           // with XPath
-$I->dontSee('Sign Up', ['css' => 'body h1']); // with strict CSS locator
+$I->dontSee('Login');                    // I can suppose user is already logged in
+$I->dontSee('Sign Up','h1');             // I can suppose it's not a signup page
+$I->dontSee('Sign Up','//body/h1');      // with XPath
 ```
 
 Note that the search is done after stripping all HTML tags from the body,
@@ -981,10 +980,9 @@ parameter to only search within that element.
 
 ``` php
 <?php
-$I->see('Logout');                        // I can suppose user is logged in
-$I->see('Sign Up', 'h1');                 // I can suppose it's a signup page
-$I->see('Sign Up', '//body/h1');          // with XPath
-$I->see('Sign Up', ['css' => 'body h1']); // with strict CSS locator
+$I->see('Logout');                 // I can suppose user is logged in
+$I->see('Sign Up', 'h1');          // I can suppose it's a signup page
+$I->see('Sign Up', '//body/h1');   // with XPath
 ```
 
 Note that the search is done after stripping all HTML tags from the body,
@@ -1484,24 +1482,6 @@ $I->submitForm('#my-form', [
     ]
 ]);
 ```
-
-The `$button` parameter can be either a string, an array or an instance
-of Facebook\WebDriver\WebDriverBy. When it is a string, the
-button will be found by its "name" attribute. If $button is an
-array then it will be treated as a strict selector and a WebDriverBy
-will be used verbatim.
-
-For example, given the following HTML:
-
-``` html
-<input type="submit" name="submitButton" value="Submit" />
-```
-
-`$button` could be any one of the following:
-  - 'submitButton'
-  - ['name' => 'submitButton']
-  - WebDriverBy::name('submitButton')
-
  * `param` $selector
  * `param` $params
  * `param` $button
@@ -1687,9 +1667,7 @@ $I->waitForJS("return $.active == 0;", 60);
 ### waitForText
  
 Waits up to $timeout seconds for the given string to appear on the page.
-
-Can also be passed a selector to search in, be as specific as possible when using selectors.
-waitForText() will only watch the first instance of the matching selector / text provided.
+Can also be passed a selector to search in.
 If the given text doesn't appear, a timeout exception is thrown.
 
 ``` php

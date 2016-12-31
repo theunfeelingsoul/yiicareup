@@ -1,10 +1,10 @@
-<div class="card">
-	<div class="card-content">
+<div class="card blue-grey darken-1">
+	<div class="card-content white-text">
 		<!-- <span class="card-title">OFFICE TIMETABLE</span> -->
 		<table class="bordered highlight responsive-table">
 			<thead>
 		    	<tr>
-                    <th>d</th>
+                    <th>Time</th>
                     <th>月</th>
                     <th>火</th>
                     <th>水</th>

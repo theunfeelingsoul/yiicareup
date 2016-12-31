@@ -1,5 +1,5 @@
-<div class="card">
-	<div class="card-content">
+<div class="card orange">
+	<div class="card-content white-text">
 		<span class="card-title">Services</span>
     		<div class="tagdiv">
     			<div class="tagchecklist-service row">

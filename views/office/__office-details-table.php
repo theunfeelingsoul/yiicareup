@@ -1,5 +1,5 @@
 <h2>Office Information</h2>
-<div class="card">
+<div class="card blue">
 	<div class="card-content">
 		<!--<span class="card-title">Office Information</span>-->
 		<!-- <h2>Office Information</h2>	 -->

@@ -593,36 +593,6 @@ class Crawler implements \Countable, \IteratorAggregate
     }
 
     /**
-     * Evaluates an XPath expression.
-     *
-     * Since an XPath expression might evaluate to either a simple type or a \DOMNodeList,
-     * this method will return either an array of simple types or a new Crawler instance.
-     *
-     * @param string $xpath An XPath expression
-     *
-     * @return array|Crawler An array of evaluation results or a new Crawler instance
-     */
-    public function evaluate($xpath)
-    {
-        if (null === $this->document) {
-            throw new \LogicException('Cannot evaluate the expression on an uninitialized crawler.');
-        }
-
-        $data = array();
-        $domxpath = $this->createDOMXPath($this->document, $this->findNamespacePrefixes($xpath));
-
-        foreach ($this->nodes as $node) {
-            $data[] = $domxpath->evaluate($xpath, $node);
-        }
-
-        if (isset($data[0]) && $data[0] instanceof \DOMNodeList) {
-            return $this->createSubCrawler($data);
-        }
-
-        return $data;
-    }
-
-    /**
      * Extracts information from the list of nodes.
      *
      * You can extract attributes or/and the node value (_text).
@@ -930,7 +900,7 @@ class Crawler implements \Countable, \IteratorAggregate
             }
         }
 
-        return sprintf('concat(%s)', implode(', ', $parts));
+        return sprintf('concat(%s)', implode($parts, ', '));
     }
 
     /**
@@ -970,54 +940,29 @@ class Crawler implements \Countable, \IteratorAggregate
     {
         $expressions = array();
 
+        $unionPattern = '/\|(?![^\[]*\])/';
         // An expression which will never match to replace expressions which cannot match in the crawler
         // We cannot simply drop
         $nonMatchingExpression = 'a[name() = "b"]';
 
-        $xpathLen = strlen($xpath);
-        $openedBrackets = 0;
-        $startPosition = strspn($xpath, " \t\n\r\0\x0B");
+        // Split any unions into individual expressions.
+        foreach (preg_split($unionPattern, $xpath) as $expression) {
+            $expression = trim($expression);
+            $parenthesis = '';
 
-        for ($i = $startPosition; $i <= $xpathLen; ++$i) {
-            $i += strcspn($xpath, '"\'[]|', $i);
-
-            if ($i < $xpathLen) {
-                switch ($xpath[$i]) {
-                    case '"':
-                    case "'":
-                        if (false === $i = strpos($xpath, $xpath[$i], $i + 1)) {
-                            return $xpath; // The XPath expression is invalid
-                        }
-                        continue 2;
-                    case '[':
-                        ++$openedBrackets;
-                        continue 2;
-                    case ']':
-                        --$openedBrackets;
-                        continue 2;
-                }
+            // If the union is inside some braces, we need to preserve the opening braces and apply
+            // the change only inside it.
+            if (preg_match('/^[\(\s*]+/', $expression, $matches)) {
+                $parenthesis = $matches[0];
+                $expression = substr($expression, strlen($parenthesis));
             }
-            if ($openedBrackets) {
-                continue;
-            }
-
-            if ($startPosition < $xpathLen && '(' === $xpath[$startPosition]) {
-                // If the union is inside some braces, we need to preserve the opening braces and apply
-                // the change only inside it.
-                $j = 1 + strspn($xpath, "( \t\n\r\0\x0B", $startPosition + 1);
-                $parenthesis = substr($xpath, $startPosition, $j);
-                $startPosition += $j;
-            } else {
-                $parenthesis = '';
-            }
-            $expression = rtrim(substr($xpath, $startPosition, $i - $startPosition));
 
             if (0 === strpos($expression, 'self::*/')) {
                 $expression = './'.substr($expression, 8);
             }
 
             // add prefix before absolute element selector
-            if ('' === $expression) {
+            if (empty($expression)) {
                 $expression = $nonMatchingExpression;
             } elseif (0 === strpos($expression, '//')) {
                 $expression = 'descendant-or-self::'.substr($expression, 2);
@@ -1030,7 +975,7 @@ class Crawler implements \Countable, \IteratorAggregate
             } elseif ('/' === $expression[0] || '.' === $expression[0] || 0 === strpos($expression, 'self::')) {
                 $expression = $nonMatchingExpression;
             } elseif (0 === strpos($expression, 'descendant::')) {
-                $expression = 'descendant-or-self::'.substr($expression, 12);
+                $expression = 'descendant-or-self::'.substr($expression, strlen('descendant::'));
             } elseif (preg_match('/^(ancestor|ancestor-or-self|attribute|following|following-sibling|namespace|parent|preceding|preceding-sibling)::/', $expression)) {
                 // the fake root has no parent, preceding or following nodes and also no attributes (even no namespace attributes)
                 $expression = $nonMatchingExpression;
@@ -1038,16 +983,9 @@ class Crawler implements \Countable, \IteratorAggregate
                 $expression = 'self::'.$expression;
             }
             $expressions[] = $parenthesis.$expression;
-
-            if ($i === $xpathLen) {
-                return implode(' | ', $expressions);
-            }
-
-            $i += strspn($xpath, " \t\n\r\0\x0B", $i + 1);
-            $startPosition = $i + 1;
         }
 
-        return $xpath; // The XPath expression is invalid
+        return implode(' | ', $expressions);
     }
 
     /**

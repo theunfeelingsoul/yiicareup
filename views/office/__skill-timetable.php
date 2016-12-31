@@ -23,7 +23,7 @@
 				<table class="highlight responsive-table">
 					<thead>
 				    	<tr>
-		                    <th></th>
+		                    <th>Time</th>
 		                    <th>月</th>
 		                    <th>火</th>
 		                    <th>水</th>

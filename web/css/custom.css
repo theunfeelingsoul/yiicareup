@@ -3,11 +3,11 @@ body{
 }
 
 .the-tagcloud {
-/*    margin: 5px 0 10px;
-    padding: 8px;
-    border: 1px solid #ddd;
-    line-height: 1.8em;
-    word-spacing: 3px;*/
+
+}
+
+.the-tagcloud  .collection .collection-item:hover{
+	cursor: pointer !important;
 }
 
 .tag-link,.tag-link-2{

@@ -53,10 +53,6 @@ class Sqlite extends Db
     public function getPrimaryKey($tableName)
     {
         if (!isset($this->primaryKeys[$tableName])) {
-            if ($this->hasRowId($tableName)) {
-                return $this->primaryKeys[$tableName] = ['_ROWID_'];
-            }
-
             $primaryKey = [];
             $query = 'PRAGMA table_info(' . $this->getQuotedName($tableName) . ')';
             $stmt = $this->executeQuery($query, []);
@@ -72,18 +68,5 @@ class Sqlite extends Db
         }
 
         return $this->primaryKeys[$tableName];
-    }
-
-    /**
-     * @param $tableName
-     * @return bool
-     */
-    private function hasRowId($tableName)
-    {
-        $params = ['type' => 'table', 'name' => $tableName];
-        $select = $this->select('sql', 'sqlite_master', $params);
-        $result = $this->executeQuery($select, $params);
-        $sql = $result->fetchColumn(0);
-        return strpos($sql, ') WITHOUT ROWID') === false;
     }
 }

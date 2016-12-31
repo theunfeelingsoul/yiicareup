@@ -41,7 +41,7 @@ class Crawler extends Page
             $output .= $this->nodesList($nodes);
         } else {
             $message = new Message("[total %s elements]");
-            $output .= $message->with($nodes->count())->getMessage();
+            $output .= $message->with($nodes->count())->style('debug')->getMessage();
         }
         $output .= "\ncontains text '{$this->string}'";
 
@@ -67,7 +67,7 @@ class Crawler extends Page
             if ($contains && strpos($node->nodeValue, $contains) === false) {
                 continue;
             }
-            $output .= "\n+ " . $node->C14N();
+            $output .= "\n+ <info>" . $node->C14N() . "</info>";
         }
         return $output;
     }

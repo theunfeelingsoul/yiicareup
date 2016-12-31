@@ -49,7 +49,7 @@ class OfficeController extends Controller
                     // ],
                     [
                         'allow' => true,
-                        'actions' => ['home','create','update','delete'],
+                        'actions' => ['home','create','update','delete','index'],
                         'roles' => ['@'], // only authenticated users
                     ],
                 ],

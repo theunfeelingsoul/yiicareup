@@ -45,7 +45,6 @@ $urls = array(
     '/unset-cookie' => 'unsetCookie',
     '/external_url' => 'external_url',
     '/iframe' => 'iframe',
-    '/basehref' => 'basehref',
 );
 
 glue::stick($urls);

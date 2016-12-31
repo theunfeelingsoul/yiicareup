@@ -4,14 +4,13 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitaa06bf20630c89271976e1424e6ab02f
+class ComposerStaticInit9f9e4e27e79990b4ee47bd62041b34f3
 {
     public static $files = array (
-        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '2cffec82183ee1cea088009cef9a6fc3' => __DIR__ . '/..' . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
-        'fe1bcd0336136e435eaf197895daf81a' => __DIR__ . '/..' . '/nikic/php-parser/lib/bootstrap.php',
-        'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
+        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
+        'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
         '180092cfc969a12e06f2132a203a3184' => __DIR__ . '/..' . '/codeception/verify/src/Codeception/function.php',
     );
 
@@ -24,14 +23,19 @@ class ComposerStaticInitaa06bf20630c89271976e1424e6ab02f
             'yii\\debug\\' => 10,
             'yii\\composer\\' => 13,
             'yii\\bootstrap\\' => 14,
-            'yii\\apidoc\\' => 11,
             'yii\\' => 4,
+        ),
+        'p' => 
+        array (
+            'phpDocumentor\\Reflection\\' => 25,
         ),
         'c' => 
         array (
-            'cebe\\markdown\\latex\\' => 20,
             'cebe\\markdown\\' => 14,
-            'cebe\\jssearch\\' => 14,
+        ),
+        'W' => 
+        array (
+            'Webmozart\\Assert\\' => 17,
         ),
         'S' => 
         array (
@@ -95,25 +99,23 @@ class ComposerStaticInitaa06bf20630c89271976e1424e6ab02f
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2-bootstrap',
         ),
-        'yii\\apidoc\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/yiisoft/yii2-apidoc',
-        ),
         'yii\\' => 
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2',
         ),
-        'cebe\\markdown\\latex\\' => 
+        'phpDocumentor\\Reflection\\' => 
         array (
-            0 => __DIR__ . '/..' . '/cebe/markdown-latex',
+            0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
+            1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
         ),
         'cebe\\markdown\\' => 
         array (
             0 => __DIR__ . '/..' . '/cebe/markdown',
         ),
-        'cebe\\jssearch\\' => 
+        'Webmozart\\Assert\\' => 
         array (
-            0 => __DIR__ . '/..' . '/cebe/js-search/lib',
+            0 => __DIR__ . '/..' . '/webmozart/assert/src',
         ),
         'Symfony\\Polyfill\\Mbstring\\' => 
         array (
@@ -186,16 +188,6 @@ class ComposerStaticInitaa06bf20630c89271976e1424e6ab02f
     );
 
     public static $prefixesPsr0 = array (
-        'p' => 
-        array (
-            'phpDocumentor' => 
-            array (
-                0 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
-                1 => __DIR__ . '/..' . '/phpdocumentor/reflection/src',
-                2 => __DIR__ . '/..' . '/phpdocumentor/reflection/tests/unit',
-                3 => __DIR__ . '/..' . '/phpdocumentor/reflection/tests/mocks',
-            ),
-        ),
         'P' => 
         array (
             'Prophecy\\' => 
@@ -203,20 +195,8 @@ class ComposerStaticInitaa06bf20630c89271976e1424e6ab02f
                 0 => __DIR__ . '/..' . '/phpspec/prophecy/src',
             ),
         ),
-        'M' => 
-        array (
-            'MikeVanRiel' => 
-            array (
-                0 => __DIR__ . '/..' . '/mikevanriel/text-to-latex/src',
-                1 => __DIR__ . '/..' . '/mikevanriel/text-to-latex/tests/unit',
-            ),
-        ),
         'H' => 
         array (
-            'Highlight\\' => 
-            array (
-                0 => __DIR__ . '/..' . '/scrivo/highlight.php',
-            ),
             'HTMLPurifier' => 
             array (
                 0 => __DIR__ . '/..' . '/ezyang/htmlpurifier/library',
@@ -249,10 +229,7 @@ class ComposerStaticInitaa06bf20630c89271976e1424e6ab02f
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',
         'File_Iterator_Facade' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Facade.php',
         'File_Iterator_Factory' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Factory.php',
-        'PHPUnit\\Framework\\Assert' => __DIR__ . '/..' . '/phpunit/phpunit/src/ForwardCompatibility/Assert.php',
-        'PHPUnit\\Framework\\BaseTestListener' => __DIR__ . '/..' . '/phpunit/phpunit/src/ForwardCompatibility/BaseTestListener.php',
         'PHPUnit\\Framework\\TestCase' => __DIR__ . '/..' . '/phpunit/phpunit/src/ForwardCompatibility/TestCase.php',
-        'PHPUnit\\Framework\\TestListener' => __DIR__ . '/..' . '/phpunit/phpunit/src/ForwardCompatibility/TestListener.php',
         'PHPUnit_Exception' => __DIR__ . '/..' . '/phpunit/phpunit/src/Exception.php',
         'PHPUnit_Extensions_GroupTestSuite' => __DIR__ . '/..' . '/phpunit/phpunit/src/Extensions/GroupTestSuite.php',
         'PHPUnit_Extensions_PhptTestCase' => __DIR__ . '/..' . '/phpunit/phpunit/src/Extensions/PhptTestCase.php',
@@ -594,7 +571,6 @@ class ComposerStaticInitaa06bf20630c89271976e1424e6ab02f
         'PHP_Token_STRING' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_STRING_CAST' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_STRING_VARNAME' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
-        'PHP_Token_SUPER' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_SWITCH' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_Stream' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token/Stream.php',
         'PHP_Token_Stream_CachingFactory' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token/Stream/CachingFactory.php',
@@ -609,7 +585,6 @@ class ComposerStaticInitaa06bf20630c89271976e1424e6ab02f
         'PHP_Token_UNSET' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_UNSET_CAST' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_USE' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
-        'PHP_Token_USE_FUNCTION' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_VAR' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_VARIABLE' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_WHERE' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
@@ -712,10 +687,10 @@ class ComposerStaticInitaa06bf20630c89271976e1424e6ab02f
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitaa06bf20630c89271976e1424e6ab02f::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitaa06bf20630c89271976e1424e6ab02f::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitaa06bf20630c89271976e1424e6ab02f::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitaa06bf20630c89271976e1424e6ab02f::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit9f9e4e27e79990b4ee47bd62041b34f3::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit9f9e4e27e79990b4ee47bd62041b34f3::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit9f9e4e27e79990b4ee47bd62041b34f3::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit9f9e4e27e79990b4ee47bd62041b34f3::$classMap;
 
         }, null, ClassLoader::class);
     }

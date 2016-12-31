@@ -38,13 +38,13 @@ class TextDescriptor extends Descriptor
         }
 
         $totalWidth = isset($options['total_width']) ? $options['total_width'] : strlen($argument->getName());
-        $spacingWidth = $totalWidth - strlen($argument->getName());
+        $spacingWidth = $totalWidth - strlen($argument->getName()) + 2;
 
-        $this->writeText(sprintf('  <info>%s</info>  %s%s%s',
+        $this->writeText(sprintf('  <info>%s</info>%s%s%s',
             $argument->getName(),
             str_repeat(' ', $spacingWidth),
-            // + 4 = 2 spaces before <info>, 2 spaces after </info>
-            preg_replace('/\s*[\r\n]\s*/', "\n".str_repeat(' ', $totalWidth + 4), $argument->getDescription()),
+            // + 17 = 2 spaces + <info> + </info> + 2 spaces
+            preg_replace('/\s*[\r\n]\s*/', "\n".str_repeat(' ', $totalWidth + 17), $argument->getDescription()),
             $default
         ), $options);
     }
@@ -75,13 +75,13 @@ class TextDescriptor extends Descriptor
             sprintf('--%s%s', $option->getName(), $value)
         );
 
-        $spacingWidth = $totalWidth - strlen($synopsis);
+        $spacingWidth = $totalWidth - strlen($synopsis) + 2;
 
-        $this->writeText(sprintf('  <info>%s</info>  %s%s%s%s',
+        $this->writeText(sprintf('  <info>%s</info>%s%s%s%s',
             $synopsis,
             str_repeat(' ', $spacingWidth),
-            // + 4 = 2 spaces before <info>, 2 spaces after </info>
-            preg_replace('/\s*[\r\n]\s*/', "\n".str_repeat(' ', $totalWidth + 4), $option->getDescription()),
+            // + 17 = 2 spaces + <info> + </info> + 2 spaces
+            preg_replace('/\s*[\r\n]\s*/', "\n".str_repeat(' ', $totalWidth + 17), $option->getDescription()),
             $default,
             $option->isArray() ? '<comment> (multiple values allowed)</comment>' : ''
         ), $options);
@@ -198,8 +198,6 @@ class TextDescriptor extends Descriptor
             }
 
             // add commands by namespace
-            $commands = $description->getCommands();
-
             foreach ($description->getNamespaces() as $namespace) {
                 if (!$describedNamespace && ApplicationDescription::GLOBAL_NAMESPACE !== $namespace['id']) {
                     $this->writeText("\n");
@@ -207,13 +205,9 @@ class TextDescriptor extends Descriptor
                 }
 
                 foreach ($namespace['commands'] as $name) {
-                    if (isset($commands[$name])) {
-                        $this->writeText("\n");
-                        $spacingWidth = $width - strlen($name);
-                        $command = $commands[$name];
-                        $commandAliases = $this->getCommandAliasesText($command);
-                        $this->writeText(sprintf('  <info>%s</info>%s%s', $name, str_repeat(' ', $spacingWidth), $commandAliases.$command->getDescription()), $options);
-                    }
+                    $this->writeText("\n");
+                    $spacingWidth = $width - strlen($name);
+                    $this->writeText(sprintf('  <info>%s</info>%s%s', $name, str_repeat(' ', $spacingWidth), $description->getCommand($name)->getDescription()), $options);
                 }
             }
 
@@ -230,25 +224,6 @@ class TextDescriptor extends Descriptor
             isset($options['raw_text']) && $options['raw_text'] ? strip_tags($content) : $content,
             isset($options['raw_output']) ? !$options['raw_output'] : true
         );
-    }
-
-    /**
-     * Formats command aliases to show them in the command description.
-     *
-     * @param Command $command
-     *
-     * @return string
-     */
-    private function getCommandAliasesText($command)
-    {
-        $text = '';
-        $aliases = $command->getAliases();
-
-        if ($aliases) {
-            $text = '['.implode('|', $aliases).'] ';
-        }
-
-        return $text;
     }
 
     /**

@@ -114,12 +114,6 @@ class PostgreSql extends Db
                     "To run 'COPY' commands 'pgsql' extension should be installed"
                 );
             }
-            if (defined('HHVM_VERSION')) {
-                throw new ModuleException(
-                    '\Codeception\Module\Db',
-                    "'COPY' command is not supported on HHVM, please use INSERT instead"
-                );
-            }
             $constring = str_replace(';', ' ', substr($this->dsn, 6));
             $constring .= ' user=' . $this->user;
             $constring .= ' password=' . $this->password;
@@ -194,13 +188,13 @@ class PostgreSql extends Db
     {
         if (!isset($this->primaryKeys[$tableName])) {
             $primaryKey = [];
-            $query = "SELECT a.attname
+            $query = 'SELECT a.attname
                 FROM   pg_index i
                 JOIN   pg_attribute a ON a.attrelid = i.indrelid
                                      AND a.attnum = ANY(i.indkey)
-                WHERE  i.indrelid = '$tableName'::regclass
-                AND    i.indisprimary";
-            $stmt = $this->executeQuery($query, []);
+                WHERE  i.indrelid = ?::regclass
+                AND    i.indisprimary';
+            $stmt = $this->executeQuery($query, [$tableName]);
             $columns = $stmt->fetchAll(\PDO::FETCH_ASSOC);
             foreach ($columns as $column) {
                 $primaryKey []= $column['attname'];

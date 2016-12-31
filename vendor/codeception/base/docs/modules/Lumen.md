@@ -16,27 +16,20 @@ Please try it and leave your feedback.
 
 ## Config
 
-* cleanup: `boolean`, default `true` - all database queries will be run in a transaction,
-  which will be rolled back at the end of each test.
-* bootstrap: `string`, default `bootstrap/app.php` - relative path to app.php config file.
-* root: `string`, default `` - root path of the application.
-* packages: `string`, default `workbench` - root path of application packages (if any).
-* url: `string`, default `http://localhost` - the application URL
+* cleanup: `boolean`, default `true` - all db queries will be run in transaction, which will be rolled back at the end of test.
+* bootstrap: `string`, default `bootstrap/app.php` - Relative path to app.php config file.
+* root: `string`, default `` - Root path of our application.
+* packages: `string`, default `workbench` - Root path of application packages (if any).
+* url: `string`, default `http://localhost` - The application URL
 
 ## API
 
-* app - `\Laravel\Lumen\Application`
-* config - `array`
+* app - `\Laravel\Lumen\Application` instance
+* client - `\Symfony\Component\BrowserKit\Client` instance
 
 ## Parts
 
-* ORM - only include the database methods of this module:
-    * have
-    * haveMultiple
-    * haveRecord
-    * grabRecord
-    * seeRecord
-    * dontSeeRecord
+* ORM - include only haveRecord/grabRecord/seeRecord/dontSeeRecord actions
 
 
 ## Actions
@@ -292,10 +285,9 @@ Give a locator as the second parameter to match a specific region.
 
 ```php
 <?php
-$I->dontSee('Login');                         // I can suppose user is already logged in
-$I->dontSee('Sign Up','h1');                  // I can suppose it's not a signup page
-$I->dontSee('Sign Up','//body/h1');           // with XPath
-$I->dontSee('Sign Up', ['css' => 'body h1']); // with strict CSS locator
+$I->dontSee('Login');                    // I can suppose user is already logged in
+$I->dontSee('Sign Up','h1');             // I can suppose it's not a signup page
+$I->dontSee('Sign Up','//body/h1');      // with XPath
 ```
 
 Note that the search is done after stripping all HTML tags from the body,
@@ -710,23 +702,7 @@ $value = $I->grabTextFrom('~<input value=(.*?)]~sgi'); // match with a regex
 
 
 ### have
- 
-Use Lumen's model factory to create a model.
-Can only be used with Lumen 5.1 and later.
-
-``` php
-<?php
-$I->have('App\User');
-$I->have('App\User', ['name' => 'John Doe']);
-$I->have('App\User', [], 'admin');
-?>
-```
-
- * `see`  https://lumen.laravel.com/docs/master/testing#model-factories
- * `param string` $model
- * `param array` $attributes
- * `param string` $name
- * `[Part]` orm
+__not documented__
 
 
 ### haveHttpHeader
@@ -748,24 +724,7 @@ $I->amOnPage('test-headers.php');
 
 
 ### haveMultiple
- 
-Use Laravel's model factory to create multiple models.
-Can only be used with Lumen 5.1 and later.
-
-``` php
-<?php
-$I->haveMultiple('App\User', 10);
-$I->haveMultiple('App\User', 10, ['name' => 'John Doe']);
-$I->haveMultiple('App\User', 10, [], 'admin');
-?>
-```
-
- * `see`  https://lumen.laravel.com/docs/master/testing#model-factories
- * `param string` $model
- * `param int` $times
- * `param array` $attributes
- * `param string` $name
- * `[Part]` orm
+__not documented__
 
 
 ### haveRecord
@@ -813,10 +772,9 @@ parameter to only search within that element.
 
 ``` php
 <?php
-$I->see('Logout');                        // I can suppose user is logged in
-$I->see('Sign Up', 'h1');                 // I can suppose it's a signup page
-$I->see('Sign Up', '//body/h1');          // with XPath
-$I->see('Sign Up', ['css' => 'body h1']); // with strict CSS locator
+$I->see('Logout');                 // I can suppose user is logged in
+$I->see('Sign Up', 'h1');          // I can suppose it's a signup page
+$I->see('Sign Up', '//body/h1');   // with XPath
 ```
 
 Note that the search is done after stripping all HTML tags from the body,

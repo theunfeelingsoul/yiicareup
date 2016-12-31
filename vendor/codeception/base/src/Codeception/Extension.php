@@ -7,17 +7,10 @@ use Codeception\Exception\ModuleRequireException;
 use Codeception\Lib\Console\Output;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-/**
- * A base class for all Codeception Extensions and GroupObjects
- *
- * Available Properties:
- *
- * * config: current extension configuration
- * * options: passed running options
- *
- */
 abstract class Extension implements EventSubscriberInterface
 {
+    public static $events = [];
+
     protected $config = [];
     protected $options;
     protected $output;
@@ -35,9 +28,6 @@ abstract class Extension implements EventSubscriberInterface
 
     public static function getSubscribedEvents()
     {
-        if (!isset(static::$events)) {
-            return [Events::SUITE_INIT => 'receiveModuleContainer'];
-        }
         if (isset(static::$events[Events::SUITE_INIT])) {
             if (!is_array(static::$events[Events::SUITE_INIT])) {
                 static::$events[Events::SUITE_INIT] = [[static::$events[Events::SUITE_INIT]]];

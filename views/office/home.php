@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $model->Oname;
     <!-- Side Nav -->
     <div class="col s12 m4 l3">
 
-        <?= $this->render('__slide-out-nav', [
+        <?= $this->render('__normal-nav', [
         	'model'=> $model 
         ]); ?>
     </div>

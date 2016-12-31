@@ -2,8 +2,7 @@
 namespace Codeception\Module;
 
 use Codeception\Configuration;
-use Codeception\Exception\ModuleException;
-use Codeception\Exception\ModuleConfigException;
+use Codeception\Exception\ModuleConfig;
 use Codeception\Lib\Connector\Lumen as LumenConnector;
 use Codeception\Lib\Framework;
 use Codeception\Lib\Interfaces\ActiveRecord;
@@ -31,27 +30,20 @@ use Illuminate\Database\Eloquent\Model as EloquentModel;
  *
  * ## Config
  *
- * * cleanup: `boolean`, default `true` - all database queries will be run in a transaction,
- *   which will be rolled back at the end of each test.
- * * bootstrap: `string`, default `bootstrap/app.php` - relative path to app.php config file.
- * * root: `string`, default `` - root path of the application.
- * * packages: `string`, default `workbench` - root path of application packages (if any).
- * * url: `string`, default `http://localhost` - the application URL
+ * * cleanup: `boolean`, default `true` - all db queries will be run in transaction, which will be rolled back at the end of test.
+ * * bootstrap: `string`, default `bootstrap/app.php` - Relative path to app.php config file.
+ * * root: `string`, default `` - Root path of our application.
+ * * packages: `string`, default `workbench` - Root path of application packages (if any).
+ * * url: `string`, default `http://localhost` - The application URL
  *
  * ## API
  *
- * * app - `\Laravel\Lumen\Application`
- * * config - `array`
+ * * app - `\Laravel\Lumen\Application` instance
+ * * client - `\Symfony\Component\BrowserKit\Client` instance
  *
  * ## Parts
  *
- * * ORM - only include the database methods of this module:
- *     * have
- *     * haveMultiple
- *     * haveRecord
- *     * grabRecord
- *     * seeRecord
- *     * dontSeeRecord
+ * * ORM - include only haveRecord/grabRecord/seeRecord/dontSeeRecord actions
  */
 class Lumen extends Framework implements ActiveRecord, PartedModule
 {
@@ -114,7 +106,7 @@ class Lumen extends Framework implements ActiveRecord, PartedModule
      * Before hook.
      *
      * @param \Codeception\TestInterface $test
-     * @throws ModuleConfigException
+     * @throws ModuleConfig
      */
     public function _before(TestInterface $test)
     {
@@ -145,14 +137,14 @@ class Lumen extends Framework implements ActiveRecord, PartedModule
     /**
      * Make sure the Lumen bootstrap file exists.
      *
-     * @throws ModuleConfigException
+     * @throws ModuleConfig
      */
     protected function checkBootstrapFileExists()
     {
         $bootstrapFile = $this->config['bootstrap_file'];
 
         if (!file_exists($bootstrapFile)) {
-            throw new ModuleConfigException(
+            throw new ModuleConfig(
                 $this->module,
                 "Lumen bootstrap file not found in $bootstrapFile.\n"
                 . "Please provide a valid path using the 'bootstrap' config param. "
@@ -484,7 +476,7 @@ class Lumen extends Framework implements ActiveRecord, PartedModule
         return (array)$query->first();
     }
 
-    /**
+    /*
      * Use Lumen's model factory to create a model.
      * Can only be used with Lumen 5.1 and later.
      *
@@ -512,7 +504,7 @@ class Lumen extends Framework implements ActiveRecord, PartedModule
         }
     }
 
-    /**
+    /*
      * Use Laravel's model factory to create multiple models.
      * Can only be used with Lumen 5.1 and later.
      *

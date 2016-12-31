@@ -53,16 +53,19 @@ class Page extends \PHPUnit_Framework_Constraint
         );
     }
 
-    protected function failureDescription($pageContent)
+    protected function failureDescription($other)
     {
-        $message = $this->uriMessage('on page');
-        $message->append("\n--> ");
-        $message->append(substr($pageContent, 0, 300));
-        if (strlen($pageContent) > 300) {
+        $page = substr($other, 0, 300);
+        $message = new Message($page);
+        $message->style('info');
+        $message->prepend("\n--> ");
+        $message->prepend($this->uriMessage());
+        if (strlen($other) > 300) {
             $debugMessage = new Message(
                 "[Content too long to display. See complete response in '" . codecept_output_dir() . "' directory]"
             );
-            $message->append("\n")->append($debugMessage);
+            $debugMessage->style('debug')->prepend("\n");
+            $message->append($debugMessage);
         }
         $message->append("\n--> ");
         return $message->getMessage() . $this->toString();
@@ -74,6 +77,7 @@ class Page extends \PHPUnit_Framework_Constraint
             return "";
         }
         $message = new Message($this->uri);
+        $message->style('bold');
         $message->prepend(" $onPage ");
         return $message;
     }

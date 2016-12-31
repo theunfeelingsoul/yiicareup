@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card orange">
 	<div class="card-content">
 		<span class="card-title">Appeal</span>
 		<div class="tagdiv">

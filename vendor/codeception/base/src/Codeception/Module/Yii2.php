@@ -45,7 +45,7 @@ use yii\db\ActiveRecordInterface;
  *
  * ### Example (`functional.suite.yml`)
  *
- * ```yaml
+ * ```yml
  * class_name: FunctionalTester
  * modules:
  *   enabled:
@@ -55,7 +55,7 @@ use yii\db\ActiveRecordInterface;
  *
  * ### Example (`unit.suite.yml`)
  *
- * ```yaml
+ * ```yml
  * class_name: UnitTester
  * modules:
  *   enabled:
@@ -67,7 +67,7 @@ use yii\db\ActiveRecordInterface;
  *
  * ### Example (`acceptance.suite.yml`)
  *
- * ```yaml
+ * ```yml
  * class_name: AcceptanceTester
  * modules:
  *     enabled:
@@ -103,18 +103,6 @@ use yii\db\ActiveRecordInterface;
  * }
  * ```
  *
- * ## URL
- * This module provide to use native URL formats of Yii2 for all codeception commands that use url for work.
- * This commands allows input like:
- *
- * ```php
- * <?php
- * $I->amOnPage(['site/view','page'=>'about']);
- * $I->amOnPage('index-test.php?site/index');
- * $I->amOnPage('http://localhost/index-test.php?site/index');
- * $I->sendAjaxPostRequest(['/user/update', 'id' => 1], ['UserForm[name]' => 'G.Hopper');
- * ```
- *
  * ## Status
  *
  * Maintainer: **samdark**
@@ -130,7 +118,7 @@ class Yii2 extends Framework implements ActiveRecord, PartedModule
      * @var array
      */
     protected $config = [
-        'cleanup'     => true,
+        'cleanup'     => false,
         'entryScript' => '',
         'entryUrl'    => 'http://localhost/index-test.php',
     ];
@@ -178,26 +166,12 @@ class Yii2 extends Framework implements ActiveRecord, PartedModule
         $this->app = $this->client->getApplication();
 
         // load fixtures before db transaction
-        if ($test instanceof \Codeception\Test\Cest) {
-            $this->loadFixtures($test->getTestClass());
-        } else {
-            $this->loadFixtures($test);
+        if (method_exists($test, self::TEST_FIXTURES_METHOD)) {
+            $this->haveFixtures(call_user_func($test, self::TEST_FIXTURES_METHOD));
         }
 
         if ($this->config['cleanup'] && $this->app->has('db')) {
             $this->transaction = $this->app->db->beginTransaction();
-        }
-    }
-
-    /**
-     * load fixtures before db transaction
-     *
-     * @param mixed $test instance of test class
-     */
-    private function loadFixtures($test)
-    {
-        if (method_exists($test, self::TEST_FIXTURES_METHOD)) {
-            $this->haveFixtures(call_user_func([$test, self::TEST_FIXTURES_METHOD]));
         }
     }
 
@@ -220,15 +194,9 @@ class Yii2 extends Framework implements ActiveRecord, PartedModule
 
         $this->client->resetPersistentVars();
 
-        if (isset(\Yii::$app) && \Yii::$app->has('session', true)) {
+        if (\Yii::$app->has('session', true)) {
             \Yii::$app->session->close();
         }
-
-        // Close connections if exists
-        if (isset(\Yii::$app) && \Yii::$app->has('db', true)) {
-            \Yii::$app->db->close();
-        }
-
         parent::_after($test);
     }
 
@@ -276,13 +244,13 @@ class Yii2 extends Framework implements ActiveRecord, PartedModule
      *
      * ```php
      * <?php
-     * $I->haveFixtures([
+     * $I->haveFixtures(,
      *     'posts' => PostsFixture::className(),
      *     'user' => [
      *         'class' => UserFixture::className(),
-     *         'dataFile' => '@tests/_data/models/user.php',
+     *         'dataFile' => '@tests/_data/models/user.php'
      *      ],
-     * ]);
+     * );
      * ```
      *
      * @param $fixtures
@@ -458,6 +426,28 @@ class Yii2 extends Framework implements ActiveRecord, PartedModule
     }
 
     /**
+     * Converting $page to valid Yii 2 URL
+     *
+     * Allows input like:
+     *
+     * ```php
+     * <?php
+     * $I->amOnPage(['site/view','page'=>'about']);
+     * $I->amOnPage('index-test.php?site/index');
+     * $I->amOnPage('http://localhost/index-test.php?site/index');
+     * ```
+     *
+     * @param $page string|array parameter for \yii\web\UrlManager::createUrl()
+     */
+    public function amOnPage($page)
+    {
+        if (is_array($page)) {
+            $page = Yii::$app->getUrlManager()->createUrl($page);
+        }
+        parent::amOnPage($page);
+    }
+
+    /**
      * Similar to amOnPage but accepts route as first argument and params as second
      *
      * ```
@@ -469,26 +459,6 @@ class Yii2 extends Framework implements ActiveRecord, PartedModule
     {
         array_unshift($params, $route);
         $this->amOnPage($params);
-    }
-    
-    /**
-     * To support to use the behavior of urlManager component
-     * for the methods like this: amOnPage(), sendAjaxRequest() and etc.
-     * @param $method
-     * @param $uri
-     * @param array $parameters
-     * @param array $files
-     * @param array $server
-     * @param null $content
-     * @param bool $changeHistory
-     * @return mixed
-     */
-    protected function clientRequest($method, $uri, array $parameters = [], array $files = [], array $server = [], $content = null, $changeHistory = true)
-    {
-        if (is_array($uri)) {
-            $uri = Yii::$app->getUrlManager()->createUrl($uri);
-        }
-        return parent::clientRequest($method, $uri, $parameters, $files, $server, $content, $changeHistory);
     }
 
     /**

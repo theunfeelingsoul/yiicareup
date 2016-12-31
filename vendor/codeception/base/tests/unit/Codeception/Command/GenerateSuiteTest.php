@@ -3,7 +3,6 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'BaseCommandRunner.php';
 
 class GenerateSuiteTest extends BaseCommandRunner
 {
-    public $config = ['actor' => 'Guy'];
 
     protected function setUp()
     {
@@ -13,19 +12,11 @@ class GenerateSuiteTest extends BaseCommandRunner
     public function testBasic()
     {
         $this->execute(array('suite' => 'shire', 'actor' => 'Hobbit'));
-
-        $configFile = $this->log[2];
-
-        $this->assertEquals(\Codeception\Configuration::projectDir().'tests/shire.suite.yml', $configFile['filename']);
-        $conf = \Symfony\Component\Yaml\Yaml::parse($configFile['content']);
+        $this->assertEquals(\Codeception\Configuration::projectDir().'tests/shire.suite.yml', $this->filename);
+        $conf = \Symfony\Component\Yaml\Yaml::parse($this->content);
         $this->assertEquals('HobbitGuy', $conf['class_name']);
         $this->assertContains('\Helper\Hobbit', $conf['modules']['enabled']);
         $this->assertContains('Suite shire generated', $this->output);
-
-        $actor = $this->log[3];
-        $this->assertEquals(\Codeception\Configuration::supportDir().'HobbitGuy.php', $actor['filename']);
-        $this->assertContains('class HobbitGuy extends \Codeception\Actor', $actor['content']);
-
 
         $helper = $this->log[1];
         $this->assertEquals(\Codeception\Configuration::supportDir().'Helper/Hobbit.php', $helper['filename']);
@@ -42,9 +33,7 @@ class GenerateSuiteTest extends BaseCommandRunner
     public function testGuyWithSuffix()
     {
         $this->execute(array('suite' => 'shire', 'actor' => 'HobbitGuy'));
-
-        $configFile = $this->log[2];
-        $conf = \Symfony\Component\Yaml\Yaml::parse($configFile['content']);
+        $conf = \Symfony\Component\Yaml\Yaml::parse($this->content);
         $this->assertEquals('HobbitGuy', $conf['class_name']);
         $this->assertContains('\Helper\Hobbit', $conf['modules']['enabled']);
 

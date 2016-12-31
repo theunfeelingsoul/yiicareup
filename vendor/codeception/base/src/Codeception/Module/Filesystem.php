@@ -265,7 +265,7 @@ class Filesystem extends CodeceptionModule
             \PHPUnit_Framework_Assert::assertFileExists($file);
             return;
         }
-        $this->fail("File \"$filename\" not found at \"$path\"");
+        $this->fail("$filename in $path");
     }
 
     /**
