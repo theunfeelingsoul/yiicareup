@@ -37,7 +37,11 @@ class Office extends \yii\db\ActiveRecord
 
     // will be used to store the image data
     public $imageFile;
+
     public $imgx;
+
+    // message when a search is empty
+    public $msg_empty_search = "Your Search Came up Empty. Please Try again";
 
     public $times=array('mon_9', 'tue_9', 'wed_9', 'thu_9', 'fri_9', 'sat_9', 'sun_9', 'mon_10', 'tue_10', 'wed_10', 'thu_10', 'fri_10', 'sat_10', 'sun_10', 'mon_11', 'tue_11', 'wed_11', 'thu_11', 'fri_11', 'sat_11', 'sun_11', 'mon_12', 'tue_12', 'wed_12', 'thu_12', 'fri_12', 'sat_12', 'sun_12', 'mon_13', 'tue_13', 'wed_13', 'thu_13', 'fri_13', 'sat_13', 'sun_13', 'mon_14', 'tue_14', 'wed_14', 'thu_14', 'fri_14', 'sat_14', 'sun_14', 'mon_15', 'tue_15', 'wed_15', 'thu_15', 'fri_15', 'sat_15', 'sun_15', 'mon_16', 'tue_16', 'wed_16', 'thu_16', 'fri_16', 'sat_16', 'sun_16', 'mon_17', 'tue_17', 'wed_17', 'thu_17', 'fri_17', 'sat_17', 'sun_17', 'mon_18', 'tue_18', 'wed_18', 'thu_18', 'fri_18', 'sat_18', 'sun_18', 'mon_19', 'tue_19', 'wed_19', 'thu_19', 'fri_19', 'sat_19', 'sun_19', 'mon_20', 'tue_20', 'wed_20', 'thu_20', 'fri_20', 'sat_20', 'sun_20');
     
@@ -55,13 +59,13 @@ class Office extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'Onum', 'Oname', 'leader', 'url', 'apeal', 'tel', 'fax', 'email', 'blanktime_s', 'blanktime_f', 'location', 'area', 'staff', 'service','user_id','skills'], 'required'],
+            [['Oname', 'leader', 'url', 'apeal', 'tel', 'fax', 'email', 'location', 'area', 'service','user_id','skills'], 'required'],
             // [['imgname'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg','maxSize' => 1024 * 1024 * 2],
-            [['imageFile'], 'file', 'skipOnEmpty' => false,'extensions' => 'png, jpg'],
-            [['id', 'staff','user_id'], 'integer'],
-            [['blanktime_s', 'blanktime_f'], 'safe'],
-            [['img'], 'string'],
-            [['Onum', 'Oname'], 'string', 'max' => 20],
+            [['imageFile'], 'file', 'skipOnEmpty' => true,'extensions' => 'png, jpg'],
+            [['id','user_id'], 'integer'],
+            [['area'], 'required'],
+
+            [['Oname'], 'string', 'max' => 20],
             [['leader'], 'string', 'max' => 10],
             [['url'], 'string', 'max' => 100],
             [['apeal'], 'string', 'max' => 150],
@@ -90,22 +94,17 @@ class Office extends \yii\db\ActiveRecord
     {
         return [
             'id'            => 'ID',
-            'Onum'          => 'Onum',
-            'Oname'         => 'Company Name',
-            'leader'        => 'Person In charge',
+            'Oname'         => 'Company',
+            'leader'        => 'In charge',
             'url'           => 'Movie Url',
-            'apeal'         => 'Appeal (About 200 words)',
+            'apeal'         => 'Appeal',
             'tel'           => 'Tel',
             'fax'           => 'Fax',
             'email'         => 'Email',
-            'blanktime_s'   => 'Blanktime S',
-            'blanktime_f'   => 'Blanktime F',
             'location'      => 'Address',
             'area'          => 'Area',
-            'staff'         => 'Staff',
             'service'       => 'Service',
             'imgname'       => 'Imgname',
-            'img'           => 'Img',
             'user_id'       => 'User ID',
             'skills'        => 'Skills',
         ];
@@ -125,8 +124,6 @@ class Office extends \yii\db\ActiveRecord
         }
        
     } // end upload()
-
-
    
 
 
@@ -142,6 +139,8 @@ class Office extends \yii\db\ActiveRecord
 
         return $offices;
     }
+
+  
 
     public function findLatestIdByUserId(){
         $office = Office::find()
@@ -165,6 +164,22 @@ class Office extends \yii\db\ActiveRecord
         ->exists(); 
 
         return $exists;
+    }
+
+    // public function findUserIdByOfficeId($office_id){
+    //  $data = Office::find()
+    //     ->where([$attribute => $value])
+    //     ->all(); 
+
+    //     return $data;
+    // }
+
+    public function findByAttribute($attribute,$value){
+        $data = Office::find()
+        ->where([$attribute => $value])
+        ->all(); 
+
+        return $data;
     }
 
 

@@ -1,12 +1,12 @@
 <?php use yii\helpers\Html;?>
-<ul id="slide-out" class="side-nav fixed">
+<ul id="slide-out" class="side-nav fixed hide-on-med-and-down">
     <li>
         <div class="userView">
             <div class="background">
-                <!-- <img src="http://materializecss.com/images/office.jpg"> -->
+                <img src="https://lh4.googleusercontent.com/-XplyTa1Za-I/VMSgIyAYkHI/AAAAAAAADxM/oL-rD6VP4ts/w1184-h666/Android-Lollipop-wallpapers-Google-Now-Wallpaper-2.png">
 
 
-                <?= Html::img($model->imgname, ['alt'=>'Office Image', 'class'=>'responsive-img','width'=>'']);?>
+                <!-- </?= Html::img($model->imgname, ['alt'=>'Office Image', 'class'=>'responsive-img','width'=>'']);?> -->
               
             </div>
             <a href="#!user"><img class="circle" src="http://materializecss.com/images/yuna.jpg"></a>

@@ -137,6 +137,38 @@ class Skillstimetable extends \yii\db\ActiveRecord
     }
 
 
+    /**
+     * Inserts multiple rows into skills_timetable table.
+     * @param mixed $data. Multidimention array. Each array made of the data 
+     * Example :
+     * $connection->createCommand()->batchInsert('user', ['name', 'age'], [
+     *    ['Tom', 30],
+     *    ['Jane', 20],
+     *    ['Linda', 25],
+     * ])->execute();
+     *
+     */
+    public function batchInsertSkills($data)
+    {
+
+        $table  = skillstimetable::tableName();
+        $fields = skillstimetable::batchInsertAttributes();
+        Yii::$app->db
+                 ->createCommand()
+                 ->batchInsert($table,$fields,$data)
+                 ->execute();
+    }
+
+    /**
+     * Returns the attributes of office_timetable in array format.
+     * Excluding the id.
+     * @return mixed
+     */
+    public function batchInsertAttributes(){
+        return ['day_and_time', 'skid','user_id', 'status', 'office_id'];
+    }
+
+
 
 
 

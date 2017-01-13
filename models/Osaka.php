@@ -43,4 +43,37 @@ class Osaka extends \yii\db\ActiveRecord
             'Cname' => 'Cname',
         ];
     }
+
+
+    public function findColumn($column){
+        $service = Services::find()
+        ->select($column)
+        ->all();
+
+        //  foreach ($allservices as $key => $value) {
+        //    $data[]=$value->$column;
+        // }
+
+        return $data;
+    }
+
+    public function findCnamesByCattribute($cattribute){
+        $cnames = Osaka::find()
+        ->select('Cname,Cid')
+        ->where(['Cattribute' => $cattribute])
+        ->all();
+
+        return $cnames;
+    }
+
+
+    public function findDistinctCattributes(){
+        $cattributes = Osaka::find()
+        ->select('Cattribute')
+        ->distinct()
+        ->all();
+
+        return $cattributes;
+
+    }
 }

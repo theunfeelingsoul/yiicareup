@@ -13,121 +13,122 @@ use yii\helpers\BaseHtml;
 /* @var $model app\models\Office */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-  <ul id="slide-out" class="side-nav">
-    <li><div class="userView">
-      <div class="background">
-        <img src="images/office.jpg">
-      </div>
-      <a href="#!user"><img class="circle" src="images/yuna.jpg"></a>
-      <a href="#!name"><span class="white-text name">John Doe</span></a>
-      <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
-    </div></li>
-    <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-    <li><a href="#!">Second Link</a></li>
-    <li><div class="divider"></div></li>
-    <li><a class="subheader">Subheader</a></li>
-    <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
-  </ul>
-  <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
-<div class="col s12 m6 l10">
+
     <div class="office-form">
         <?php $form = ActiveForm::begin([
             'options' => ['enctype' => 'multipart/form-data'],
-        'errorCssClass' => 'errord'
         ]); ?>
         <?= $form->errorSummary($model) ?>
         <div class="row">
-            <div class="input-field col s12 l6">
+            <div class="input-field col s12 m6 l6">
                 <?= $form->field($model, 'Oname')->textInput(['maxlength' => true]) ?>
             </div>
 
-            <div class="input-field col s12 l6">
-                <?= $form->field($model, 'service')->dropDownList(
-                    ArrayHelper::map(Services::find()->all(),'Sid','Sname'),
-                    ['prompt'=>'Choose your option','multiple'=>'multiple',
-                    
-                    ]
-                ); ?>
+            <div class="input-field col s12 m6 l6">
+                <?= $form->field($model, 'leader')->textInput(['maxlength' => true]) ?>
             </div>
         </div>    
         <div class="row">
-            <div class="input-field col s12 l6">
+            <div class="input-field col s12 m6 l6">
                 <?= $form->field($model, 'tel')->textInput(['maxlength' => true]) ?>
             </div>
-            <div class="input-field col s12 l6">
+            <div class="input-field col s12 m6 l6">
                 <?= $form->field($model, 'fax')->textInput(['maxlength' => true]) ?>
             </div>
         </div>
 
         <div class="row">
-            <div class="input-field col s12 l6">
+            <div class="input-field col s12 m6 l6">
                 <?= $form->field($model, 'email',[ 'labelOptions' => [ 'data-error' => 'wrong','data-success'=>'right' ]])->textInput(['class' => 'validate']) ?>
             </div>
 
-
-            <div class="input-field col s12 l6">
-            <?= $form->field($model, 'location')->textInput(['maxlength' => true]) ?>
+            <div class="input-field col s12 m6 l6">
+                <?= $form->field($model, 'location')->textInput(['maxlength' => true]) ?>
             </div>
         </div>
-        <!-- < $form->field($model, 'area')->textInput(['maxlength' => true]) ?> -->
+        
         <div class="row">
-            <div class="input-field col s12 l6">
-              <?= $form->field($model, 'area')->dropDownList(
-                    ArrayHelper::map(Osaka::find()->all(),'Cid','Cname'),
-                    ['prompt'=>'Default Category','multiple'=>'multiple']
-                ); ?>
-
-            </div>
-            <div class="input-field col s12 l6">
-            <?= $form->field($model, 'leader')->textInput(['maxlength' => true]) ?>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s12 l6">
-                <?= $form->field($model, 'skills')->dropDownList(
-                    ArrayHelper::map(tags::find()->all(),'Skid','Skname'),
-                    ['prompt'=>'Default Category','multiple'=>'multiple']
-                ); ?>
-            </div>
-            <div class="input-field col s12 l6">
-                <?= Html::activeTextarea($model, 'apeal',['class' => 'materialize-textarea']) ?>
-            <label for="textarea1">Appeal</label>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="input-field col s12 l6">
-                
+            
+            <div class="input-field col s12 m6 l6">
+               
                 <?= $form->field($model, 'url')->textInput(['maxlength' => true]) ?>
             </div>
-            <!-- < $form->field($model, 'imgname')->fileInput() ?> -->
 
-            <div class="input-field col s12 l6">
-                <?= Html::img($model->imgname, ['alt'=>'some', 'class'=>'thing','width'=>'200']);?> 
-                <div class="file-field input-field">
-                    <div class="btn">
-                        <span>File</span>
-                         <?= $form->field($model, 'imgname')->fileInput(['class'=>''])->label(false); ?>
-                        <!-- <input type="file"> -->
-                    </div>
-                    <div class="file-path-wrapper">
-                        <input class="file-path validate" type="text">
-                    </div>
+             <div class="input-field col s12 m6 l6 ">
+                <?= Html::activeTextarea($model, 'apeal',['class' => 'materialize-textarea']) ?>
+                <label for="textarea1"><?php echo $model->attributeLabels()['apeal'] ?></label>
+                
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group field-office-service required">
+                <div class="input-field col s12">
+                    <?= Html::activeDropDownList($model, 'service', ArrayHelper::map(Services::find()->all(), 'Sid', 'Sname'),['multiple'=>'multiple','prompt'=>'Choose a service']); ?>
+                    <label><?php echo $model->attributeLabels()['service'] ?></label>
                 </div>
             </div>
         </div>
 
-       
-        <div class="form-group">
-            <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <div class="row">
+            <div class="input-field col s12">
+                <?php echo Html::activeDropDownList($model, 'skills', ArrayHelper::map(tags::find()->all(), 'Skid', 'Skname'),['multiple'=>'multiple','prompt'=>'Choose a skill']); ?>
+                <label><?php echo $model->attributeLabels()['skills'] ?></label>
 
+            </div>
+        </div>
+
+        <div class="row">
+             <div class="input-field col s12">
+                <?= Html::activeDropDownList($model, 'area', ArrayHelper::map(Osaka::find()->all(), 'Cid', 'Cname'),['multiple'=>'multiple','prompt'=>'Choose an area']); ?>
+                <label><?php echo $model->attributeLabels()['area'] ?></label>
+
+            </div>
+        </div>
+        <div class="row">
+           
+
+            <div class="input-field col s12 ">
+                
+                <div class="row">
+                    <div class="file-field input-field">
+                        <div class="waves-effect waves-light btn">
+                            <span>File</span>
+                             <?= $form->field($model, 'imgname')->fileInput(['class'=>''])->label(false); ?>
+                            <!-- <input type="file"> -->
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <?php 
+                        // only show if its empty
+                        if (!empty($model->imgname)) {
+                             echo Html::img($model->imgname, [
+                                            'alt'=>'some', 'class'=>'thing','width'=>'200'
+                                            ]);
+                        } 
+                     ?>
+                </div>
+
+
+            </div> <!--./input-field-->
+        </div>
+
+       
+        <div class="row">
+            <div class="input-field right ">
+                <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'waves-effect waves-light btn ' : 'waves-effect waves-light btn']) ?>
+
+            </div>
         </div>
 
         <?php ActiveForm::end(); ?>
 
     </div>
-</div>
-
-  <script>
-                                      
-                                    </script>
+    </div>
+    </div>
+    </div>

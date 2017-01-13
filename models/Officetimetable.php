@@ -113,6 +113,22 @@ class Officetimetable extends \yii\db\ActiveRecord
     }
 
 
+    /**
+     * Finds data by the column and value given.
+     * @param string $attribute
+     * @param string $value
+     * @return mixed $data
+     *
+     */
+    public function findByAttribute($attribute,$value){
+        $data = Officetimetable::find()
+        ->where([$attribute => $value])
+        ->all(); 
+
+        return $data;
+    }
+
+
 
 
 } // end class

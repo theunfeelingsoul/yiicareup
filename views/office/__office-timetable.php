@@ -1,5 +1,5 @@
-<div class="card blue-grey darken-1">
-	<div class="card-content white-text">
+<div class="card" id="offtime">
+	<div class="card-content">
 		<!-- <span class="card-title">OFFICE TIMETABLE</span> -->
 		<table class="bordered highlight responsive-table">
 			<thead>

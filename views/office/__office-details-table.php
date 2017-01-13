@@ -1,5 +1,10 @@
-<h2>Office Information</h2>
-<div class="card blue">
+<?php use yii\helpers\Html; ?>
+<h3>Office Information</h3>
+<div class="card">
+	<div class="card-image office-info-image">
+      <?= Html::img($model->imgname, ['alt'=>'some', 'class'=>'responsive-img','width'=>'']);?> 
+      <span class="card-title">Card Title</span>
+    </div>
 	<div class="card-content">
 		<!--<span class="card-title">Office Information</span>-->
 		<!-- <h2>Office Information</h2>	 -->

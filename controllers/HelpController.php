@@ -3,16 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Tagsdisplay;
-use app\models\TagsdisplaySearch;
+use app\models\Help;
+use app\models\HelpSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * TagsdisplayController implements the CRUD actions for Tagsdisplay model.
+ * HelpController implements the CRUD actions for Help model.
  */
-class TagsdisplayController extends Controller
+class HelpController extends Controller
 {
     /**
      * @inheritdoc
@@ -30,12 +30,12 @@ class TagsdisplayController extends Controller
     }
 
     /**
-     * Lists all Tagsdisplay models.
+     * Lists all Help models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new TagsdisplaySearch();
+        $searchModel = new HelpSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,7 +45,7 @@ class TagsdisplayController extends Controller
     }
 
     /**
-     * Displays a single Tagsdisplay model.
+     * Displays a single Help model.
      * @param integer $id
      * @return mixed
      */
@@ -57,13 +57,13 @@ class TagsdisplayController extends Controller
     }
 
     /**
-     * Creates a new Tagsdisplay model.
+     * Creates a new Help model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Tagsdisplay();
+        $model = new Help();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -75,7 +75,7 @@ class TagsdisplayController extends Controller
     }
 
     /**
-     * Updates an existing Tagsdisplay model.
+     * Updates an existing Help model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -94,92 +94,31 @@ class TagsdisplayController extends Controller
     }
 
     /**
-     * Deletes an existing Tagsdisplay model.
+     * Deletes an existing Help model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id = false)
-    {   
-
-        if (Yii::$app->request->isAjax) {
-            $id = $_POST['id'];
-            $this->findModel($id)->delete();
-            echo "deleted";
-            exit();
-        }
-
-
+    public function actionDelete($id)
+    {
         $this->findModel($id)->delete();
 
-        // return $this->redirect(['index']);
-        return $this->redirect(Yii::$app->request->referrer);
+        return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Tagsdisplay model based on its primary key value.
+     * Finds the Help model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Tagsdisplay the loaded model
+     * @return Help the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Tagsdisplay::findOne($id)) !== null) {
+        if (($model = Help::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-
-
-    /**
-     * Saves the tags into tags_display table
-     * @param string $_POST['name']
-    */
-    public function actionAjaxtags()
-    {
-
-        if (Yii::$app->request->isAjax) {
-            // POST request
-            $tag_post_office_id = $_POST['office_id'];
-            $tag_post_skill_id = $_POST['skill_id'];
-
-            $modelTagsDisplay = new Tagsdisplay();
-
-            // check if the given tag_name exists in tags_display table
-            echo $exists = $modelTagsDisplay->tagId($tag_post_skill_id,$tag_post_office_id); 
-
-            // if it dosen't exts sane
-            if (!$exists) {
-                // insert a new row of data
-                $modelTagsDisplay->office_id    = $tag_post_office_id;
-                $modelTagsDisplay->tag_id       = $tag_post_skill_id;
-                $modelTagsDisplay->user_id      = Yii::$app->user->identity->id;
-                $modelTagsDisplay->save(false);
-            }
-
-            exit();
-         }
-    }
-
-
-    public function actionAjaxgetid(){
-
-        $model = new Tagsdisplay();
-
-        if (Yii::$app->request->isAjax) {
-            $tag_post_skill_id  = $_POST['skill_id'];
-            $tag_post_office_id = $_POST['office_id'];
-
-            $service_display = $model->findByTagIdAndOfficeId($tag_post_skill_id,$tag_post_office_id);
-
-            echo $service_display['id'];
-
-
-            exit();
-
-
-        }
-    }
-} // end class
+}

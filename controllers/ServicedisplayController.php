@@ -114,7 +114,13 @@ class ServicedisplayController extends Controller
         // return $this->redirect(Yii::$app->request->referrer);
     }
 
-
+     /**
+     * Get service_display id by Service Display name, and office id
+     * 
+     * @param  string $service_name
+     * @param  int    $service_office_id 
+     * @return int    $service_display['id']
+     */
     public function actionAjaxgetid(){
 
         $model = new Servicedisplay();
@@ -127,10 +133,7 @@ class ServicedisplayController extends Controller
 
             echo $service_display['id'];
 
-
             exit();
-
-
         }
     }
 
@@ -163,11 +166,12 @@ class ServicedisplayController extends Controller
         if (Yii::$app->request->isAjax) {
 
             //  POST request
-            $service_post_name      = $_POST['name'];
-            $service_post_office_id = $_POST['office_id'];
+            // $service_post_name          = $_POST['name'];
+            $service_post_office_id     = $_POST['office_id'];
+            $service_post_service_id    = $_POST['service_id'];
 
             // check if it exists in service_display table already
-           echo $exists= $model->ServiceDisplayExists($service_post_name,$service_post_office_id);   
+            echo $exists= $model->ServiceDisplayExists($service_post_service_id,$service_post_office_id);   
 
             // exit();
 
@@ -175,8 +179,9 @@ class ServicedisplayController extends Controller
             if (!$exists) {
                 // insert a new row of data
                 $Servicedisplay                 = new Servicedisplay();
-                $Servicedisplay->service_name   = $service_post_name;
+
                 $Servicedisplay->user_id        = Yii::$app->user->identity->id;
+                $Servicedisplay->service_id     = $service_post_service_id;
                 $Servicedisplay->office_id      = $service_post_office_id;
 
                 $Servicedisplay->save(false);

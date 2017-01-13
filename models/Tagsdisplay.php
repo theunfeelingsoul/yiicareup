@@ -52,11 +52,11 @@ class Tagsdisplay extends \yii\db\ActiveRecord
      * @param string $tag_post_name
      * @return integer $exists
     */
-    public function tagNameExists($tag_post_name,$office_id){
+    public function tagId($tag_post_skill_id,$office_id){
         $exists = Tagsdisplay::find()
-        ->andwhere( [ 'tag_name'   => $tag_post_name ] )
-        ->andwhere( [ 'user_id' => Yii::$app->user->identity->id ] )
-        ->andwhere( [ 'office_id'  => $office_id ] )
+        ->andwhere( [ 'tag_id'      => $tag_post_skill_id ] )
+        ->andwhere( [ 'user_id'     => Yii::$app->user->identity->id ] )
+        ->andwhere( [ 'office_id'   => $office_id ] )
         ->exists(); 
 
         return $exists;
@@ -91,14 +91,23 @@ class Tagsdisplay extends \yii\db\ActiveRecord
         return $tags_display;
     }
 
-    public function findByServiceDisplayNameAndOfficeId($tag_name,$office_id){
+    public function findByTagIdAndOfficeId($tag_id,$office_id){
         $tags_display = Tagsdisplay::find()
-        ->andwhere(['user_id' => Yii::$app->user->identity->id]) // this can be ommited
+        ->andwhere(['user_id'   => Yii::$app->user->identity->id]) // this can be ommited
         ->andwhere(['office_id' => $office_id])
-        ->andwhere(['tag_name' => $tag_name])
+        ->andwhere(['tag_id'    => $tag_id])
         ->one();
 
         return $tags_display;
+    }
+
+    public function findByColumn($column,$attribute,$value){
+         $Tags = Tagsdisplay::find()
+        ->select($column)
+        ->where([$attribute => $value])
+        ->all();
+
+        return $Tags;
     }
 
 

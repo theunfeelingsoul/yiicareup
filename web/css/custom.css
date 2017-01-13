@@ -79,7 +79,7 @@ body{
 }
 
 .profile-menu-image{
-	margin-bottom: 10px;
+	margin-top: 10px;
 }
 
 /*MAIN PAGE*/
@@ -149,6 +149,7 @@ body{
 
 #office-info-header{
 	background-color: #f3f3f3;
+	margin-top: 30px;
 } 
 
 #office-info-header .office-name{
@@ -159,7 +160,8 @@ body{
 }
 
 .office-info-image{
-
+    height: 300px;
+    overflow: hidden;
 }
 
 
@@ -204,7 +206,7 @@ body{
     display: none;
     z-index: 1000;
     /*height: 31px;
-    width: 31px;*/*/
+    width: 31px;*/
 }
 
 .tag-link:hover{
@@ -276,7 +278,61 @@ body{
 	margin-top: 30px;
 }
 
-/*yes*/
+
+/*office */
+.tabs .tab a , .tabs .tab a.active {
+    color: #009688 !important;
+}
+
+
+
+.table-bordered {
+  border: 1px solid #ddd;
+}
+.table-bordered > thead > tr > th,
+.table-bordered > tbody > tr > th,
+.table-bordered > tfoot > tr > th,
+.table-bordered > thead > tr > td,
+.table-bordered > tbody > tr > td,
+.table-bordered > tfoot > tr > td {
+  border: 1px solid #ddd;
+}
+.table-bordered > thead > tr > th,
+.table-bordered > thead > tr > td {
+  border-bottom-width: 2px;
+}
+
+.table-responsive > .table-bordered > thead > tr > th:first-child,
+  .table-responsive > .table-bordered > tbody > tr > th:first-child,
+  .table-responsive > .table-bordered > tfoot > tr > th:first-child,
+  .table-responsive > .table-bordered > thead > tr > td:first-child,
+  .table-responsive > .table-bordered > tbody > tr > td:first-child,
+  .table-responsive > .table-bordered > tfoot > tr > td:first-child {
+    border-left: 0;
+  }
+  .table-responsive > .table-bordered > thead > tr > th:last-child,
+  .table-responsive > .table-bordered > tbody > tr > th:last-child,
+  .table-responsive > .table-bordered > tfoot > tr > th:last-child,
+  .table-responsive > .table-bordered > thead > tr > td:last-child,
+  .table-responsive > .table-bordered > tbody > tr > td:last-child,
+  .table-responsive > .table-bordered > tfoot > tr > td:last-child {
+    border-right: 0;
+  }
+  .table-responsive > .table-bordered > tbody > tr:last-child > th,
+  .table-responsive > .table-bordered > tfoot > tr:last-child > th,
+  .table-responsive > .table-bordered > tbody > tr:last-child > td,
+  .table-responsive > .table-bordered > tfoot > tr:last-child > td {
+    border-bottom: 0;
+  }
+
+  .table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: #f9f9f9;
+}
+
+
+#offtime .fa .fa-close{
+	font-size: 30px !important;
+}
 
 
 

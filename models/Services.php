@@ -59,5 +59,52 @@ class Services extends \yii\db\ActiveRecord
         return $service;
     }
 
+    public function findBySgroup($sgroup){
+        $service = Services::find()
+        ->select('Sname')
+        ->where(['Sgroup' => $sgroup])
+        ->all();
+
+        return $service;
+    }
+
+    public function findDistinctByAttribute($attribute){
+         $Sgroup = Services::find()
+         ->select($attribute)
+         ->distinct()
+         ->all();
+
+         return $Sgroup;
+    }
+
+    public function findSattributeByAttribute($attribute,$value){
+        $service = Services::find()
+        ->select('Sattribute')
+        ->where([$attribute => $value])
+        ->one();
+
+        return $service['Sattribute'];
+
+    }
+
+    public function allServices(){
+        $service = Services::find()
+        ->all();
+
+        return $service;
+    }
+
+
+    public function getServiceNameByServiceId($service_id){
+        $tag = Services::find()
+        ->select('Sname')
+        ->where(['Sid' => $service_id])
+        ->one();
+
+        return $tag['Sname'];
+    }
+
+
+
 
 } // end class

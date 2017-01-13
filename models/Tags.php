@@ -67,6 +67,44 @@ class Tags extends \yii\db\ActiveRecord
         return $skid;
     }
 
+    public function getTagNameByTagId($tag_id){
+        $tag = Tags::find()
+        ->select('Skname')
+        ->where(['Skid' => $tag_id])
+        ->one();
+
+        return $tag['Skname'];
+    }
+
+
+    public function findDistinctByAttribute($attribute){
+         $tags = Tags::find()
+         ->select($attribute)
+         ->distinct()
+         ->all();
+
+         return $tags;
+    }
+
+    // public function findCellByAttributeValue($attribute,$column,$value){
+    //     $service = Services::find()
+    //     ->select($attribute)
+    //     ->where([$column => $value])
+    //     ->one();
+
+    //     return $service[$attribute];
+
+    // }
+
+    public function findByColumn($column,$attribute,$value){
+         $Tags = Tags::find()
+        ->select($column)
+        ->where([$attribute => $value])
+        ->all();
+
+        return $Tags;
+    }
+
 
 
 }// end class

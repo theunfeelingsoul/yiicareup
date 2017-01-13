@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Office;
+use app\models\Help;
 
 /**
- * OfficeSearch represents the model behind the search form about `app\models\Office`.
+ * HelpSearch represents the model behind the search form about `app\models\Help`.
  */
-class OfficeSearch extends Office
+class HelpSearch extends Help
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class OfficeSearch extends Office
     public function rules()
     {
         return [
-            [['id', 'staff'], 'integer'],
-            [['Onum', 'Oname', 'leader', 'url', 'apeal', 'tel', 'fax', 'email', 'blanktime_s', 'blanktime_f', 'location', 'area', 'service', 'imgname', 'img'], 'safe'],
+            [['id'], 'integer'],
+            [['stuff'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class OfficeSearch extends Office
      */
     public function search($params)
     {
-        $query = Office::find();
+        $query = Help::find();
 
         // add conditions that should always apply here
 
@@ -60,20 +60,9 @@ class OfficeSearch extends Office
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'user_id' => Yii::$app->user->identity->id,
         ]);
 
-        $query->andFilterWhere(['like', 'Oname', $this->Oname])
-            ->andFilterWhere(['like', 'leader', $this->leader])
-            ->andFilterWhere(['like', 'url', $this->url])
-            ->andFilterWhere(['like', 'apeal', $this->apeal])
-            ->andFilterWhere(['like', 'tel', $this->tel])
-            ->andFilterWhere(['like', 'fax', $this->fax])
-            ->andFilterWhere(['like', 'email', $this->email])
-            ->andFilterWhere(['like', 'location', $this->location])
-            ->andFilterWhere(['like', 'area', $this->area])
-            ->andFilterWhere(['like', 'service', $this->service])
-            ->andFilterWhere(['like', 'imgname', $this->imgname]);
+        $query->andFilterWhere(['like', 'stuff', $this->stuff]);
 
         return $dataProvider;
     }

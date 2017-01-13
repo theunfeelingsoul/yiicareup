@@ -31,6 +31,7 @@ class CareupAsset extends AssetBundle
     public $js = [
     'js/service-and-skill-tags.js',
     'js/office-and-skill-timetable.js',
+    'js/plugin-inits.js',
     'css/materialize/js/materialize.min.js',
     ];
     public $depends = [

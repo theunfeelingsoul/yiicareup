@@ -14,13 +14,19 @@ $this->params['breadcrumbs'][] = $model->Oname;
     <!-- Side Nav -->
     <div class="col s12 m4 l3">
 
-        <?= $this->render('__normal-nav', [
+        <?= 
+        	$this->render('__normal-nav', [
+        	// $this->render('__slide-out-nav', [
         	'model'=> $model 
         ]); ?>
-    </div>
+    </div>	
 
     <div class="col s12 m8 l8">
         <!-- PRE-LOADER -->
+        <!-- Modal Trigger -->
+
+  <!-- Modal Structure -->
+ 
         <div class="col s12" id="preloader">
             <div class="preloader-wrapper big active center-align">
                 <div class="spinner-layer spinner-blue">
@@ -74,102 +80,97 @@ $this->params['breadcrumbs'][] = $model->Oname;
         </div> <!--./col s12-->
     
 	    <!-- OFFICE INFO HEADER -->
-			<div class="row">
-				<div class="col s12">
-							<div id="office-info-header">
-								<div class="row">
-									<div class="col s12 m12 l4">
-										<div class="office-name">
-											<h2>
-											<?php echo $model->Oname ?>
-											</h2>
-										</div>
-									</div>
-
-									<div class="col s12 m12 l8 push-l5">
-										<?= Html::a( "Edit", $url = ['office/update','id'=>$user_office_id], $options = ['class'=>'waves-effect waves-light btn col s12 l2'] ) ?>
-
-							    	</div>
-
-						    	</div>
-					    	</div>
-						<div class="card-action">
-							<a href="#">This is a link</a>
-							<a href="#">This is a link</a>
+		<div class="row">
+			<div class="col s12 pull">
+				<div id="office-info-header">
+					<div class="row">
+						<div class="col s12 m12 l4">
+							<div class="office-name">
+								<h2>
+								<?php echo $model->Oname ?>
+								</h2>
+							</div>
 						</div>
-				</div>
-			</div> <!--./row-->
 
-			
+						<div class="col s12 m12 l8 push-l5">
+							<?= Html::a( "Edit", $url = ['office/update','id'=>$user_office_id], $options = ['class'=>'waves-effect waves-light btn col s12 l2'] ) ?>
 
+				    	</div>
+
+			    	</div>
+		    	</div>
+					<!-- <div class="card-action">
+						<a href="#">View Less</a>
+						<a href="#">Edit</a>
+					</div> -->
+			</div>
+		</div> <!--./row-->
 
 	    <div class="divider"></div>
 
-
 		<!-- OFFICE INFORMATION -->
 		<div class="row">
-
-			<!-- OFFICE INFORMATION -->
-			<?=	$this->render('__office-details-table', [
-				'model'=> $model,
-			]) ?>
-			
-			
-		</div>
-
-		<!-- SERVICE AND APPEAL TAGS -->
-		<div class="row">
-
-			<h2>TAGS</h2>
+			<div class="col l6 s12">
+				<div class="">
+					<!-- OFFICE INFORMATION -->
+					<?=	$this->render('__office-details-table', [
+						'model'=> $model,
+					]) ?>
+				</div>
+			</div>
+			<div class="col l6 s12">
+				<h3>Tags</h3>
 				<!-- SERIVCE TAGS-->
-		    	<div class="col s12 l6 m6">
+		    	<div class="row">
 					<?= $this->render('__service-tags', [
-						'Service_display'   => $Service_display,
+						'service_display'   => $service_display,
 						'model_service_name'=> $model_service_name,
 						'user_office_id'    => $model->id,
 					]); ?>
 		    	</div>
 
 		    	<!-- APPEAL TAGS-->
-		    	<div class="col s12 l6 m6">
+		    	<div class="row">
 					<?=$this->render('__appeal-tags', [
 						'tags_display'      => $tags_display,
 						'skills_names_array'=> $skills_names_array,
 						'user_office_id'    => $model->id,
 					]); ?>
 		    	</div>
-
+			</div>
 		</div>
 
-	<div class="row">
-		<H2>Open hours</H2>
-		<div class="col s12">
-			<ul class="tabs">
-				<li class="tab col s3"><a class="active" href="#office-timetable">OFFICE TIMETABLE</a></li>
-				<li class="tab col s3"><a href="#skill-timetable">SKILL TIMETABLE</a></li>
-			</ul>
-		</div>
-		<div id="office-timetable" class="col s12">
-			<!-- <div class="col s12"> -->
-				<?=	$this->render('__office-timetable', [
-					'model'=> $model,
-					'office_timetable'          => $office_timetable,
-					'user_office_id'            => $model->id,
-					]);
-				 ?>
-			<!-- </div> -->
-		</div>
-		<div id="skill-timetable" class="col s12">
-			<!-- <div class="col s12"> -->
-				<?=	$this->render('__skill-timetable', [
-					'model'=> $model,
-					'skills_names_array'        => $skills_names_array,
-					'new_skilltimetable_array'  => $new_skilltimetable_array,
-					'user_office_id'            => $model->id,
-				]) ?>
-			<!-- </div> -->
+		<div class="row">
+			<H2>Open hours</H2>
+			<div class="col s12">
+				<ul class="tabs teal-text">
+					<li class="tab col s3 teal-text"><a class="active" href="#office-timetable">OFFICE TIMETABLE</a></li>
+					<li class="tab col s3 teal-text"><a href="#skill-timetable">SKILL TIMETABLE</a></li>
+				</ul>
+			</div>
+			<div id="office-timetable" class="col s12">
+				<!-- <div class="col s12"> -->
+					<?=	$this->render('__office-timetable', [
+						'model'=> $model,
+						'office_timetable'          => $office_timetable,
+						'user_office_id'            => $model->id,
+						]);
+					 ?>
+				<!-- </div> -->
+			</div>
+			<div id="skill-timetable" class="col s12">
+				<!-- <div class="col s12"> -->
+					<?=	$this->render('__skill-timetable', [
+						'model'=> $model,
+						'skills_names_array'        => $skills_names_array,
+						'new_skilltimetable_array'  => $new_skilltimetable_array,
+						'user_office_id'            => $model->id,
+					]) ?>
+				<!-- </div> -->
+			</div>
 		</div>
 	</div>
+</div><!--./row-->
 
 
 	

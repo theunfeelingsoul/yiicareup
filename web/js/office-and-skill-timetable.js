@@ -1,18 +1,4 @@
-  
-  $(window).load(function() {
-  	console.log("cows");
-	$("#preloader").fadeOut("slow");
-	// $(".preloader-wrapper").fadeOut("slow");
-})
-
 $( document ).ready(function() {
-
-	$('select').material_select();
-
-
-
-
-	
 
 	$(".time_not_available").click(function() {
 		// get the class
@@ -156,9 +142,7 @@ $( document ).ready(function() {
 
 		// chnage the existing state
 	});
-
-	$('ul.tabs').tabs();
-	$('ul.tabsz').tabs();
+	
 
 	$(".office_time_not_available").click(function() {
 		// get the class
@@ -297,9 +281,6 @@ $( document ).ready(function() {
 
 		// chnage the existing state
 	});
-
-
-	$(".button-collapse").sideNav();
 
 }); // end 
 

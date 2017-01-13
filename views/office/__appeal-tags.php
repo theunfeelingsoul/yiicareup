@@ -1,4 +1,4 @@
-<div class="card orange">
+<div class="card">
 	<div class="card-content">
 		<span class="card-title">Appeal</span>
 		<div class="tagdiv">
@@ -19,8 +19,8 @@
     				<?php 
     					foreach ($skills_names_array as $key => $value):?>
     						<li class="collection-item">
-	    						<div class="skill-tag-item <?=$user_office_id ?>">
-	    							<?php echo $value; ?>	
+	    						<div class="skill-tag-item <?=$user_office_id." ".$value['skill_id'] ?>">
+	    							<?php echo $value['skill_name']; ?>	
 	    						</div>
     						</li>
     				<?php endforeach; ?>
