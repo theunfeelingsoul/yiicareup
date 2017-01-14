@@ -93,7 +93,30 @@ $this->params['breadcrumbs'][] = $model->Oname;
 						</div>
 
 						<div class="col s12 m12 l8 push-l5">
-							<?= Html::a( "Edit", $url = ['office/update','id'=>$user_office_id], $options = ['class'=>'waves-effect waves-light btn col s12 l2'] ) ?>
+
+							<div class="fixed-action-btn horizontal click-to-toggle">
+								<a class="btn-floating btn-large red">
+									<i class="material-icons">menu</i>
+								</a>
+								<ul>
+									<li>
+										<?= Html::a( '<i class="material-icons">mode_edit</i>', $url = ['office/update','id'=>$user_office_id], $options = ['class'=>'waves-effect waves-light btn-floating red'] ) ?>
+									</li>
+									<li>
+										<?= Html::a( '<i class="material-icons">visibility</i>', $url = ['office/view','id'=>$user_office_id], $options = ['class'=>'waves-effect waves-light btn-floating green'] ) ?>
+									</li>
+									<li>
+										<?= Html::a( '<i class="fa fa-plus" aria-hidden="true"></i>', $url = ['office/create','id'=>$user_office_id], $options = ['class'=>'waves-effect waves-light btn-floating green'] ) ?>
+									</li>
+									<!-- <li><a class="btn-floating yellow darken-1"><i class="material-icons">delete</i></a></li>
+									<li><a class="btn-floating green"><i class="material-icons">visibility</i></a></li> -->
+									<!-- <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li> -->
+								</ul>
+							</div>
+							<!-- </?= Html::a( "Edit", $url = ['office/update','id'=>$user_office_id], $options = ['class'=>'waves-effect waves-light btn col s12 l2'] ) ?> -->
+														 <!-- Dropdown Trigger -->
+							  <!-- <a class='dropdown-button btn' href='#' data-activates='editd'>Drop Me!</a> -->
+							  
 
 				    	</div>
 

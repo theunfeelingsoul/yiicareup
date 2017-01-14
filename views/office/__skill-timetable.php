@@ -20,7 +20,7 @@
 		<div class="row">
 			<?php foreach ($skills_names_array as $key => $skill): ?>
 				<div id="<?= $key ?>" class="">
-					<table class="highlight responsive-table">
+					<table class="highlight responsive-table striped bordered">
 						<thead>
 					    	<tr>
 			                    <th>Time</th>

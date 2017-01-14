@@ -44,7 +44,7 @@ class OfficeController extends Controller
 
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['home','create','update','delete','index','search','view'],
+                'only' => ['home','create','update','delete','index','search','view','viewmore'],
                 'rules' => [
                     // [
                     //     'allow' => true,
@@ -53,7 +53,7 @@ class OfficeController extends Controller
                     // ],
                     [
                         'allow' => true,
-                        'actions' => ['home','create','update','delete','index','search','view'],
+                        'actions' => ['home','create','update','delete','index','search','view','viewmore'],
                         'roles' => ['@'], // only authenticated users
                     ],
                 ],
@@ -87,7 +87,7 @@ class OfficeController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionViewold($id)
+    public function actionView($id)
     {
         $this->layout = "careup";
         return $this->render('view', [
@@ -471,7 +471,7 @@ class OfficeController extends Controller
     }
 
 
-    public function actionView($id=false)
+    public function actionViewmore($id=false)
     {
         // use the careup layout
         // $this->layout = "careup";

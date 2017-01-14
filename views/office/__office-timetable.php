@@ -1,7 +1,7 @@
 <div class="card" id="offtime">
 	<div class="card-content">
 		<!-- <span class="card-title">OFFICE TIMETABLE</span> -->
-		<table class="bordered highlight responsive-table">
+		<table class="bordered highlight responsive-table striped">
 			<thead>
 		    	<tr>
                     <th>Time</th>

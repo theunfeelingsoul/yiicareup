@@ -67,6 +67,16 @@ class Osaka extends \yii\db\ActiveRecord
     }
 
 
+    public function getAreaNameById($id){
+        $tag = Osaka::find()
+        ->select('Cname')
+        ->where(['Cid' => $id])
+        ->one();
+
+        return $tag['Cname'];
+    }
+
+
     public function findDistinctCattributes(){
         $cattributes = Osaka::find()
         ->select('Cattribute')

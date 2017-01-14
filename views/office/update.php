@@ -19,6 +19,26 @@ $this->params['breadcrumbs'][] = 'Update';
             'model'=> $model 
         ]); ?>
     </div>  
+
+     <div class="fixed-action-btn horizontal click-to-toggle">
+            <a class="btn-floating btn-large red">
+                <i class="material-icons">menu</i>
+            </a>
+            <ul>
+         
+                <li>
+                    <?= Html::a( '<i class="material-icons">visibility</i>', $url = ['office/viewmore','id'=>$model->id], $options = ['class'=>'waves-effect waves-light btn-floating green'] ) ?>
+                </li>
+                <li>
+                    <?= Html::a( '<i class="material-icons">list</i>', $url = ['office/index','id'=>$model->id], $options = ['class'=>'waves-effect waves-light btn-floating orange'] ) ?>
+                </li>
+            
+                <!-- <li><a class="btn-floating yellow darken-1"><i class="material-icons">delete</i></a></li>
+                <li><a class="btn-floating green"><i class="material-icons">visibility</i></a></li> -->
+                <!-- <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li> -->
+            </ul>
+        </div>
+
     <div class="office-update col s12 m8 l8">
 
         <h1><?= Html::encode($this->title) ?></h1>

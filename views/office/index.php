@@ -21,6 +21,11 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="col s12 m8 l8">
 
+    <div class="fixed-action-btn horizontal click-to-toggle">
+        <?= Html::a( '<i class="material-icons">add</i>', $url = ['office/create'], $options = ['class'=>'btn-floating btn-large waves-effect waves-light red'] ) ?>
+      
+    </div>
+
         <div class="office-index">
 
             <h1><?= Html::encode($this->title) ?></h1>
@@ -31,14 +36,15 @@ $this->params['breadcrumbs'][] = $this->title;
             </p>
         <div class="row">
         <div class="card">
-            <div class="card-content">
+            <!-- show on desktop only -->
+            <div class="card-content hide-on-med-and-down">
                 <?= GridView::widget([  
                     'dataProvider' => $dataProvider,
-                    //'filterModel' => $searchModel,  
+                    'filterModel' => $searchModel,  
                     
                     // 'cssFile' => Url::base('https') . '/materialize/css/materialize.css',
 
-                    'tableOptions' =>    ['class' => 'bordered highlight responsive-table'],
+                    'tableOptions' =>    ['class' => 'bordered highlight'],
                     'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
                         // "itemsCssClass" => "striped",
@@ -46,8 +52,81 @@ $this->params['breadcrumbs'][] = $this->title;
                         // 'Mtag',
                         'Oname',    
                         'leader',
+                        'url:url',
+                        // 'apeal',
+                        'tel',
+                        // 'fax',
+                        'email:email',
+                        // 'holiday',
+                        'location',
+                        // 'area',
+                        // 'staff',
+                        // 'service',
+                        // 'imgname',
+
+                        ['class' => 'yii\grid\ActionColumn','template' => '{view} {update} {delete}',
+                            'buttons' => [
+                                'view' => function ($url) {
+                                    return Html::a(
+                                        '<span class="">
+                                        <i class="small material-icons">visibility</i></span>',
+                                        $url, 
+                                        [
+                                            'title' => 'view',
+                                            'data-pjax' => '0',
+                                        ]
+                                    );
+                                },
+                                'update' => function ($url) {
+                                    return Html::a(
+                                        '<span class="">
+                                        <i class="small material-icons">mode_edit</i></span>',
+                                        $url, 
+                                        [
+                                            'title' => 'Edit',
+                                            'data-pjax' => '0',
+                                        ]
+                                    );
+                                },
+                                // 'delete' => function ($url) {
+                                //     return Html::a(
+                                //         '<span class="">
+                                //         <i class="small material-icons">delete</i></span>',
+                                //         $url, 
+                                //         [
+                                //             'title' => 'delete',
+                                //             'data-pjax' => '0',
+                                //             'data-method' => 'POST',    
+                                //              // 'confirm' => 'Are you absolutely sure ? You will lose all the information about this user with this action.',
+                                //              'onClick' => 'return confirm("Your confirmation message?")'
+                                //         ]
+                                //     );
+                                // },
+
+                            ],
+                        ],
+
+                    ],
+                ]); ?>
+            </div>
+             <!-- show om mobile only -->
+             <div class="card-content hide-on-large-only">
+                <?= GridView::widget([  
+                    'dataProvider' => $dataProvider,
+                    'filterModel' => $searchModel,  
+                    
+                    // 'cssFile' => Url::base('https') . '/materialize/css/materialize.css',
+
+                    'tableOptions' =>    ['class' => 'bordered highlight'],
+                    'columns' => [
+                        ['class' => 'yii\grid\SerialColumn'],
+                        // "itemsCssClass" => "striped",
+                        // 'id',
+                        // 'Mtag',
+                        'Oname',    
+                        // 'leader',
                         // 'url:url',
-                        'apeal',
+                        // 'apeal',
                         'tel',
                         // 'fax',
                         'email:email',
@@ -82,20 +161,20 @@ $this->params['breadcrumbs'][] = $this->title;
                                         ]
                                     );
                                 },
-                                'delete' => function ($url) {
-                                    return Html::a(
-                                        '<span class="">
-                                        <i class="small material-icons">delete</i></span>',
-                                        $url, 
-                                        [
-                                            'title' => 'delete',
-                                            'data-pjax' => '0',
-                                            'data-method' => 'POST',    
-                                             // 'confirm' => 'Are you absolutely sure ? You will lose all the information about this user with this action.',
-                                             'onClick' => 'return confirm("Your confirmation message?")'
-                                        ]
-                                    );
-                                },
+                                // 'delete' => function ($url) {
+                                //     return Html::a(
+                                //         '<span class="">
+                                //         <i class="small material-icons">delete</i></span>',
+                                //         $url, 
+                                //         [
+                                //             'title' => 'delete',
+                                //             'data-pjax' => '0',
+                                //             'data-method' => 'POST',    
+                                //              // 'confirm' => 'Are you absolutely sure ? You will lose all the information about this user with this action.',
+                                //              'onClick' => 'return confirm("Your confirmation message?")'
+                                //         ]
+                                //     );
+                                // },
 
                             ],
                         ],

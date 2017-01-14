@@ -3,6 +3,7 @@
 namespace app\models;
 use yii\web\UploadedFile;
 use app\models\Servicedisplay;
+use app\models\Tags;
 
 use Yii;
 
@@ -104,7 +105,7 @@ class Office extends \yii\db\ActiveRecord
             'location'      => 'Address',
             'area'          => 'Area',
             'service'       => 'Service',
-            'imgname'       => 'Imgname',
+            'imgname'       => 'Office Image',
             'user_id'       => 'User ID',
             'skills'        => 'Skills',
         ];
@@ -180,6 +181,76 @@ class Office extends \yii\db\ActiveRecord
         ->all(); 
 
         return $data;
+    }
+
+
+    /**
+     * String given are tag ids. 
+     * Explode the string, get the tag names using the $model_tags->getTagNameByTagId() method
+     * 
+     * @param  string $string
+     * @return string $tag_names_string or "No Skills"
+    */
+    public function findTagNamesFromString($string){
+        $model_tags= new Tags();
+        if (!empty($string)) {
+            $string_array = explode(',', $string);
+            foreach ($string_array as $key => $tag_id) {
+                $tag_names_array[] = $model_tags->getTagNameByTagId($tag_id);
+            }
+
+            //implode array into string
+            return $tag_names_string = implode(' , ', $tag_names_array);
+
+        }else{
+            return "No Skills";
+        }
+    }
+
+    /**
+     * String given are area ids. 
+     * Explode the string, get the area names using the $model_tags->getAreaNameById() method
+     * 
+     * @param  string $string
+     * @return string $area_names_array or "No Area"
+    */
+    public function findAreaNamesFromString($string){
+        $model_location = new Osaka();
+
+        if (!empty($string)) {
+            $string_array = explode(',', $string);
+            foreach ($string_array as $key => $location_id) {
+                $area_names_array[] = $model_location->getAreaNameById($location_id);
+            }
+
+            // implode array into string
+            return implode(',', $area_names_array);
+        }else{
+            return "No Area";
+        }
+    }
+
+    /**
+     * String given are service ids. 
+     * Explode the string, get the service names using the $model_tags->getServiceNameByServiceId() method
+     * 
+     * @param  string $string
+     * @return string $service_names_array or "No Services"
+    */
+    public function findServiceNamesFromString($string){
+        $model_services = new Services();
+
+        if (!empty($string)) {
+            $string_array = explode(',', $string);
+            foreach ($string_array as $key => $location_id) {
+                $service_names_array[] = $model_services->getServiceNameByServiceId($location_id);
+            }   
+
+            // implode array into string
+            return implode(' , ', $service_names_array);
+        }else{
+            return "No Services";
+        }
     }
 
 
