@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "tags_display".
  *
  * @property integer $id
- * @property string $tag_name
+ * @property string $tag_id
  * @property string $user_id
  * @property string $office_id
  */
@@ -28,7 +28,7 @@ class Tagsdisplay extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['tag_name', 'user_id', 'office_id'], 'string', 'max' => 255],
+            [['tag_id', 'user_id', 'office_id'], 'string', 'max' => 255],
         ];
     }
 
@@ -39,7 +39,7 @@ class Tagsdisplay extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'tag_name' => 'Tag Name',
+            'tag_id' => 'Tag Name',
             'user_id' => 'User ID',
             'office_id' => 'Office ID',
         ];
@@ -47,7 +47,7 @@ class Tagsdisplay extends \yii\db\ActiveRecord
 
 
     /**
-     * Check if tag_name exists
+     * Check if tag_id exists
      * 
      * @param string $tag_post_name
      * @return integer $exists
@@ -85,6 +85,19 @@ class Tagsdisplay extends \yii\db\ActiveRecord
     public function findByUserIdAndOfficeId($office_id){
         $tags_display       = Tagsdisplay::find()
         ->andwhere(['user_id'  => Yii::$app->user->identity->id])
+        ->andwhere(['office_id'=> $office_id])
+        ->all();
+
+        return $tags_display;
+    }
+
+    /**
+     * Find tags by office_id
+     * 
+     * @return mixed $tags_display
+    */
+    public function findByOfficeId($office_id){
+        $tags_display       = Tagsdisplay::find()
         ->andwhere(['office_id'=> $office_id])
         ->all();
 

@@ -17,7 +17,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
-
     <?= $form->field($model, 'Onum') ?>
 
     <?= $form->field($model, 'Oname') ?>
@@ -53,8 +52,8 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'img') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton('ケンサク', ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton('リセット', ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -18,7 +18,7 @@ use yii\helpers\BaseHtml;
     <div class="office-form">
         <?php $form = ActiveForm::begin([
             'options' => ['enctype' => 'multipart/form-data'],
-        'errorCssClass' => 'errord'
+            'errorCssClass' => 'errord'
         ]); ?>
         <?= $form->errorSummary($model) ?>
         <div class="row">
@@ -32,11 +32,11 @@ use yii\helpers\BaseHtml;
                 <?= $form->field($model, 'service')->dropDownList(
                     ArrayHelper::map(Services::find()->all(),'Sid','Sname'),
                     ['prompt'=>'Choose your option','multiple'=>'multiple',
-                    
+
                     ]
                 ); ?>
             </div>
-        </div>    
+        </div>
         <div class="row">
             <div class="input-field col s12">
                 <?= $form->field($model, 'tel')->textInput(['maxlength' => true]) ?>
@@ -49,7 +49,7 @@ use yii\helpers\BaseHtml;
             <div class="input-field col s12">
                 <?= $form->field($model, 'email',[ 'labelOptions' => [ 'data-error' => 'wrong','data-success'=>'right' ]])->textInput(['class' => 'validate']) ?>
             </div>
-        </div>  
+        </div>
 
 
 
@@ -63,9 +63,9 @@ use yii\helpers\BaseHtml;
             ); ?>
 
 
-         
+
         <?= $form->field($model, 'leader')->textInput(['maxlength' => true]) ?>
-       
+
         <?= $form->field($model, 'skills')->dropDownList(
             ArrayHelper::map(tags::find()->all(),'Skid','Skname'),
             ['prompt'=>'Default Category','multiple'=>'multiple']
@@ -73,12 +73,12 @@ use yii\helpers\BaseHtml;
         <div class="row">
             <div class="input-field col s12">
                 <?= Html::activeTextarea($model, 'apeal',['class' => 'materialize-textarea']) ?>
-            <label for="textarea1">Appeal</label>
+            <label for="textarea1">アピールポイント(150文字程度)</label>
             </div>
         </div>
 
 
-        <?= Html::img($model->imgname, ['alt'=>'some', 'class'=>'thing','width'=>'200']);?> 
+        <?= Html::img($model->imgname, ['alt'=>'some', 'class'=>'thing','width'=>'200']);?>
 
         <!-- < $form->field($model, 'imgname')->fileInput() ?> -->
 
@@ -100,7 +100,7 @@ use yii\helpers\BaseHtml;
             </div>
         </div>
         <div class="form-group">
-            <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+            <?= Html::submitButton($model->isNewRecord ? '作成' : '更新', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
 
         </div>
 
@@ -110,5 +110,5 @@ use yii\helpers\BaseHtml;
 </div>
 
   <script>
-                                      
+
                                     </script>

@@ -1,69 +1,107 @@
 <?php use yii\helpers\Html; ?>
-<h3 class="hide-on-small-only">Office Information</h3>
-<div class="card">
+<?php use app\models\Osaka; ?>
+
+<div class="col-md-3">
 	<div class="card-image office-info-image">
-      <?= Html::img($model->imgname, ['alt'=>'some', 'class'=>'responsive-img','width'=>'']);?> 
-      <!-- <span class="card-title">Card Title</span> -->
+		<?= Html::img($model->imgname, ['alt'=>'some', 'class'=>'responsive-img','width'=>'200']);?>
     </div>
-	<div class="card-content">
-		<!--<span class="card-title">Office Information</span>-->
-		<!-- <h2>Office Information</h2>	 -->
-		<div class="row">
-			<table class="bordered highlight office-home-info-table-left">
-				<!-- <thead>
-					<th>Position</th>
-					<th>Name</th>
-					<th>Value</th>
-				</thead> -->
+</div>
+
+
+<div class="col-md-6">
+	<div class="col-md-12">
+		table name
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+		    <table class="">
 				<tbody>
 					<tr>
-						<!-- <td>電話番号(必須) Phone Number Required)</td> -->
-						<!-- <td>1</td> -->
-						<td>電話番号(必須)</td>
-						<td><?= $model->tel ?></td>
+						<td>事業所番号(必須)</td>
+						<td><?= $model->Onum ?></td>
 					</tr>
 					<tr>
-						<!-- <td>事業所名(必須)	Plant name (required)</td> -->
-						<!-- <td>2</td> -->
 						<td>事業所名(必須)</td>
 						<td><?= $model->Oname ?></td>
 					</tr>
 					<tr>
-						<!-- <td>3</td> -->
+						<td>電話番号(必須)</td>
+						<td><?= $model->tel ?></td>
+					</tr>
+					<tr>
+						<td>FAX</td>
+						<td><?= $model->fax ?></td>
+					</tr>
+		            <tr>
+						<td>メール</td>
+						<td><?= $model->email ?></td>
+					</tr>
+					<!-- <tr>
+						<td>住所</td>
+						<td><?= $model->location ?></td>
+					</tr>
+					<tr>
+						<td>対応可能な範囲</td>
+						<td><?= $model->area ?></td>
+					</tr>
+					<tr>
 						<td>担当者名</td>
-						<!-- <td>担当者名 Name of the person in charge</td> -->
 						<td><?= $model->leader ?></td>
 					</tr>
 					<tr>
-						<!-- <td>4</td> -->
-						<td>アピールポイント（200字程度）</td>
-						<!-- <td>アピールポイント（200字程度） Appeal point (about 200 words)</td> -->
+						<td>アピールポイント（150字程度）</td>
 						<td><?= $model->apeal ?></td>
 					</tr>
+		            <tr>
+						<td>事業所ホームページURL</td>
+						<td><?= $model->url ?></td>
+					</tr> -->
+				</tbody>
+			</table>
+		</div>
 
-					<tr>
-						<!-- <td>5</td> -->
-						<td>電話番号(必須)</td>
-						<!-- <td>電話番号(必須) Phone Number Required)</td> -->
-						<td><?= $model->tel ?></td>
+		<div class="col-md-6">
+		    <table class="">
+				<tbody>
+					<!-- <tr>
+						<td>事業所番号(必須)</td>
+						<td><?= $model->Onum ?></td>
 					</tr>
 					<tr>
-						<!-- <td>6</td> -->
 						<td>事業所名(必須)</td>
-						<!-- <td>事業所名(必須)	Plant name (required)</td> -->
 						<td><?= $model->Oname ?></td>
 					</tr>
 					<tr>
-						<!-- <td>7</td> -->
+						<td>電話番号(必須)</td>
+						<td><?= $model->tel ?></td>
+					</tr>
+					<tr>
+						<td>FAX</td>
+						<td><?= $model->fax ?></td>
+					</tr>
+		            <tr>
+						<td>メール</td>
+						<td><?= $model->email ?></td>
+					</tr> -->
+					<tr>
+						<td>住所</td>
+						<td><?= $model->location ?></td>
+					</tr>
+					<tr>
+						<td>対応可能な範囲</td>
+						<td><?= $model->area ?></td>
+					</tr>
+					<tr>
 						<td>担当者名</td>
-						<!-- <td>担当者名 Name of the person in charge</td> -->
 						<td><?= $model->leader ?></td>
 					</tr>
 					<tr>
-						<!-- <td>8</td> -->
-						<td>アピールポイント（200字程度）</td>
-						<!-- <td>アピールポイント（200字程度） Appeal point (about 200 words)</td> -->
+						<td>アピールポイント（150字程度）</td>
 						<td><?= $model->apeal ?></td>
+					</tr>
+		            <tr>
+						<td>事業所ホームページURL</td>
+						<td><?= $model->url ?></td>
 					</tr>
 				</tbody>
 			</table>

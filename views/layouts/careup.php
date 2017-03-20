@@ -28,119 +28,140 @@ CareupAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 
-<div class="">
-    <div class="navbar-fixed">
-        <ul id="dropdown1" class="dropdown-content">
-            <li>    
-            <!-- <a href="#!">Logout</a> -->
-                <?= Html::a( "Logout", $url = ['site/logout'], $options = ['class'=>'','data-method' => 'POST'] ) ?>
-            </li>
-        </ul>
-        <nav>
-            <div class="nav-wrapper white">
-                <a href="#" data-activates="slide-out" class="button-collapse btn-flat">
-                    <i class="material-icons">menu</i>
-                </a>
-
-                <a href="#!" class="brand-logo hide-on-small-only"><img src="img/web-logo.png"></a>
-
-                <a href="#!" class="brand-logo hide-on-med-and-up" >
-                    <img class="responsive-img" width="70" src="img/calogo.png">
-                </a>
-                <ul class="right hide-on-med-and-down black-text">
-                    <li><?php echo Html::a('Search', ['office/search'], ['class' => 'black-text']) ?></li>
-                    <li><?php echo Html::a('Home', ['office/index'], ['class' => 'black-text']) ?></li>
-                    <li ><a class="black-text" href="#!">Therapist</a></li>
-                    <li><a class="black-text" href="#!">Events</a></li>
-                    <li><a class="black-text" href="#!">Recruit</a></li>
-                    <li><a class="black-text" href="#!">Share</a></li>
-                    <!-- Dropdown Trigger -->
-                    <li>
-                        <a class="dropdown-button" href="#!" data-activates="dropdown1">
-                            <img src="img/friends.png" alt="" width="40" class="circle responsive-img profile-menu-image">
-                            <!-- <i class="material-icons right">arrow_drop_down</i> -->
-                        </a>
-                    </li>
-                </ul>
-            </div><!--/.nav-wrapper-->
-        </nav>
-    </div>
-</div><!--/.row-->
-
-<ul id="slide-out" class="side-nav">
-    <li>
-    <div class="userView">
-        <div class="background">
-            <!-- <img src="https://lh4.googleusercontent.com/-XplyTa1Za-I/VMSgIyAYkHI/AAAAAAAADxM/oL-rD6VP4ts/w1184-h666/Android-Lollipop-wallpapers-Google-Now-Wallpaper-2.png"> -->
-
-            <?= Html::img('img/side-nav-bg.png', ['alt'=>'Office Image', 'class'=>'','width'=>'']);?>
-            <!-- </?= Html::img($model->imgname, ['alt'=>'Office Image', 'class'=>'responsive-img','width'=>'']);?> -->
-          
-        </div>
-        <a href="#!user"></a><?= Html::img('img/user_icon.png', ['alt'=>'Office Image', 'class'=>'responsive-img','width'=>'']);?></a>
-        <!-- <a href="#!user"><img class="circle" src="http://materializecss.com/images/yuna.jpg"></a> -->
-        <a href="#!name"><span class="white-text name"><?= isset(Yii::$app->user->identity->name)? Yii::$app->user->identity->name:'' ?></span></a>
-        <a href="#!email"><span class="white-text email"><?= isset(Yii::$app->user->identity->mailadr)? Yii::$app->user->identity->mailadr:'' ?></span></a>
-    </div>
-    </li>
-    <!-- <li> <a class="waves-effect" href="#!"><i class="material-icons">cloud</i>Home</a> </li> -->
-    <li>
-        <?php echo Html::a('<i class="material-icons">cloud</i>Search', ['office/search'], ['class' => 'waves-effect']) ?>
-    </li>
-    <li>
-        <?php echo Html::a('<i class="material-icons">cloud</i>Offices', ['office/index'], ['class' => 'waves-effect']) ?>
-    </li>
-
-   <!--  <ul class="collapsible collapsible-accordion">
-      <li>
-        <a class="collapsible-header">Dropdown<i class="material-icons">arrow_drop_down</i></a>
-        <div class="collapsible-body">
-          <ul>
-            <li><a href="#!">First</a></li>
-            <li><a href="#!">Second</a></li>
-            <li><a href="#!">Third</a></li>
-            <li><a href="#!">Fourth</a></li>
-          </ul>
-        </div>
-      </li>
-    </ul> -->
-    <li> <a class="waves-effect" href="#!"><i class="material-icons">cloud</i>Therapist</a> </li>
-    <li> <a class="waves-effect" href="#!"><i class="material-icons">cloud</i>Events</a> </li>
-    <li> <a class="waves-effect" href="#!"><i class="material-icons">cloud</i>Recruit</a> </li>
-    <li> <a class="waves-effect" href="#!"><i class="material-icons">cloud</i>Share</a> </li>
-  </ul>
-
-
-
-
-<!-- <div class="row"> -->
-    <?= $content ?>
-<!-- </div> -->
-           
-
-           
-
-<!--     </div>
-</div>
- -->
-<footer class="page-footer row teal">
+<nav class="navbar navbar-default">
     <div class="container">
-        <div class="row">
-            <div class="col l6 s12">
-                <div class="white-text">Footer Content</div>
-                <p class="grey-text text-lighten-4">
-                    You can add text here
-                </p>
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://careup.jp/">
+                <!-- <img alt="Brand" src="..."> -->
+                <?= Html::img( 'img/web-logo.png', ['alt'=>'"alt"', 'class'=>'img-responsive','width'=>''] ) ?>
+            </a>
+        </div>
+
+        <?php if (Yii::$app->controller->action->id == 'signup'): ?>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav navbar-right">
+                <li class="sign-up-login">
+                    <?php echo Html::a('<i class=" fa fa-sign-in" aria-hidden="true"></i> Login', ['site/login',], ['class' => '','data-method' => 'post']); ?>
+
+                </li>
+
+              </ul>
+            </div><!-- /.navbar-collapse -->
+        <?php else: ?>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+
+            <?php if (Yii::$app->controller->action->id == 'viewmore'): ?>
+                <li class="active">
+            <?php else: ?>
+                <li>
+            <?php endif ?>
+                    <a href="index.php?r=office/viewmore">
+                        <!-- Link <span class="sr-only">(current)</span> -->
+                        <div class="nav-menu-link">
+                            <span class="pull-left">
+                                <?= Html::img( 'img/Member/Member_1_.png', ['alt'=>'"alt"', 'class'=>'img-responsive','width'=>'30'] ) ?>
+                            </span>
+                            <span class="pull-left"> &nbsp; &nbsp;事業所を登録</span>
+                        </div>
+                    </a>
+                </li>
+
+           <!--  </?php if (Yii::$app->controller->action->id == 'pagedesignjobdetails'): ?>
+                <li class="active">
+            </?php else: ?>
+                <li>
+            </?php endif ?>
+                    <a href="index.php?r=office/pagedesignjobdetails">
+                        <div class="nav-menu-link">
+                            <span class="pull-left">
+                                </?= Html::img( 'img/Member/Member_1_.png', ['alt'=>'"alt"', 'class'=>'img-responsive','width'=>'30'] ) ?>
+                            </span>
+                            <span class="pull-left"> &nbsp; &nbsp;Job Description</span>
+                        </div>
+                    </a>
+                </li> -->
+
+            <?php if (Yii::$app->controller->action->id == 'search'): ?>
+                <li class="active">
+            <?php else: ?>
+                <li>
+            <?php endif ?>
+                    <a href="index.php?r=office/search">
+                        <div class="nav-menu-link">
+                            <span class="pull-left">
+                                <span class="glyphicon glyphicon-search"></span>
+
+                            </span>
+                            <span class="pull-left"> &nbsp; &nbsp;検索する</span>
+                        </div>
+                    </a>
+                </li>
+
+            </ul><!--navbar-nav-->
+
+
+
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+                <?php echo Html::a('<div class="nav-menu-link"> <span class="pull-left"> <img src="img/Member/Member_7_.png" width="20" class="img-responsive"> </span> <span class="pull-left"> &nbsp; &nbsp;事業所一覧へ</span> </div>', ['office/index',], ['class' => '','data-method' => 'post']); ?>
+            </li>
+            <li>
+                <?php echo Html::a('<div class="nav-menu-link"> <span class="pull-left"> <img src="img/Member/Member_6_.png" width="20" class="img-responsive"> </span> <span class="pull-left"> &nbsp; &nbsp;ログアウト</span> </div>', ['site/logout',], ['class' => '','data-method' => 'post']); ?>
+            </li>
+            <li>
+                <?php echo Html::a(Yii::$app->user->identity->name); ?>
+            </li>
+           <!--  <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></?= Yii::$app->user->identity->name ?> <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+              </ul>
+            </li> -->
+          </ul>
+        </div><!-- /.navbar-collapse -->
+        <?php endif ?>
+  </div><!-- /.container-fluid -->
+</nav>
+
+<div class="container">
+    <?= $content ?>
+</div>
+           
+
+           
+
+<!--  Footer  -->
+<div class="">
+    <div class="footer">
+        <div class="section">
+            <div class="col-xs-12 col-sm-4 col-md-4" align="center">
+                <div class="col_box clearfix">
+                    <?= Html::a('ご利用規約', ['usepolicy']) ?>
+                </div>
             </div>
-            <div class="footer-copyright">
-                <div class="container">
-                    2016 Copyright text
-                    <a href="" class="grey-text text-lighten-4 right">More Links</a>
+            <div class="col-xs-12 col-sm-4 col-md-4" align="center">
+                <div class="col_box clearfix">
+                    <?= Html::a('個人情報保護方針', ['privacypolicy']) ?>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-4" align="center">
+                <div class="col_box clearfix">
+<!--                    広告の掲載について-->
                 </div>
             </div>
         </div>
     </div>
-</footer>
+</div>
 
 <?php $this->endBody() ?>
 </body>

@@ -2,12 +2,18 @@
 <div id="desktop-side-nav" class="col s12 l3 hide-on-med-and-down">
     <div class="collection">
         <!-- <a href="#!" class="waves-effect collection-item">Home</a> -->
-        <?php echo Html::a('Search', ['office/search'], ['class' => 'waves-effect collection-item']) ?>
-        <?php echo Html::a('Offices', ['office/index'], ['class' => 'waves-effect collection-item']) ?>
-        <a href="#!" class="waves-effect collection-item active">Therapist</a>
-        <a href="#!" class="waves-effect collection-item">Events</a>
-        <a href="#!" class="waves-effect collection-item">Recruit</a>
-        <a href="#!" class="waves-effect collection-item">Share</a>
-        
+        <?php echo Html::a(Html::img('@web/img/find/6.png', ['width'=>'220px']), ['office/search'], ['class' => 'waves-effect']) ?>
+
+        <?php echo Html::a(Html::img('@web/img/Member/Member_1.png', ['width'=>'220px']), ['office/index'], ['class' => 'waves-effect']) ?>
+
+        <?php echo Html::a(Html::img('@web/img/Member/Member_2.0.png', ['width'=>'220px']), [''], ['class' => 'waves-effect']) ?>
+
+        <?php echo Html::a(Html::img('@web/img/Member/Member_3.0.png', ['width'=>'220px']), [''], ['class' => 'waves-effect']) ?>
+
+        <?php echo Html::a(Html::img('@web/img/Member/Member_4.0.png', ['width'=>'220px']), [''], ['class' => 'waves-effect']) ?>
+
+        <?php echo Html::a(Html::img('@web/img/Member/Member_5.0.png', ['width'=>'220px']), [''], ['class' => 'waves-effect']) ?>
+
+        <?php echo Html::a(Html::img('@web/img/Member/Member_6.png', ['width'=>'220px']), ['site/logout'], $options = ['class'=>'','data-method' => 'POST']) ?>
     </div>
 </div>

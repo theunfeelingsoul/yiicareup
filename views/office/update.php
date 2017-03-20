@@ -5,46 +5,28 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Office */
 
-$this->title = 'Update Office: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Offices', 'url' => ['index']];
+$this->title = '事業所情報更新: ' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => '事業所', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = '更新';
 ?>
 
 <div class="row">
-    <div class="col s12 m4 l3">
-        <?= 
-            $this->render('__normal-nav', [
-            // $this->render('__slide-out-nav', [
-            'model'=> $model 
-        ]); ?>
-    </div>  
 
-     <div class="fixed-action-btn horizontal click-to-toggle">
-            <a class="btn-floating btn-large red">
-                <i class="material-icons">menu</i>
-            </a>
-            <ul>
-         
-                <li>
-                    <?= Html::a( '<i class="material-icons">visibility</i>', $url = ['office/viewmore','id'=>$model->id], $options = ['class'=>'waves-effect waves-light btn-floating green'] ) ?>
-                </li>
-                <li>
-                    <?= Html::a( '<i class="material-icons">list</i>', $url = ['office/index','id'=>$model->id], $options = ['class'=>'waves-effect waves-light btn-floating orange'] ) ?>
-                </li>
-            
-                <!-- <li><a class="btn-floating yellow darken-1"><i class="material-icons">delete</i></a></li>
-                <li><a class="btn-floating green"><i class="material-icons">visibility</i></a></li> -->
-                <!-- <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li> -->
-            </ul>
-        </div>
-
-    <div class="office-update col s12 m8 l8">
+    <div class="office-update">
 
         <h1><?= Html::encode($this->title) ?></h1>
-	    <?= $this->render('_form', [
-	        'model' => $model,
-	    ]) ?>
+
+    	    <?= $this->render('_form', [
+    	        'model' => $model,
+                'user_offices'              => $user_offices,
+                'user_office_id'            => $model->id,
+                'skills_names_array'        => $skills_names_array,
+                'new_skilltimetable_array'  => $new_skilltimetable_array,
+                'office_timetable'          => $office_timetable,
+    	    ]) ?>
 
     </div>
+
+
 </div>

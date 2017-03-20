@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\SignupForm;
 
 class SiteController extends Controller
 {
@@ -71,7 +72,7 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-             $this->layout = "careup";
+             $this->layout = "careup-nomenu";
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -125,5 +126,48 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+
+
+     /**
+     * Signup action.
+     *
+     * @return string
+     */
+    public function actionSignup()
+    {
+        $this->layout = "careup";
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        $model = new SignupForm();
+        if ($model->load(Yii::$app->request->post()) && $model->signup()) {
+            // return $this->goBack();
+            return $this->redirect(['site/login']);
+        }
+        return $this->render('signup', [
+            'model' => $model,
+        ]);
+    }
+
+        /**
+     * Displays UsePolicy page.
+     *
+     * @return string
+     */
+    public function actionUsepolicy()
+    {
+        return $this->render('usepolicy');
+    }
+
+        /**
+     * Displays PrivatePolicy page.
+     *
+     * @return string
+     */
+    public function actionPrivacypolicy()
+    {
+        return $this->render('privacypolicy');
     }
 }

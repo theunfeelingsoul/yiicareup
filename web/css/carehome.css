@@ -5,20 +5,21 @@ body {
     background-color: #ffffff;
     /*background-image: url(../img/sn.png);*/
     background-repeat: no-repeat;
-    background-position: top 66px center;
-    background-size: 768px auto;
+   /* background-position: top 66px center;
+    background-size: 768px auto;*/
+    min-height: 100%;
 }
 /* タブレット以上のサイズに */
 @media (min-width: 768px) {
     body {
-        background-position: top center;
-        background-size: 992px auto;
+       /* background-position: top center;
+        background-size: 992px auto;*/
     }
 }
 /* PC以上のサイズに*/
 @media (min-width: 992px) {
     body {
-        background-size: 100% auto;
+        /*background-size: 100% auto;*/
     }
 }
 
@@ -352,13 +353,13 @@ input:focus {
 /* tableのスタイル */
 /* 列（縦）の色 */
 * {
-			margin: 0;
+		/*	margin: 0;
 			padding: 0;
 			border: 0;
 			outline: 0;
 			font-size: 100%;
 			font-weight: normal;
-			vertical-align: baseline;
+			vertical-align: baseline;*/
 		}
 		article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
 			display: block;
@@ -370,23 +371,23 @@ input:focus {
 			vertical-align: bottom;
 		}
 		a {
-			color: #555;
-			text-decoration: none;
+		/*	color: #555;
+			text-decoration: none;*/
 		}
 		a:hover {
-			color: #555;
-			text-decoration: underline;
+		/*	color: #555;
+			text-decoration: underline;*/
 		}
 		::selection      { color: #fff; background: #55d5ac;}
 		::-moz-selection { color: #fff; background: #55d5ac;}
 
 		::-webkit-scrollbar {
-			width: 15px;
-			background: #f7f7f7;
+/*			width: 15px;
+			background: #f7f7f7;*/
 		}
 		::-webkit-scrollbar-thumb {
-			height: 100px;
-			background: #ddd;
+		/*	height: 100px;
+			background: #ddd;*/
 		}
 		header {
 			padding: 40px 40px 0;
@@ -397,7 +398,7 @@ input:focus {
 		}
 		footer {
 			margin: 80px 40px 20px;
-			font-family: 'Open Sans', sans-serif;
+			/*font-family: 'Open Sans', sans-serif;*/
 			font-weight: 300;
 		}
 		footer small {
@@ -428,7 +429,7 @@ input:focus {
 			width: auto;
 			padding: 0.75em 1em;
 			border: 1px solid #eaeaea;
-			font-family: 'Open Sans', sans-serif;
+			/*font-family: 'Open Sans', sans-serif;*/
 			font-weight: 300;
 			text-align: center;
 		}
@@ -661,13 +662,13 @@ input:focus {
 body {
   /*background-color:#f77;*/
   font-size: 14px;
-  font-family: 'Noto Sans Japanese' ,'游ゴシック体', 'Yu Gothic', 'YuGothic', 'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3', 'Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro W3', 'Meiryo', 'メイリオ', sans-serif;
-  letter-spacing: 1.5px;
+  /*font-family: 'Noto Sans Japanese' ,'游ゴシック体', 'Yu Gothic', 'YuGothic', 'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3', 'Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro W3', 'Meiryo', 'メイリオ', sans-serif;*/
+  /*letter-spacing: 1.5px;*/
   margin: 0;
   padding: 0;
 }
-a:link, a:visited {color: #66CDAA;}
-a:hover {color: #fca;}
+/*a:link, a:visited {color: #66CDAA;}*/
+/*a:hover {color: #fca;}*/
 p {
   margin: 0;
   padding: 0;
@@ -680,11 +681,18 @@ h1 {
   text-align: center;
 }
 h2 {
+
+}
+.green-ribbon{
   margin: 0 -20px 10px -20px;
   padding: 5px 10px;
   background-color: #66CDAA;
-  color: white;
+  color: white !important;
   font-size: 18px;
+}
+
+.white-text{
+  color: #fff !important;
 }
 /*
 h3 {
@@ -712,10 +720,10 @@ h3 {
 
 body,p,form,input{margin: 0}
 #form{
-    width: 340px;
-    margin: 30px auto;
+    /*width: 340px;*/
+/*    margin: 30px auto;
     padding: 20px;
-    border: 1px solid #555;
+    border: 1px solid #555;*/
     }
 
 form p{
@@ -904,4 +912,16 @@ display: none;
 
 .footer-copy p {
     margin: 0 auto;
+}
+
+.sign-up-btn{
+  /*width: 160px; */
+  /*border-radius: 7.5px; */
+  background-color:#00BFA5 !important; 
+  border:0; 
+  font-size: 1.6em;
+}
+
+.site-signup{
+  margin-bottom: 30px;
 }

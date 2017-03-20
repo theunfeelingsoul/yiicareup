@@ -38,11 +38,12 @@ class Office extends \yii\db\ActiveRecord
 
     // will be used to store the image data
     public $imageFile;
+    public $Officetimetable_search;
 
     public $imgx;
 
     // message when a search is empty
-    public $msg_empty_search = "Your Search Came up Empty. Please Try again";
+    public $msg_empty_search = "条件に当てはまる事業所は現在登録されておりません。 別の条件でお試しください。";
 
     public $times=array('mon_9', 'tue_9', 'wed_9', 'thu_9', 'fri_9', 'sat_9', 'sun_9', 'mon_10', 'tue_10', 'wed_10', 'thu_10', 'fri_10', 'sat_10', 'sun_10', 'mon_11', 'tue_11', 'wed_11', 'thu_11', 'fri_11', 'sat_11', 'sun_11', 'mon_12', 'tue_12', 'wed_12', 'thu_12', 'fri_12', 'sat_12', 'sun_12', 'mon_13', 'tue_13', 'wed_13', 'thu_13', 'fri_13', 'sat_13', 'sun_13', 'mon_14', 'tue_14', 'wed_14', 'thu_14', 'fri_14', 'sat_14', 'sun_14', 'mon_15', 'tue_15', 'wed_15', 'thu_15', 'fri_15', 'sat_15', 'sun_15', 'mon_16', 'tue_16', 'wed_16', 'thu_16', 'fri_16', 'sat_16', 'sun_16', 'mon_17', 'tue_17', 'wed_17', 'thu_17', 'fri_17', 'sat_17', 'sun_17', 'mon_18', 'tue_18', 'wed_18', 'thu_18', 'fri_18', 'sat_18', 'sun_18', 'mon_19', 'tue_19', 'wed_19', 'thu_19', 'fri_19', 'sat_19', 'sun_19', 'mon_20', 'tue_20', 'wed_20', 'thu_20', 'fri_20', 'sat_20', 'sun_20');
     
@@ -60,32 +61,22 @@ class Office extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['Oname', 'leader', 'url', 'apeal', 'tel', 'fax', 'email', 'location', 'area', 'service','user_id','skills'], 'required'],
+            [['Oname', 'leader', 'url', 'apeal', 'tel', 'fax', 'email', 'location', 'area', 'user_id','skills','service'], 'required'],
             // [['imgname'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg','maxSize' => 1024 * 1024 * 2],
             [['imageFile'], 'file', 'skipOnEmpty' => true,'extensions' => 'png, jpg'],
             [['id','user_id'], 'integer'],
-            [['area'], 'required'],
-
-            [['Oname'], 'string', 'max' => 20],
-            [['leader'], 'string', 'max' => 10],
+            // [['area'], 'required'],
+            [['leader'], 'string', 'max' => 100],
             [['url'], 'string', 'max' => 100],
-            [['apeal'], 'string', 'max' => 150],
-            [['tel', 'fax'], 'string', 'max' => 15],
+            [['apeal','imgname','Oname'], 'string'],
+            [['tel', 'fax'], 'string', 'max' => 100],
             ['email', 'email'],
-            [['location'], 'string', 'max' => 30],
-            [['imgname'], 'string', 'max' => 50],
+            [['location'], 'string', 'max' => 100],
         ];
     }
 
 
-      // this helps ignore img_path when updating
-    // i.e. making it not required
-    // public function scenarios()
-    // {
-    //     $scenarios = parent::scenarios();
-    //     $scenarios['update'] = ['id', 'Onum', 'Oname', 'leader', 'url', 'apeal', 'tel', 'fax', 'email', 'blanktime_s', 'blanktime_f', 'location', 'area', 'staff', 'service','user_id'];// only validate these attibutes on update
-    //     return $scenarios;
-    // }
+
 
 
     /**
@@ -94,20 +85,20 @@ class Office extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id'            => 'ID',
-            'Oname'         => 'Company',
-            'leader'        => 'In charge',
-            'url'           => 'Movie Url',
-            'apeal'         => 'Appeal',
+           'id'            => 'ID',
+            'Oname'         => '事業所名',
+            'leader'        => '担当者',
+            'url'           => '事業所ホームページURL',
+            'apeal'         => 'アピール文（１５０字程度）',
             'tel'           => 'Tel',
             'fax'           => 'Fax',
-            'email'         => 'Email',
-            'location'      => 'Address',
-            'area'          => 'Area',
-            'service'       => 'Service',
-            'imgname'       => 'Office Image',
-            'user_id'       => 'User ID',
-            'skills'        => 'Skills',
+            'email'         => 'メール',
+            'location'      => '住所',
+            'area'          => '対応可能なエリア',
+            'service'       => 'サービス',
+            'imgname'       => '画像',
+            'user_id'       => 'ユーザID',
+            'skills'        => 'アピールタグ',
         ];
     }
 
@@ -136,6 +127,7 @@ class Office extends \yii\db\ActiveRecord
     public function findByUserId(){
         $offices = Office::find()
         ->where(['user_id' => Yii::$app->user->identity->id])
+        ->orderBy(['id' => SORT_DESC])
         ->all(); 
 
         return $offices;
@@ -182,6 +174,13 @@ class Office extends \yii\db\ActiveRecord
 
         return $data;
     }
+    public function findLikeAttribute($attribute,$value){
+        $data = Office::find()
+        ->where(['like', $attribute, $value])
+        ->all(); 
+
+        return $data;
+    }
 
 
     /**
@@ -203,7 +202,7 @@ class Office extends \yii\db\ActiveRecord
             return $tag_names_string = implode(' , ', $tag_names_array);
 
         }else{
-            return "No Skills";
+            return "選択されたタグに該当する事業所がありません";
         }
     }
 
@@ -226,7 +225,7 @@ class Office extends \yii\db\ActiveRecord
             // implode array into string
             return implode(',', $area_names_array);
         }else{
-            return "No Area";
+            return "選択されたエリアに該当する事業所がありません";
         }
     }
 
@@ -249,8 +248,33 @@ class Office extends \yii\db\ActiveRecord
             // implode array into string
             return implode(' , ', $service_names_array);
         }else{
-            return "No Services";
+            return "選択されたサービスに該当する事業所がありません";
         }
+    }
+
+
+        /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOffice_timetable()
+    {
+        return $this->hasMany(Officetimetable::className(), ['office_id' => 'id']);
+    }
+
+        /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTags_display()
+    {
+        return $this->hasMany(Tagsdisplay::className(), ['office_id' => 'id']);
+    }
+
+        /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getService_display()
+    {
+        return $this->hasMany(Servicedisplay::className(), ['office_id' => 'id']);
     }
 
 

@@ -12,6 +12,30 @@
                     <th>日</th>
                 </tr>
                 <tr>
+                    <td>6:00-9:00 / 早朝</td>
+                    <td>
+                        <?php echo $form->field($model, 'mon_6')->checkbox(array('label'=>'')); ?>
+                    </td>
+                    <td>
+                        <?php echo $form->field($model, 'tue_6')->checkbox(array('label'=>'')); ?>
+                    </td>
+                    <td>
+                        <?php echo $form->field($model, 'wed_6')->checkbox(array('label'=>'')); ?>
+                    </td>
+                    <td>
+                        <?php echo $form->field($model, 'thu_6')->checkbox(array('label'=>'')); ?>
+                    </td>
+                    <td>
+                        <?php echo $form->field($model, 'fri_6')->checkbox(array('label'=>'')); ?>
+                    </td>
+                    <td>
+                        <?php echo $form->field($model, 'sat_6')->checkbox(array('label'=>'')); ?>
+                    </td>
+                    <td>
+                        <?php echo $form->field($model, 'sun_6')->checkbox(array('label'=>'')); ?>
+                    </td>
+                </tr>
+                <tr>
                     <td>9:00</td>
                     <td>
                         <?php echo $form->field($model, 'mon_9')->checkbox(array('label'=>'')); ?>
@@ -20,9 +44,7 @@
                         <?php echo $form->field($model, 'tue_9')->checkbox(array('label'=>'')); ?>
                     </td>
                     <td>
-                        <!-- < echo $form->field($model, 'wed_9')->checkbox(array('label'=>'')); ?>-->
-                        <?= $form->field($model, 'wed_9')->checkbox(array('label'=>'')); ?>
-
+                        <?php echo $form->field($model, 'wed_9')->checkbox(array('label'=>'')); ?>
                     </td>
                     <td>
                         <?php echo $form->field($model, 'thu_9')->checkbox(array('label'=>'')); ?>
@@ -230,7 +252,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>18:00</td>
+                    <td>18:00-21:00 / 夕方</td>
                            <td>
                         <?php echo $form->field($model, 'mon_18')->checkbox(array('label'=>'')); ?>
                     </td>
@@ -254,53 +276,54 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>19:00</td>
-                          <td>
-                        <?php echo $form->field($model, 'mon_19')->checkbox(array('label'=>'')); ?>
+                        <td>21:00-24:00 / 夜間</td>
+                           <td>
+                        <?php echo $form->field($model, 'mon_21')->checkbox(array('label'=>'')); ?>
                     </td>
                     <td>
-                        <?php echo $form->field($model, 'tue_19')->checkbox(array('label'=>'')); ?>
+                        <?php echo $form->field($model, 'tue_21')->checkbox(array('label'=>'')); ?>
                     </td>
                     <td>
-                        <?php echo $form->field($model, 'wed_19')->checkbox(array('label'=>'')); ?>
+                        <?php echo $form->field($model, 'wed_21')->checkbox(array('label'=>'')); ?>
                     </td>
                     <td>
-                        <?php echo $form->field($model, 'thu_19')->checkbox(array('label'=>'')); ?>
+                        <?php echo $form->field($model, 'thu_21')->checkbox(array('label'=>'')); ?>
                     </td>
                     <td>
-                        <?php echo $form->field($model, 'fri_19')->checkbox(array('label'=>'')); ?>
+                        <?php echo $form->field($model, 'fri_21')->checkbox(array('label'=>'')); ?>
                     </td>
                     <td>
-                        <?php echo $form->field($model, 'sat_19')->checkbox(array('label'=>'')); ?>
+                        <?php echo $form->field($model, 'sat_21')->checkbox(array('label'=>'')); ?>
                     </td>
                     <td>
-                        <?php echo $form->field($model, 'sun_19')->checkbox(array('label'=>'')); ?>
+                        <?php echo $form->field($model, 'sun_21')->checkbox(array('label'=>'')); ?>
                     </td>
                 </tr>
                 <tr>
-                    <td>20:00</td>
+                        <td>24:00-6:00 / 夜中</td>
                            <td>
-                        <?php echo $form->field($model, 'mon_20')->checkbox(array('label'=>'')); ?>
+                        <?php echo $form->field($model, 'mon_24')->checkbox(array('label'=>'')); ?>
                     </td>
                     <td>
-                        <?php echo $form->field($model, 'tue_20')->checkbox(array('label'=>'')); ?>
+                        <?php echo $form->field($model, 'tue_24')->checkbox(array('label'=>'')); ?>
                     </td>
                     <td>
-                        <?php echo $form->field($model, 'wed_20')->checkbox(array('label'=>'')); ?>
+                        <?php echo $form->field($model, 'wed_24')->checkbox(array('label'=>'')); ?>
                     </td>
                     <td>
-                        <?php echo $form->field($model, 'thu_20')->checkbox(array('label'=>'')); ?>
+                        <?php echo $form->field($model, 'thu_24')->checkbox(array('label'=>'')); ?>
                     </td>
                     <td>
-                        <?php echo $form->field($model, 'fri_20')->checkbox(array('label'=>'')); ?>
+                        <?php echo $form->field($model, 'fri_24')->checkbox(array('label'=>'')); ?>
                     </td>
                     <td>
-                        <?php echo $form->field($model, 'sat_20')->checkbox(array('label'=>'')); ?>
+                        <?php echo $form->field($model, 'sat_24')->checkbox(array('label'=>'')); ?>
                     </td>
                     <td>
-                        <?php echo $form->field($model, 'sun_20')->checkbox(array('label'=>'')); ?>
+                        <?php echo $form->field($model, 'sun_24')->checkbox(array('label'=>'')); ?>
                     </td>
                 </tr>
+                
             </tbody>
-        </table>               
+        </table>
     </div>

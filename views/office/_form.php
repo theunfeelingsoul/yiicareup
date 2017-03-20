@@ -1,6 +1,8 @@
 <?php
 
+// use Yii;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\Office;
@@ -9,121 +11,125 @@ use app\models\Osaka;
 use app\models\Tags;
 use yii\helpers\BaseHtml;
 
+$serviceList = ArrayHelper::map(Services::find()->all(), 'Sid', 'Sname');
+$skillList = ArrayHelper::map(tags::find()->all(), 'Skid', 'Skname');
+$areaList = ArrayHelper::map(Osaka::find()->all(), 'Cid', 'Cname');
+
 /* @var $this yii\web\View */
 /* @var $model app\models\Office */
 /* @var $form yii\widgets\ActiveForm */
+
 ?>
 
     <div class="office-form">
         <?php $form = ActiveForm::begin([
-            'options' => ['enctype' => 'multipart/form-data'],
+            'options' =>    [  'enctype' => 'multipart/form-data',
+                                'layout' => 'horizontal',
+                                // 'fieldConfig' => [
+                                    // 'template' => "{label}\n{beginWrapper}\n{input}\n{hint}\n{error}\n{endWrapper}",
+                                    'horizontalCssClasses' => [
+                                        'label' => 'col-sm-4',
+                                        'offset' => 'col-sm-offset-4',
+                                        'wrapper' => 'col-sm-8',
+                                        'error' => '',
+                                        'hint' => '',
+                                    ],
+                                // ],
+
+                            ],
         ]); ?>
         <?= $form->errorSummary($model) ?>
-        <div class="row">
-            <div class="input-field col s12 m6 l6">
-                <?= $form->field($model, 'Oname')->textInput(['maxlength' => true]) ?>
-            </div>
+        <?= $form->field($model, 'Oname')->textInput(['maxlength' => true]) ?>
 
-            <div class="input-field col s12 m6 l6">
-                <?= $form->field($model, 'leader')->textInput(['maxlength' => true]) ?>
-            </div>
-        </div>    
-        <div class="row">
-            <div class="input-field col s12 m6 l6">
-                <?= $form->field($model, 'tel')->textInput(['maxlength' => true]) ?>
-            </div>
-            <div class="input-field col s12 m6 l6">
-                <?= $form->field($model, 'fax')->textInput(['maxlength' => true]) ?>
-            </div>
-        </div>
+        <?= $form->field($model, 'leader')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'tel')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'fax')->textInput(['maxlength' => true]) ?>
 
-        <div class="row">
-            <div class="input-field col s12 m6 l6">
-                <?= $form->field($model, 'email',[ 'labelOptions' => [ 'data-error' => 'wrong','data-success'=>'right' ]])->textInput(['class' => 'validate']) ?>
-            </div>
+        <?= $form->field($model, 'email')->textInput([]) ?>
 
-            <div class="input-field col s12 m6 l6">
-                <?= $form->field($model, 'location')->textInput(['maxlength' => true]) ?>
-            </div>
-        </div>
+        <?= $form->field($model, 'location')->textInput(['maxlength' => true]) ?>
+
+    
+       
+        <?= $form->field($model, 'url')->textInput(['maxlength' => true]) ?>
+
+        <?= $form->field($model, 'apeal')->textarea(['rows' => '6']) ?>
+ 
+        <?= $form->field($model, 'service')->dropdownList($serviceList,
+                ['multiple'=>'multiple']
+            ); 
+        ?>
+
         
-        <div class="row">
-            
-            <div class="input-field col s12 m6 l6">
-               
-                <?= $form->field($model, 'url')->textInput(['maxlength' => true]) ?>
-            </div>
+        <?= $form->field($model, 'skills')->dropdownList($skillList,
+                ['multiple'=>'multiple']
+            ); 
+        ?>
 
-             <div class="input-field col s12 m6 l6 ">
-                <?= Html::activeTextarea($model, 'apeal',['class' => 'materialize-textarea']) ?>
-                <label for="textarea1"><?php echo $model->attributeLabels()['apeal'] ?></label>
+         <?= $form->field($model, 'area')->dropdownList($areaList,
+                ['multiple'=>'multiple']
+            ); 
+        ?>
+
+        
+        <?= $form->field($model, 'imgname')->fileInput(['class'=>''])->label(false); ?>
                 
-            </div>
+        <div class="row">
+            <?php 
+                // only show if its empty
+                if (!empty($model->imgname)) {
+                      echo Html::img($model->imgname, [
+                                    'alt'=>'some', 'class'=>'thing','width'=>'200'
+                                    ]);
+                } 
+             ?>
         </div>
 
-        <div class="row">
-            <div class="form-group field-office-service required">
-                <div class="input-field col s12">
-                    <?= Html::activeDropDownList($model, 'service', ArrayHelper::map(Services::find()->all(), 'Sid', 'Sname'),['multiple'=>'multiple','prompt'=>'Choose a service']); ?>
-                    <label><?php echo $model->attributeLabels()['service'] ?></label>
-                </div>
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="input-field col s12">
-                <?php echo Html::activeDropDownList($model, 'skills', ArrayHelper::map(tags::find()->all(), 'Skid', 'Skname'),['multiple'=>'multiple','prompt'=>'Choose a skill']); ?>
-                <label><?php echo $model->attributeLabels()['skills'] ?></label>
 
-            </div>
-        </div>
-
-        <div class="row">
-             <div class="input-field col s12">
-                <?= Html::activeDropDownList($model, 'area', ArrayHelper::map(Osaka::find()->all(), 'Cid', 'Cname'),['multiple'=>'multiple','prompt'=>'Choose an area']); ?>
-                <label><?php echo $model->attributeLabels()['area'] ?></label>
-
-            </div>
-        </div>
-        <div class="row">
-           
-
-            <div class="input-field col s12 ">
-                
-                <div class="row">
-                    <div class="file-field input-field">
-                        <div class="waves-effect waves-light btn">
-                            <span>File</span>
-                             <?= $form->field($model, 'imgname')->fileInput(['class'=>''])->label(false); ?>
-                            <!-- <input type="file"> -->
-                        </div>
-                        <div class="file-path-wrapper">
-                            <input class="file-path validate" type="text">
-                        </div>
+        <!-- OFFICE AND SKILL TIMETABLE -->
+        <!-- ONLY SHOWS UP ON UPDATE -->
+        <?php if (Yii::$app->controller->action->id == 'update'): ?>
+            <!-- Tab panes -->
+            <div class="row">
+                <!-- Nav tabs -->
+                <h1>Skill and office Timetable</h1>
+                <ul class="nav nav-tabs form-skill-time-table" id="myTabs" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#office-timetable" aria-controls="office-timetable" role="tab" data-toggle="tab">
+                            Office
+                        </a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#skill-timetable" aria-controls="skill-timetable" role="tab" data-toggle="tab">
+                            Skills
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="office-timetable">
+                        <?= $this->render('__office-timetable', [
+                            'model'=> $model,
+                            'office_timetable'          => $office_timetable,
+                            'user_office_id'            => $model->id,
+                            ]);
+                         ?>
                     </div>
-                </div>
-
-                <div class="row">
-                    <?php 
-                        // only show if its empty
-                        if (!empty($model->imgname)) {
-                             echo Html::img($model->imgname, [
-                                            'alt'=>'some', 'class'=>'thing','width'=>'200'
-                                            ]);
-                        } 
-                     ?>
-                </div>
-
-
-            </div> <!--./input-field-->
-        </div>
+                    <div role="tabpanel" class="tab-pane" id="skill-timetable">
+                        <?= $this->render('__skill-timetable', [
+                            'model'=> $model,
+                            'skills_names_array'        => $skills_names_array,
+                            'new_skilltimetable_array'  => $new_skilltimetable_array,
+                            'user_office_id'            => $model->id,
+                        ]) ?>
+                    </div>
+                </div><!--./tab-content-->
+            </div><!--./row-->
+        <?php endif ?>
 
        
-        <div class="row">
-            <div class="input-field right ">
-                <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'waves-effect waves-light btn ' : 'waves-effect waves-light btn']) ?>
-
-            </div>
+        <div class="form-group">
+                <?= Html::submitButton($model->isNewRecord ? '事業所作成' : '更新', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
         </div>
 
         <?php ActiveForm::end(); ?>
@@ -132,3 +138,4 @@ use yii\helpers\BaseHtml;
     </div>
     </div>
     </div>
+
