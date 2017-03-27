@@ -43,11 +43,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                 // 'id',
                                 // 'Mtag',
                                  array(
-                                    'attribute' => 'イメージ画像',
+                                    'attribute' => '画像',
                                     'format' => 'html',
                                     'value' => function ($data) {
                                     return Html::img(Yii::getAlias('@web').'/'.$data['imgname'],
-                                        ['width' => '70px']);
+                                        ['height' => '50px']);
                                     },
 
                                 ),
@@ -76,6 +76,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 // 'service',
                                 // 'imgname',
                                 // ['class' => 'yii\grid\ActionColumn'],
+                                ['class' => 'yii\grid\ActionColumn','template'=>'{delete}' ],
                             ],
                         ]); ?>
                     </div>
@@ -93,6 +94,15 @@ $this->params['breadcrumbs'][] = $this->title;
                                 // "itemsCssClass" => "striped",
                                 // 'id',
                                 // 'Mtag',
+                                 array(
+                                    'attribute' =>'',
+                                    'format' => 'html',
+                                    'value' => function ($data) {
+                                    return Html::img(Yii::getAlias('@web').'/'.$data['imgname'],
+                                        ['height' => '50px']);
+                                    },
+
+                                ),
                                 array(
                                     'attribute' => 'Oname',
                                     'format' => 'raw',
@@ -104,9 +114,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                 // 'leader',
                                 // 'url:url',
                                 // 'apeal',
-                                'tel',
+                                // 'tel',
                                 // 'fax',
-                                'email:email',
+                                // 'email:email',
                                 // 'holiday',
                                 // 'location',
                                 // 'area',
@@ -114,6 +124,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 // 'service',
                                 // 'imgname',
                                 // ['class' => 'yii\grid\ActionColumn'],
+                                ['class' => 'yii\grid\ActionColumn','template'=>'{delete}' ],
 
 
                             ],

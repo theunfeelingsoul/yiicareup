@@ -39,41 +39,32 @@ $areaList = ArrayHelper::map(Osaka::find()->all(), 'Cid', 'Cname');
                             ],
         ]); ?>
         <?= $form->errorSummary($model) ?>
+        <!--     Necessarily items    -->
+        <?= $form->field($model, 'Onum')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'Oname')->textInput(['maxlength' => true]) ?>
-
-        <?= $form->field($model, 'leader')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'tel')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'fax')->textInput(['maxlength' => true]) ?>
-
-        <?= $form->field($model, 'email')->textInput([]) ?>
-
-        <?= $form->field($model, 'location')->textInput(['maxlength' => true]) ?>
-
-    
-       
-        <?= $form->field($model, 'url')->textInput(['maxlength' => true]) ?>
-
-        <?= $form->field($model, 'apeal')->textarea(['rows' => '6']) ?>
- 
-        <?= $form->field($model, 'service')->dropdownList($serviceList,
-                ['multiple'=>'multiple']
-            ); 
-        ?>
-
-        
+        <?= $form->field($model, 'service')->dropdownList($serviceList);?>
         <?= $form->field($model, 'skills')->dropdownList($skillList,
                 ['multiple'=>'multiple']
             ); 
         ?>
-
-         <?= $form->field($model, 'area')->dropdownList($areaList,
+        <?= $form->field($model, 'tel')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'location')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'area')->dropdownList($areaList,
                 ['multiple'=>'multiple']
             ); 
-        ?>
+        ?>  
+        <?= $form->field($model, 'leader')->textInput(['maxlength' => true]) ?>
 
-        
+        <!--     NOT necessarily items    -->
+        <?= $form->field($model, 'fax')->textInput(['maxlength' => true]) ?>
+
+        <?= $form->field($model, 'email')->textInput([]) ?>
+        <?= $form->field($model, 'url')->textInput(['maxlength' => true]) ?>
+        <hr>
+        <?= $form->field($model_homecare, 'hmc_date')->textInput(['id' => 'multiple-date-pick']) ?>
+        <hr>
+        <?= $form->field($model, 'apeal')->textarea(['rows' => '6']) ?>
         <?= $form->field($model, 'imgname')->fileInput(['class'=>''])->label(false); ?>
-                
         <div class="row">
             <?php 
                 // only show if its empty
@@ -129,7 +120,7 @@ $areaList = ArrayHelper::map(Osaka::find()->all(), 'Cid', 'Cname');
 
        
         <div class="form-group">
-                <?= Html::submitButton($model->isNewRecord ? '事業所作成' : '更新', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                <?= Html::submitButton($model->isNewRecord ? '事業所登録' : '更新', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
         </div>
 
         <?php ActiveForm::end(); ?>

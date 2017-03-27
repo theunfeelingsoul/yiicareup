@@ -3,6 +3,7 @@
 namespace app\models;
 use yii\web\UploadedFile;
 use app\models\Servicedisplay;
+use app\models\Homecare;
 use app\models\Tags;
 
 use Yii;
@@ -19,11 +20,8 @@ use Yii;
 * @property string $tel
 * @property string $fax
 * @property string $email
-* @property string $blanktime_s
-* @property string $blanktime_f
 * @property string $location
 * @property string $area
-* @property integer $staff
 * @property string $service
 * @property string $imgname
 * @property string $img
@@ -45,7 +43,9 @@ class Office extends \yii\db\ActiveRecord
     // message when a search is empty
     public $msg_empty_search = "条件に当てはまる事業所は現在登録されておりません。 別の条件でお試しください。";
 
-    public $times=array('mon_9', 'tue_9', 'wed_9', 'thu_9', 'fri_9', 'sat_9', 'sun_9', 'mon_10', 'tue_10', 'wed_10', 'thu_10', 'fri_10', 'sat_10', 'sun_10', 'mon_11', 'tue_11', 'wed_11', 'thu_11', 'fri_11', 'sat_11', 'sun_11', 'mon_12', 'tue_12', 'wed_12', 'thu_12', 'fri_12', 'sat_12', 'sun_12', 'mon_13', 'tue_13', 'wed_13', 'thu_13', 'fri_13', 'sat_13', 'sun_13', 'mon_14', 'tue_14', 'wed_14', 'thu_14', 'fri_14', 'sat_14', 'sun_14', 'mon_15', 'tue_15', 'wed_15', 'thu_15', 'fri_15', 'sat_15', 'sun_15', 'mon_16', 'tue_16', 'wed_16', 'thu_16', 'fri_16', 'sat_16', 'sun_16', 'mon_17', 'tue_17', 'wed_17', 'thu_17', 'fri_17', 'sat_17', 'sun_17', 'mon_18', 'tue_18', 'wed_18', 'thu_18', 'fri_18', 'sat_18', 'sun_18', 'mon_19', 'tue_19', 'wed_19', 'thu_19', 'fri_19', 'sat_19', 'sun_19', 'mon_20', 'tue_20', 'wed_20', 'thu_20', 'fri_20', 'sat_20', 'sun_20');
+    // public $times=array('mon_9', 'tue_9', 'wed_9', 'thu_9', 'fri_9', 'sat_9', 'sun_9', 'mon_10', 'tue_10', 'wed_10', 'thu_10', 'fri_10', 'sat_10', 'sun_10', 'mon_11', 'tue_11', 'wed_11', 'thu_11', 'fri_11', 'sat_11', 'sun_11', 'mon_12', 'tue_12', 'wed_12', 'thu_12', 'fri_12', 'sat_12', 'sun_12', 'mon_13', 'tue_13', 'wed_13', 'thu_13', 'fri_13', 'sat_13', 'sun_13', 'mon_14', 'tue_14', 'wed_14', 'thu_14', 'fri_14', 'sat_14', 'sun_14', 'mon_15', 'tue_15', 'wed_15', 'thu_15', 'fri_15', 'sat_15', 'sun_15', 'mon_16', 'tue_16', 'wed_16', 'thu_16', 'fri_16', 'sat_16', 'sun_16', 'mon_17', 'tue_17', 'wed_17', 'thu_17', 'fri_17', 'sat_17', 'sun_17', 'mon_18', 'tue_18', 'wed_18', 'thu_18', 'fri_18', 'sat_18', 'sun_18', 'mon_19', 'tue_19', 'wed_19', 'thu_19', 'fri_19', 'sat_19', 'sun_19', 'mon_20', 'tue_20', 'wed_20', 'thu_20', 'fri_20', 'sat_20', 'sun_20');
+
+    public $times=array('mon_9', 'tue_9', 'wed_9', 'thu_9', 'fri_9', 'sat_9', 'sun_9', 'mon_10', 'tue_10', 'wed_10', 'thu_10', 'fri_10', 'sat_10', 'sun_10', 'mon_11', 'tue_11', 'wed_11', 'thu_11', 'fri_11', 'sat_11', 'sun_11', 'mon_12', 'tue_12', 'wed_12', 'thu_12', 'fri_12', 'sat_12', 'sun_12', 'mon_13', 'tue_13', 'wed_13', 'thu_13', 'fri_13', 'sat_13', 'sun_13', 'mon_14', 'tue_14', 'wed_14', 'thu_14', 'fri_14', 'sat_14', 'sun_14', 'mon_15', 'tue_15', 'wed_15', 'thu_15', 'fri_15', 'sat_15', 'sun_15', 'mon_16', 'tue_16', 'wed_16', 'thu_16', 'fri_16', 'sat_16', 'sun_16', 'mon_17', 'tue_17', 'wed_17', 'thu_17', 'fri_17', 'sat_17', 'sun_17', 'mon_18', 'tue_18', 'wed_18', 'thu_18', 'fri_18', 'sat_18', 'sun_18', 'mon_19', 'tue_19', 'wed_19', 'thu_19', 'fri_19', 'sat_19', 'sun_19', 'mon_20', 'tue_20', 'wed_20', 'thu_20', 'fri_20', 'sat_20', 'sun_20', 'mon_21', 'tue_21', 'wed_21', 'thu_21', 'fri_21', 'sat_21', 'sun_21');
     
     /**
      * @inheritdoc
@@ -61,17 +61,12 @@ class Office extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['Oname', 'leader', 'url', 'apeal', 'tel', 'fax', 'email', 'location', 'area', 'user_id','skills','service'], 'required'],
-            // [['imgname'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg','maxSize' => 1024 * 1024 * 2],
+            [['Oname','Onum', 'leader', 'url', 'apeal', 'tel', 'fax', 'email', 'location', 'area', 'user_id','skills','service'], 'required'],
             [['imageFile'], 'file', 'skipOnEmpty' => true,'extensions' => 'png, jpg'],
             [['id','user_id'], 'integer'],
-            // [['area'], 'required'],
-            [['leader'], 'string', 'max' => 100],
-            [['url'], 'string', 'max' => 100],
+            [['leader','tel','fax','url'], 'string', 'max' => 256],
             [['apeal','imgname','Oname'], 'string'],
-            [['tel', 'fax'], 'string', 'max' => 100],
             ['email', 'email'],
-            [['location'], 'string', 'max' => 100],
         ];
     }
 
@@ -85,17 +80,18 @@ class Office extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-           'id'            => 'ID',
-            'Oname'         => '事業所名',
-            'leader'        => '担当者',
+            'id'            => 'ID',
+            'Onum'          => '事業所番号(必須)',
+            'Oname'         => '事業所名(必須)',
+            'leader'        => '担当者(必須)',
             'url'           => '事業所ホームページURL',
             'apeal'         => 'アピール文（１５０字程度）',
-            'tel'           => 'Tel',
+            'tel'           => '電話番号(必須)',
             'fax'           => 'Fax',
-            'email'         => 'メール',
-            'location'      => '住所',
-            'area'          => '対応可能なエリア',
-            'service'       => 'サービス',
+            'email'         => 'メールアドレス',
+            'location'      => '住所(必須)',
+            'area'          => '対応可能なエリア(必須)',
+            'service'       => 'サービス(必須)',
             'imgname'       => '画像',
             'user_id'       => 'ユーザID',
             'skills'        => 'アピールタグ',
@@ -275,6 +271,14 @@ class Office extends \yii\db\ActiveRecord
     public function getService_display()
     {
         return $this->hasMany(Servicedisplay::className(), ['office_id' => 'id']);
+    }
+
+        /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getHome_care()
+    {
+        return $this->hasMany(Homecare::className(), ['office_id' => 'id']);
     }
 
 

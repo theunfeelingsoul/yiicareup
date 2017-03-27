@@ -3,6 +3,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
+use yii\jui\DatePicker;
 
 use app\models\Office;
 use app\models\Services;
@@ -46,6 +47,12 @@ $areaList = ArrayHelper::map(Osaka::find()->all(), 'Cid', 'Cname');
 							?>
 						</div>
 					</div>
+					<div class="srch-menu home-care col-md-2 col-xs-12 ">
+						<div class="srch-menu home-care-srch-menu-item ">
+							<!-- <input type="date" name=""> -->
+								<?= $form->field($model_homecare, 'hmc_date')->label(false)->textInput(['id' => 'home-care-datepicker','placeholder'=>'Home care']) ?>
+						</div>
+					</div>
 					<div class="srch-menu col-md-2 col-xs-6">
 						<div class="srch-menu-item skill-srch-menu-item">
 							アピールタグ
@@ -65,7 +72,7 @@ $areaList = ArrayHelper::map(Osaka::find()->all(), 'Cid', 'Cname');
 						</div>
 					</div>
 
-					<div class="col-md-3">
+					<div class="col-md-2">
 						
 						<?= Html::submitButton('ケンサク', ['class' => 'btn btn-default form-control search-by-service-tag-time-area-submit-button']) ?>
 					</div>
@@ -217,7 +224,7 @@ $areaList = ArrayHelper::map(Osaka::find()->all(), 'Cid', 'Cname');
 			<?php $form = ActiveForm::begin([
 				'id' => 'login-form',
 				'options' => ['class' => ''],
-				'action' => 'index.php?r=office/mocksearch',
+				'action' => 'index.php?r=office/search',
 				]) 
 			?>
 				<div class="col-md-3">

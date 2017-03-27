@@ -109,4 +109,48 @@ $( document ).ready(function() {
 		} // end if
 	});
 
+
+	/*
+		Show short stay date input
+		hide office time table option
+		when short stay service is selected.
+
+
+	*/
+
+	$("#office-service").change(function(){
+		var id = $(this).find("option:selected").val();
+		console.log(id);
+
+		if (id==12) {
+			
+			$(".home-care").show()
+			$(".office-srch-menu-item").hide()
+			// $("#m-home-care-datepicker").show()
+		}else{
+			$(".home-care").hide()
+			$(".office-srch-menu-item").show()
+			$('#home-care-datepicker').val("");
+		}
+	});
+
+	$("#m-office-service").change(function(){
+		var id = $(this).find("option:selected").val();
+		console.log(id);
+
+		if (id==12) {
+			
+			$(".home-care").show()
+			// $("#m-home-care-datepicker").show()
+		}else{
+			$(".home-care").hide()
+			$('#home-care-datepicker').val("");
+		}
+	});
+
+
 }); // end 
+
+area-srch-menu-item-close
+armans
+hiroshiokadesu

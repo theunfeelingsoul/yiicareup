@@ -10,6 +10,8 @@ $( document ).ready(function() {
 		$(this).tab('show')
 	});
 
+	$( "#home-care-datepicker" ).datepicker();
+	$( "#m-home-care-datepicker" ).datepicker();
 	
 
 

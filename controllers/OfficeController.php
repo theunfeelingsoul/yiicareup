@@ -13,6 +13,7 @@ use app\models\Tagsdisplay;
 use app\models\Tags;
 use app\models\Skillstimetable;
 use app\models\Officetimetable;
+use app\models\Homecare;
 
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -77,7 +78,7 @@ class OfficeController extends Controller
         // make the index show offices beloging only to a user
         // make the index show all offees if super user
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->pagination->pageSize=15;
+        $dataProvider->pagination->pageSize=5;
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -106,9 +107,9 @@ class OfficeController extends Controller
     {
         $this->layout = "careup-select";
 
-        $model = new Office();
+        $model          = new Office();
+        $model_homecare = new Homecare();
       
-        $model->staff = 4;
         $model->user_id = Yii::$app->user->identity->id;
         if ($model->load(Yii::$app->request->post()) &&  $model->validate()) {
 
@@ -116,7 +117,7 @@ class OfficeController extends Controller
             // Data from the dropdown list come in array format
             // Change it to a string delimited by commas
             // save it to the respective model attribute
-            if (!empty($model->area)) {
+            if (!empty($model->area)) { 
                 $check_area = $model->area;
                 if (empty($check_area[0])) {
                     unset($check_area[0]);
@@ -127,11 +128,15 @@ class OfficeController extends Controller
 
             if (!empty($model->service)) {
                 $check_service = $model->service;
-                if (empty($check_service[0])) {
-                    unset($check_service[0]);
+                //check if array
+                if (is_array($check_service)) {
+
+                    if (empty($check_service[0])) {
+                        unset($check_service[0]);
+                    }
+                    $model->service    = implode(', ', $check_service);
+
                 }
-                
-                $model->service    = implode(', ', $check_service);
             }
 
             if (!empty($model->skills)) {
@@ -145,9 +150,6 @@ class OfficeController extends Controller
 
             // exit();
             
-
-            
-
             // add the user id
             $model->user_id = Yii::$app->user->identity->id;
             // upload image to folder
@@ -183,6 +185,30 @@ class OfficeController extends Controller
                     $this -> InstantiateSkillsPrep($model->skills,$model->id);
                 }
 
+                //save the homecare 
+                if ($model_homecare->load(Yii::$app->request->post())) {
+
+                    $hmc_user_id =Yii::$app->user->identity->id;
+                    $hmc_office_id  = $model->id;
+                    $hmc_date_string = $model_homecare->hmc_date;
+
+                    $hmc_date_array = explode(',', $hmc_date_string);
+
+                    foreach ($hmc_date_array as $key => $hmc_date) {
+            
+                            // the array values below should be arranged as folllows:
+                            // ['user_id', 'office_id', 'hmc_date']
+                            $data[] = [$hmc_user_id,$hmc_office_id,$hmc_date];
+                        
+                    }
+
+                    // Insert the prepared data array into the table
+                    // by passing it to the batchInsertTimes() method
+                    $model_homecare->batchInsertDates($data);
+
+
+                }
+
                 return $this->redirect(['viewmore', 'id' => $model->id]);
                 exit();
             }else{
@@ -193,7 +219,8 @@ class OfficeController extends Controller
             
         } else {
             return $this->render('create', [
-                'model' => $model,
+                'model'             => $model,
+                'model_homecare'    => $model_homecare,
             ]);
         }
     }
@@ -318,13 +345,24 @@ class OfficeController extends Controller
     public function actionUpdate($id)
     {
         //Use careup layout
-        $this->layout = "careup-select";
+        $this->layout           = "careup-select";
         $modelTags              = new Tags();
-        $modelSkillstimetable              = new Skillstimetable();
+        $modelSkillstimetable   = new Skillstimetable();
+        $model_homecare         = new Homecare();
 
         $modelOffice            = new Office();
         // find all the office/s ids by user_id
         $user_offices = $modelOffice->findByUserId();
+        // find the homecare dates
+            //get all the dates for this office id
+            $hmc_date_array_ = $model_homecare->findByOfficeId($id);
+            // add the dates to an array
+            $hmc_data_before = array();
+            foreach ($hmc_date_array_ as $key => $hmc_date_single) {
+                $hmc_data_before[]=$hmc_date_single->hmc_date;
+            }
+            // make the array into string and assin it to the home care avraiablre
+            $model_homecare->hmc_date = implode(',', $hmc_data_before);
         
         // if office belongs to user, code continues
         // if not user is redirected to create page
@@ -336,7 +374,7 @@ class OfficeController extends Controller
         $first_model_imgname    = $model->imgname;
 
         // 2. CHNAGE THE COMMA DELIMITED SERVICE, AREA AND SKILLS STRING DATA TO AN ARRAY 
-         $model->service = explode(',', $model->service); 
+                $model->service = explode(',', $model->service); 
                 $model->area    = explode(',', $model->area); 
                 $model->skills  = explode(',', $model->skills); 
 
@@ -411,13 +449,26 @@ class OfficeController extends Controller
                 $model->area    = implode(', ', $check_area);
             }
 
+            // if (!empty($model->service)) {
+            //     $check_service = $model->service;
+            //     if (empty($check_service[0])) {
+            //         unset($check_service[0]);
+            //     }
+                
+            //     $model->service    = implode(', ', $check_service);
+            // }
+
             if (!empty($model->service)) {
                 $check_service = $model->service;
-                if (empty($check_service[0])) {
-                    unset($check_service[0]);
+                //check if array
+                if (is_array($check_service)) {
+
+                    if (empty($check_service[0])) {
+                        unset($check_service[0]);
+                    }
+                    $model->service    = implode(', ', $check_service);
+
                 }
-                
-                $model->service    = implode(', ', $check_service);
             }
 
             if (!empty($model->skills)) {
@@ -462,7 +513,43 @@ class OfficeController extends Controller
                 if ($model->save(false)) {
                     if (!empty($check_skills)) {
                         # code...
-                    $this->preInstantiateCheck($model->id);
+                        $this->preInstantiateCheck($model->id);
+
+                        //update homecare
+                        $model_homecare->load(Yii::$app->request->post());
+                        // $hmc_data_after = explode(',', $model_homecare->hmc_date);
+                        // hmc_data_before;
+                        // $result = array_diff($hmc_data_before, $hmc_data_after);
+
+                        // $customer = Customer::findOne(123);
+                        // $customer->delete();
+                        // $z = Homecare::find()
+                        // ->where(['office_id' => $model->id])
+                        // ->deleteAll(); 
+                        Homecare::deleteAll(['office_id' => $model->id]);
+                        // $model = $connection->createCommand('DELETE FROM home_care WHERE office_id=:office_id');
+                        // $model->bindParam(':office_id', $model->id);
+                        // // $userid = 5;
+                        // $model->execute();
+
+
+                        $hmc_user_id =Yii::$app->user->identity->id;
+                        $hmc_office_id  = $model->id;
+                        $hmc_date_string = $model_homecare->hmc_date;
+
+                        $hmc_date_array = explode(',', $hmc_date_string);
+
+                        foreach ($hmc_date_array as $key => $hmc_date) {
+                
+                                // the array values below should be arranged as folllows:
+                                // ['user_id', 'office_id', 'hmc_date']
+                                $data[] = [$hmc_user_id,$hmc_office_id,$hmc_date];
+                            
+                        }
+
+                        // Insert the prepared data array into the table
+                        // by passing it to the batchInsertTimes() method
+                        $model_homecare->batchInsertDates($data);
                     }
                     // $this->preInstantiateCheck($model->skills,$model->id);
                     return $this->redirect(['viewmore', 'id' => $model->id]);
@@ -489,7 +576,8 @@ class OfficeController extends Controller
                 // render the update page again
                 // this time it will display the errors.
                 return $this->render('_form', [
-                    'model' => $model,
+                    'model'                     => $model,
+                    'model_homecare'            => $model_homecare,
                     'user_offices'              => $user_offices,
                     'user_office_id'            => $model->id,
                     'skills_names_array'        => $skills_names_array,
@@ -499,7 +587,8 @@ class OfficeController extends Controller
             }
         } else {
             return $this->render('_form', [
-                'model' => $model,
+                'model'                     => $model,
+                'model_homecare'            => $model_homecare,
                 'user_offices'              => $user_offices,
                 'user_office_id'            => $model->id,
                 'skills_names_array'        => $skills_names_array,
@@ -508,154 +597,7 @@ class OfficeController extends Controller
             ]);
         }
     }
-      public function actionUpdatez($id)
-    {
-        //Use careup layout
-        $this->layout = "careup";
-        $modelTags              = new Tags();
-        $modelSkillstimetable              = new Skillstimetable();
-
-        $modelOffice            = new Office();
-        // find all the office/s ids by user_id
-        $user_offices = $modelOffice->findByUserId();
-        
-        // if office belongs to user, code continues
-        // if not user is redirected to create page
-        // this is a back up incare any user is redirected here by mistake
-        $this->checkIfOfficeBelongsToUser($id);
-
-        // 1. GET THE DATA OF RECORD BEING UPDATED
-        $model                  = $this->findModel($id);
-        $first_model_imgname    = $model->imgname;
-
-        // 2. CHNAGE THE COMMA DELIMITED SERVICE, AREA AND SKILLS STRING DATA TO AN ARRAY 
-         $model->service = explode(',', $model->service); 
-                $model->area    = explode(',', $model->area); 
-                $model->skills  = explode(',', $model->skills); 
-
-
-        ####################################################################
-        // office timetable
-        $office_timetable= $this->officeTimetable($model->id);
-
-         // get skills. These are the Ids
-        // check if the sills is empty first
-        $skills_names_array = array();
-        if (!empty($model->skills)) {
-            $skills_id_array = $model->skills;
-            // $skills_names_array = array(); // array to save the skill names
-
-             // get the skill names using Ids gotten above
-            foreach ($skills_id_array as $key => $skills_id) {
-                // $skills_names_array[] = $modelTags->findTagsById($value); // add all the skill names into the array
-                // trim the skills_id
-                $skills_id = trim($skills_id);
-                $skills_names_array[] = array('skill_id'=>$skills_id,'skill_name'=>$modelTags->findTagsById($skills_id)); // add all the skill names into the array
-            }
-        } // end if
-
-         // 4. GET DATA TO CREATE THE SCHEDULE OR CALENDAR OR TIMETABLE
-        // get the skid from the skilltimetable
-        $skills_timetable_grouped_by_skid= $modelSkillstimetable->findByUserIdAndOfficeIdAndGropupedBySkid($model->id);
-
- 
-        $new_skilltimetable_array=array();
-        // use a loop and change the skid to their corresponding names
-        foreach ($skills_timetable_grouped_by_skid as $key => $skid_grouped) {
-           // get all the days_and_time by the skid
-           $new_skillstimetable_days_and_time = $modelSkillstimetable->findByUserIdAndSkidAndOfficeId($skid_grouped->skid,$model->id);
-           
-           //get the result set and put the days_and_time in arrays
-           foreach ($new_skillstimetable_days_and_time as $key => $new_skill_day_time) {
-               $new_skillstimetable_days_and_time_array[] = $new_skill_day_time->day_and_time.'-'.$new_skill_day_time->status;
-           }
-
-
-           // change the skill id to names
-           $new_skill_name = $modelTags->findTagsById($skid_grouped->skid); 
-
-           $new_skilltimetable_array[$new_skill_name]= $new_skillstimetable_days_and_time_array;
-
-           // unset the array
-           // because it tsill keeps its value each time it loops
-           unset($new_skillstimetable_days_and_time_array);
-
-        }
-
-        ######################################################################
-
-
-        // 3. GET THE POST DATA TO BE UPDATED
-        if ($model->load(Yii::$app->request->post())) {
-
-            // 4.   DATA FROM THE DROPDOWN LIST WILL COME IN ARRAY FORMAT
-            //      CHANGE IT TO A COMMA DELIMITED STRING
-            //      SAVE IT TO THE RESPECTIVE MODEL ATTRIBUTE
-            // $string_area = $model->area    = implode(', ', $model->area);
-            // $string_service = $model->service = implode(', ', $model->service);
-            // $string_skills = $model->skills  = implode(', ', $model->skills);
-
-            if (!empty($model->area)) {
-                $check_area = $model->area;
-                if (empty($check_area[0])) {
-                    unset($check_area[0]);
-                }
-
-                $model->area    = implode(', ', $check_area);
-            }
-
-            if (!empty($model->service)) {
-                $check_service = $model->service;
-                if (empty($check_service[0])) {
-                    unset($check_service[0]);
-                }
-                
-                $model->service    = implode(', ', $check_service);
-            }
-
-            if (!empty($model->skills)) {
-                $check_skills = $model->skills;
-                if (empty($check_skills[0])) {
-                    unset($check_skills[0]);
-                }
-               
-                $model->skills    = implode(', ', $check_skills);
-                  
-            }
-
-
-           
-            
-                
-               
-                
-                 // save model
-                if ($model->save(false)) {
-                    if (!empty($check_skills)) {
-                        # code...
-                    $this->preInstantiateCheck($model->id);
-                    }
-                    // $this->preInstantiateCheck($model->skills,$model->id);
-                    return $this->redirect(['view', 'id' => $model->id]);
-                    exit();
-                }else{
-                    echo "<pre>";
-                    print_r($model->getErrors());
-                    echo "</pre>";
-                }
-
-                return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-                'user_offices'              => $user_offices,
-                'user_office_id'            => $model->id,
-                'skills_names_array'        => $skills_names_array,
-                'new_skilltimetable_array'  => $new_skilltimetable_array,
-                'office_timetable'          => $office_timetable,
-            ]);
-        }
-    }
+   
 
 
     public function actionViewmore($id=false)
@@ -904,7 +846,7 @@ class OfficeController extends Controller
         }
 
         if ($data===false) {
-            return "No skills";
+            return "タグはありません";
         }else{
             return $data = implode(',', $data);
         }
@@ -1506,6 +1448,7 @@ class OfficeController extends Controller
         $this->layout           ="careup";
         $model                  = new Office();
         $model_office_timetable = new Officetimetable();
+        $model_homecare         = new Homecare();
 
         $modelTags = new Tags();
         $group_tags = $this->groupTags();
@@ -1517,17 +1460,15 @@ class OfficeController extends Controller
             // Start the query
             // 1. Find all from office
             $query = Office::find();
-
+            // echo $model->Oname;
             if ($model->Oname) {
-                
-                echo $model->Oname;
-
+                // exit();
                 $query->Where(['like', 'Oname', $model->Oname]);
             }
 
             // 2. If user chooses an office time
             // -- First create a join
-            // -- Then create the or query  
+            // -- Then create the 'OR' query  
             if ($model_office_timetable->load(Yii::$app->request->post())) { 
                 if ($model_office_timetable->day_and_time) 
                 {
@@ -1561,11 +1502,11 @@ class OfficeController extends Controller
             // 3. If user chooses a service
             if ($model->service) 
             {
-                echo $model->service;
+                // exit();
                 // ceate the Join
                 $query->joinWith('service_display', false, 'JOIN');
                 
-                // create the 'or' query
+                // create the 'OR' query
                 $query->orFilterWhere(['or',['like', 'service_id', $model->service]]);
             }
 
@@ -1573,7 +1514,7 @@ class OfficeController extends Controller
 
             // 4. If user chooses a skill
             // -- First create a join
-            // -- Then create the or query
+            // -- Then create the 'OR' query
             if ($model->skills) {
 
                 $x = 0; // instatiate the counter
@@ -1600,25 +1541,40 @@ class OfficeController extends Controller
 
             
             // 5. If user chooses an area
-            // -- create the or query
+            // -- create the 'OR' query
           
             if ($model->area) {
                 foreach ($model->area as $key => $area_value) {
                     if ($area_value != 0) {
-                       
-                        echo $area_value;
-                        echo "<br/>";
+                        // echo $area_value;
+                        // echo "<br/>";
                         $query->orFilterWhere(['or',['like', 'area', $area_value]]);
                     }
                     
                 }
             }
 
+            // 6. If user chooses home care
+            // -- create the 'OR' query
+            if ($model_homecare->load(Yii::$app->request->post())) {
+                    if ($model_homecare->hmc_date) {
+                        // ceate the Join
+                        $query->joinWith('home_care', false, 'JOIN');
+                        $query->orFilterWhere(['or',['like', 'hmc_date', $model_homecare->hmc_date]]);
+                    }
+                    
+            }
+
         
             // echo $query->createCommand()->sql;
             // exit();
-            // 6. finnish the long query lol
+            // 7. finnish the long query lol
             $query_results= $query->all();
+
+            // echo "<pre>";
+            // print_r($query_results);
+            // echo "</pre>";
+            // exit();
 
             $search_results = array();
             
@@ -1636,19 +1592,20 @@ class OfficeController extends Controller
 
             return $this->render('m', [
                 'model'                 => $model,
-                'model_office_timetable'      => $model_office_timetable,
-                'search_results'      => $search_results,
-                'group_tags'      => $group_tags,
+                'model_homecare'        => $model_homecare,
+                'model_office_timetable'=> $model_office_timetable,
+                'search_results'        => $search_results,
+                'group_tags'            => $group_tags,
             ]);
 
         }
          //find tags
         $skgroup_and_tags = $this->groupTags();
         return $this->render('m', [
-            'model'                 => $model,
-            // 'skgroup_and_tags'      => $skgroup_and_tags,
-            'model_office_timetable'      => $model_office_timetable,
-            'group_tags'      => $group_tags,
+            'model'                     => $model,
+            'model_homecare'            => $model_homecare,
+            'model_office_timetable'    => $model_office_timetable,
+            'group_tags'                => $group_tags,
         ]);
     }
 

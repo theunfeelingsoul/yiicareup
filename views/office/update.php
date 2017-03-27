@@ -18,7 +18,8 @@ $this->params['breadcrumbs'][] = '更新';
         <h1><?= Html::encode($this->title) ?></h1>
 
     	    <?= $this->render('_form', [
-    	        'model' => $model,
+                'model'                     => $model,
+    	        'model_homecare'            => $model_homecare,
                 'user_offices'              => $user_offices,
                 'user_office_id'            => $model->id,
                 'skills_names_array'        => $skills_names_array,

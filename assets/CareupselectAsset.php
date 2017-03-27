@@ -24,6 +24,7 @@ class CareupselectAsset extends AssetBundle
         'css/select.css',
         'css/victor.css',
         'css/font-awesome-4.7.0/css/font-awesome.min.css',
+        'jquery.datepick.package-5.1.0/css/jquery.datepick.css'
     ];
     public $js = [
     'js/service-and-skill-tags.js',
@@ -32,9 +33,12 @@ class CareupselectAsset extends AssetBundle
     'js/plugin-inits.js',
     'js/plugin-select.js',
     'js/custom.js',
+    'jquery.datepick.package-5.1.0/js/jquery.plugin.js',
+    'jquery.datepick.package-5.1.0/js/jquery.datepick.js'
     ];
     public $depends = [
-        'yii\web\JqueryAsset',  
+        'yii\web\JqueryAsset',
+        'yii\jui\JuiAsset',  
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
         'yii\bootstrap\BootstrapPluginAsset',

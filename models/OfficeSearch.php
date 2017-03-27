@@ -18,8 +18,8 @@ class OfficeSearch extends Office
     public function rules()
     {
         return [
-            [['id', 'staff'], 'integer'],
-            [['Onum', 'Oname', 'leader', 'url', 'apeal', 'tel', 'fax', 'email', 'blanktime_s', 'blanktime_f', 'location', 'area', 'service', 'imgname', 'img'], 'safe'],
+            [['id'], 'integer'],
+            [['Onum', 'Oname', 'leader', 'url', 'apeal', 'tel', 'fax', 'email', 'location', 'area', 'service', 'imgname'], 'safe'],
         ];
     }
 

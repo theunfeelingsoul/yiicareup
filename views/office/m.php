@@ -19,6 +19,7 @@ $areaList = ArrayHelper::map(Osaka::find()->all(), 'Cid', 'Cname');
 <?php 
 	echo  $this->render('__m-advanced-srch', [
 		'model'                 => $model,
+		'model_homecare'        => $model_homecare,
 		'model_office_timetable'=> $model_office_timetable,
 		'group_tags'      		=> $group_tags,
 	]);
@@ -32,6 +33,7 @@ $areaList = ArrayHelper::map(Osaka::find()->all(), 'Cid', 'Cname');
 <?php 
 	echo  $this->render('__m-mobile-srch', [
 		'model'                 => $model,
+		'model_homecare'        => $model_homecare,
 		'model_office_timetable'=> $model_office_timetable,
 		'group_tags'      		=> $group_tags,
 	]);
@@ -44,11 +46,14 @@ $areaList = ArrayHelper::map(Osaka::find()->all(), 'Cid', 'Cname');
 <?php if (!empty($search_results)): ?>
 	<?= $this->render('__main-srch-results', [
 		'model'                 => $model,
+		'model_homecare'        => $model_homecare,
 		'model_office_timetable'=> $model_office_timetable,
 		'search_results'      	=> $search_results,
 		'group_tags'      		=> $group_tags,
 	]) ?>
 
+<?php else: ?>
+	Your Search Came up empty
 <?php endif ?>
 
 

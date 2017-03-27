@@ -598,8 +598,13 @@ textarea {
 	float: right;
 }
 
-.skill-srch-menu-item, .area-srch-menu-item, .office-srch-menu-item{
+.skill-srch-menu-item, .area-srch-menu-item, .office-srch-menu-item,.home-care-srch-menu-item{
 	margin-left: -31px !important;
+}
+
+.home-care{
+	display: none;
+	/*visibility: hidden;*/
 }
 
 /*.skill-srch-menu-item-panel{
@@ -733,6 +738,7 @@ textarea {
 	padding-bottom: 30px;
 }
 
+
 .m-name-srch-submit{
 	background-color: #6FC5A5;
 	color: #fff;
@@ -753,4 +759,8 @@ textarea {
 
 .m-srch-skill-checkbox,.m-srch-area-checkbox{
 	padding-top: 10px;
+}
+
+.m-gridview{
+	padding: 10px;
 }

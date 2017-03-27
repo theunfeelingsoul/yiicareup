@@ -39,6 +39,10 @@ $areaList = ArrayHelper::map(Osaka::find()->all(), 'Cid', 'Cname');
 					<button type="button" class="btn btn-default m-srch-menu m-service-srch-item" data-toggle="modal" data-target="#service-modal">サービス
 					<span class="glyphicon glyphicon-menu-down"></span>
 					</button>
+					<div class="home-care">
+						<?= $form->field($model_homecare, 'hmc_date')->label(false)->textInput(['id' => 'm-home-care-datepicker','placeholder'=>'Short Stay','readonly'=>true]) ?>
+					</div>
+
 					<button type="button" class="btn btn-default m-srch-menu m-skills-srch-item" data-toggle="modal" data-target="#skill-modal">アピールタグ
 					<span class="glyphicon glyphicon-menu-down"></span>
 					</button>
@@ -89,9 +93,10 @@ $areaList = ArrayHelper::map(Osaka::find()->all(), 'Cid', 'Cname');
 					<h4 class="modal-title" id="service-modal-label">サービス</h4>
 				</div>
 				<div class="modal-body">
-					<?= $form->field($model, 'service')->dropdownList($serviceList,['prompt'=>'サービス']
+					<?= $form->field($model, 'service')->dropdownList($serviceList,['prompt'=>'サービス','id'=>'m-office-service']
 							)->label(false); 
 							?>
+
 				</div>
 				<div class="modal-footer">	
 					<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
